@@ -7,6 +7,7 @@
       "subject": "[skip ci] Fix performance regression"
     }
   ],
+  "pr": null,
   "ref": "bench/aa7e79ee",
   "repo": "martijnbastiaan/clash-compiler",
   "updated": "2026-08-14T07:02:41+00:00"

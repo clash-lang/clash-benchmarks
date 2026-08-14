@@ -28,9 +28,6 @@ gh workflow run benchmark.yml -R clash-lang/clash-benchmarks -f sha=<sha>
 gh workflow run benchmark.yml -R clash-lang/clash-benchmarks -f count=5
 ```
 
-Every six hours the workflow also runs by itself, for the master commits
-that have no result. A run of the full suite takes 45 to 90 minutes for
-each commit. The new result appears on `main`, and the site renders again.
 
 ## Layout
 
@@ -57,7 +54,8 @@ To render the site on your own machine, in a clone that has the data:
 
 Master comes from a clash-compiler clone, because the graph must also show
 the commits that have no result. Without `--clash-repo`, the script makes a
-clone of its own in `~/.cache/clash-benchmarks`.
+clone of its own in `~/.cache/clash-benchmarks`. Add `--all-branches` to
+see the branches whose pull request is closed as well.
 
 ## Maintained
 This is a low-stakes repository and is mostly maintained by LLMs.

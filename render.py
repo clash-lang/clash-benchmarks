@@ -11,6 +11,7 @@ Usage:
   --clash-ref REF    master ref in that clone (default origin/master)
   --cache-dir DIR    where to make a clone if there is none
   --out PATH         output file (default site/index.html)
+  --all-branches     also show the branches without an open pull request
 
 The page holds all data. It gives the reader two selectors:
 
@@ -24,6 +25,12 @@ Master comes from the clone, not from the results: this way the graph also
 shows the commits that have no result yet, as holes. A branch comes from
 its snapshot in branches/, because a branch does not stay where it is.
 See bench/result_schema.py.
+
+The branch selector holds the branches that are the head of an open pull
+request, and no others: a branch whose pull request is closed says nothing
+about Clash today, and the list stays short enough to use.
+bench/prune_branches.py keeps the "pr" field of the snapshots up to date.
+Use --all-branches to see the rest as well, on your own machine.
 """
 
 import argparse
@@ -124,9 +131,10 @@ def load_machines(root, results):
     return machines
 
 
-def load_branches(root):
-    """Read the branch snapshots."""
+def load_branches(root, all_branches):
+    """Read the branch snapshots that belong to an open pull request."""
     snapshots = []
+    skipped = 0
     for path in sorted((root / "branches").glob("**/*.json")):
         snapshot = json.loads(path.read_text())
         problems = validate_branch(snapshot)
@@ -134,7 +142,13 @@ def load_branches(root):
             for problem in problems:
                 print(f"{path}: {problem}", file=sys.stderr)
             sys.exit("render.py: bad branch snapshot")
+        if snapshot["pr"] is None and not all_branches:
+            skipped += 1
+            continue
         snapshots.append(snapshot)
+    if skipped:
+        print(f"render.py: left out {skipped} branch(es) without an open pull "
+              f"request (--all-branches shows them)")
     return snapshots
 
 
@@ -171,11 +185,12 @@ def main():
     parser.add_argument("--cache-dir", type=Path,
                         default=Path.home() / ".cache" / "clash-benchmarks")
     parser.add_argument("--out", type=Path, default=here / "site" / "index.html")
+    parser.add_argument("--all-branches", action="store_true")
     args = parser.parse_args()
 
     results = load_results(args.data)
     machines = load_machines(args.data, results)
-    snapshots = load_branches(args.data)
+    snapshots = load_branches(args.data, args.all_branches)
 
     known = {sha for own in results.values() for sha in own}
     master = master_chain(clash_clone(args), args.clash_ref, known)
@@ -199,6 +214,7 @@ def main():
         "label": "master",
         "repo": UPSTREAM_REPO,
         "ref": "master",
+        "pr": None,
         "commits": [c["sha"] for c in master],
         "branchPoint": None,
     }]
@@ -223,6 +239,7 @@ def main():
             "label": snapshot["ref"],
             "repo": snapshot["repo"],
             "ref": snapshot["ref"],
+            "pr": snapshot["pr"],
             "commits": head + [c["sha"] for c in snapshot["commits"]],
             "branchPoint": branch_point,
         })
@@ -973,7 +990,8 @@ function renderAll() {
   document.getElementById("subtitle").textContent =
     `${results} of ${VD.commits.length} commits measured · ${machine.label || state.machine}`
     + (machine.cpu ? ` · ${machine.cpu}` : "")
-    + ` · ${VD.ref.label} · rendered ${DATA.generated}`;
+    + ` · ${VD.ref.label}` + (VD.ref.pr != null ? ` (#${VD.ref.pr})` : "")
+    + ` · rendered ${DATA.generated}`;
 
   document.getElementById("tablebox").style.display =
     VD.panels.length ? "" : "none";
@@ -1050,7 +1068,8 @@ for (const m of DATA.machines) {
 for (const r of DATA.refs) {
   const option = document.createElement("option");
   option.value = r.key;
-  option.textContent = r.key === "master" ? "master" : r.repo + " @ " + r.ref;
+  option.textContent = r.key === "master" ? "master"
+    : (r.pr != null ? "#" + r.pr + " " : "") + r.repo + " @ " + r.ref;
   refSelect.appendChild(option);
 }
 

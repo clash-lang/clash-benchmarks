@@ -6,12 +6,14 @@ name: Benchmark
 #
 # There are two ways in:
 #
-# - the schedule. It benchmarks the commits of clash-lang master that have
-#   no result on this machine yet, oldest first.
+# - the schedule. It benchmarks the commits of the open pull requests that
+#   carry the "performance" label, and the commits of clash-lang master
+#   that have no result on this machine yet.
 # - workflow_dispatch. It benchmarks a branch, or one exact commit. Use
 #   this for a backfill and to measure a branch before a merge.
 #
-# See docs/ops.md.
+# Every run also asks GitHub for the open pull requests, and prunes the
+# branch snapshots that no longer belong to one. See docs/ops.md.
 
 on:
   workflow_dispatch:
@@ -38,7 +40,7 @@ on:
 run-name: >-
   ${{ inputs.sha && format('Benchmark {0}', inputs.sha)
       || (inputs.ref && format('Benchmark {0} of {1}', inputs.ref, inputs.repo))
-      || 'Benchmark new master commits' }}
+      || 'Benchmark the labelled pull requests and new master commits' }}
 
 # There is no concurrency group on purpose: a group cancels queued runs,
 # and a cancelled run is a lost datapoint. The benchmark runner has one
@@ -70,6 +72,7 @@ jobs:
         - /var/cache/clash-bench:/bench-cache
     permissions:
       contents: write # push_result.sh pushes the result to main
+      pull-requests: read # list_prs.py reads the open pull requests
     env:
       BENCH_QUICK: ${{ vars.BENCH_QUICK }}
       BENCH_MACHINE: ${{ vars.BENCH_MACHINE }}
@@ -102,6 +105,37 @@ jobs:
             master:refs/bench/upstream-master
           git log -1 --format='clash-lang master is %h %s' refs/bench/upstream-master
 
+      # Both of the next two steps need this list, and the snapshot of a
+      # branch that a benchmark writes later needs it too. One call.
+      - name: List the open pull requests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p out
+          if ! benchmarks/bench/list_prs.py \
+                 --repo clash-lang/clash-compiler --out out/prs.json; then
+            echo "::warning::could not read the pull requests of clash-compiler;" \
+                 "this run does master only and leaves the branches alone"
+            rm -f out/prs.json
+          fi
+
+      # A branch without an open pull request is not in the report, and a
+      # branch that is gone loses its snapshot. This is cheap, so it runs
+      # before the measurements: the report is right even when the
+      # benchmark below fails. A failure here does not stop the run,
+      # because a measurement is worth more than a tidy report.
+      - name: Prune the branch snapshots
+        working-directory: benchmarks
+        run: |
+          if [[ ! -f ../out/prs.json ]]; then
+            echo "no pull request list; leaving the branch snapshots alone"
+            exit 0
+          fi
+          if ! bench/push_branches.sh ../out/prs.json; then
+            echo "::warning::could not prune the branch snapshots;" \
+                 "going on with the benchmark"
+          fi
+
       - name: Update package index
         working-directory: clash-compiler
         run: |
@@ -126,39 +160,70 @@ jobs:
             exit 1
           fi
 
+      # The work list has one line for each commit, with tabs between the
+      # four fields that run_one.sh wants: the commit, the repository and
+      # the branch that it comes from, and the ref of the tip of that
+      # branch ("-" for the commit itself).
       - name: Choose the commits
         env:
           IN_SHA: ${{ inputs.sha }}
           IN_COUNT: ${{ inputs.count || vars.BENCH_CATCHUP_MAX || '5' }}
+          IN_PR_COUNT: ${{ vars.BENCH_PR_MAX || '5' }}
+          IN_PR_LABEL: ${{ vars.BENCH_PR_LABEL || 'performance' }}
         run: |
           mkdir -p out
+          : > out/work.tsv
           if [[ -n "${IN_SHA}" ]]; then
-            git -C clash-compiler rev-parse --verify "${IN_SHA}^{commit}" > out/shas.txt
+            sha=$(git -C clash-compiler rev-parse --verify "${IN_SHA}^{commit}")
+            printf '%s\t%s\t%s\t-\n' "${sha}" "${CLASH_REPO}" "${CLASH_REF}" \
+              >> out/work.tsv
           elif [[ "${CLASH_REPO}/${CLASH_REF}" == "clash-lang/clash-compiler/master" ]]; then
+            # The labelled pull requests go first: somebody is waiting for
+            # those numbers. Master then fills its own budget.
+            if [[ -f out/prs.json ]]; then
+              benchmarks/bench/pr_catchup.py \
+                --clash-repo clash-compiler \
+                --results benchmarks \
+                --prs out/prs.json \
+                --label "${IN_PR_LABEL}" \
+                --upstream-ref refs/bench/upstream-master \
+                --max "${IN_PR_COUNT}" >> out/work.tsv
+            fi
             benchmarks/bench/catchup.py \
               --clash-repo clash-compiler \
               --results benchmarks \
               --ref refs/bench/upstream-master \
-              --max "${IN_COUNT}" > out/shas.txt
+              --max "${IN_COUNT}" \
+            | while read -r sha; do
+                printf '%s\tclash-lang/clash-compiler\tmaster\t-\n' "${sha}"
+              done >> out/work.tsv
           else
-            git -C clash-compiler rev-parse HEAD > out/shas.txt
+            sha=$(git -C clash-compiler rev-parse HEAD)
+            printf '%s\t%s\t%s\t-\n' "${sha}" "${CLASH_REPO}" "${CLASH_REF}" \
+              >> out/work.tsv
           fi
           echo "commits to benchmark:"
-          cat out/shas.txt
+          cat out/work.tsv
 
       - name: Benchmark
         env:
           TRIGGER: ${{ github.event_name == 'schedule' && 'schedule' || 'dispatch' }}
         run: |
-          if [[ ! -s out/shas.txt ]]; then
+          if [[ ! -s out/work.tsv ]]; then
             echo "nothing to benchmark"
             exit 0
           fi
-          while read -r sha; do
+          # The branch snapshot of a pull request branch records which
+          # pull request it belongs to. run_one.sh changes directory, so
+          # the path has to be absolute.
+          if [[ -f out/prs.json ]]; then
+            export BENCH_PRS="$(pwd)/out/prs.json"
+          fi
+          while IFS=$'\t' read -r sha repo ref branch_head; do
             benchmarks/bench/run_one.sh \
               clash-compiler "out/${sha}" \
-              "${sha}" "${CLASH_REPO}" "${CLASH_REF}" "${TRIGGER}"
-          done < out/shas.txt
+              "${sha}" "${repo}" "${ref}" "${TRIGGER}" "${branch_head}"
+          done < out/work.tsv
 
       - name: Upload artifacts
         if: always()

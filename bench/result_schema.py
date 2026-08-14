@@ -37,7 +37,27 @@ The "normalization" and "wire_demo" parts are the measurements. The other
 parts say what was measured, on which machine, and with which toolchain.
 Hardware facts are not in the result: they are in machines/<machine>.json.
 
-Use this module as a script to validate files:
+The second kind of file is a branch snapshot. A branch does not stay where
+it is, so the graphs read the commits of a branch from here and not from a
+clone. The path comes from the repository and the branch, see
+branch_path(). The layout is:
+
+    {
+      "repo": "someone/clash-compiler",
+      "ref": "perf/faster-strings",
+      "base": "<40 hex>",
+      "pr": 3345 | null,
+      "updated": "2026-08-13T08:12:24+00:00",
+      "commits": [{"sha": "<40 hex>", "subject": "...", "date": "2026-08-11"}]
+    }
+
+"base" is the branch point on clash-lang master; "commits" is the
+first-parent chain from there to the tip of the branch, oldest first.
+"pr" is the open pull request that has this branch as its head, and null
+when there is none. render.py shows the branches that have one, and only
+those. See bench/branch_snapshot.py and bench/prune_branches.py.
+
+Use this module as a script to validate files of either kind:
 
     result_schema.py results/volthe/0d/0d32dde3....json
 """
@@ -219,7 +239,8 @@ def validate_result(result):
 def validate_branch(snapshot):
     """Return the problems of one branch snapshot."""
     problems = []
-    if not _keys(problems, "branch", snapshot, ("repo", "ref", "base", "updated", "commits")):
+    if not _keys(problems, "branch", snapshot,
+                 ("repo", "ref", "base", "pr", "updated", "commits")):
         return problems
     if not isinstance(snapshot["repo"], str) or not REPO_RE.match(snapshot["repo"]):
         problems.append(f"repo: not owner/name: {snapshot['repo']!r}")
@@ -227,6 +248,9 @@ def validate_branch(snapshot):
         problems.append("ref: empty")
     if not isinstance(snapshot["base"], str) or not SHA_RE.match(snapshot["base"]):
         problems.append(f"base: not a full sha: {snapshot['base']!r}")
+    pr = snapshot["pr"]
+    if pr is not None and (isinstance(pr, bool) or not isinstance(pr, int) or pr < 1):
+        problems.append(f"pr: not a pull request number or null: {pr!r}")
     if not isinstance(snapshot["updated"], str) or not snapshot["updated"]:
         problems.append("updated: not a timestamp")
     if not isinstance(snapshot["commits"], list) or not snapshot["commits"]:
