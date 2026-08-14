@@ -50,6 +50,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from list_prs import load, with_label  # noqa: E402
+from pr_refs import fetch_pr, pr_ref  # noqa: E402
 from result_schema import machine_id, result_path  # noqa: E402
 
 
@@ -74,9 +75,8 @@ def commits_of(args, pr, base_url):
     Returns an empty list when the pull request cannot be read: a broken
     one must not stop the work on the others.
     """
-    ref = f"refs/bench/pr/{pr['number']}"
-    if git(args.clash_repo, "fetch", "--no-tags", "--force", base_url,
-           f"refs/pull/{pr['number']}/head:{ref}", check=False) is None:
+    ref = fetch_pr(args.clash_repo, base_url, pr["number"])
+    if ref is None:
         return []
     # Take the head from the fetched ref, not from the list: the branch
     # can have moved since the list was made.
@@ -158,7 +158,7 @@ def main():
             print(f"  #{pr['number']} {line}", file=sys.stderr)
         else:
             print(f"{sha}\t{pr['head_repo']}\t{pr['head_ref']}"
-                  f"\trefs/bench/pr/{pr['number']}")
+                  f"\t{pr_ref(pr['number'])}")
     return 0
 
 

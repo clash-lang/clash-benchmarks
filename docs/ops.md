@@ -19,8 +19,9 @@ Every run starts with two cheap steps that talk to GitHub:
 - `bench/list_prs.py` writes the open pull requests of clash-compiler to
   `out/prs.json`. The next steps all read that one file. When the call
   fails, the run says so with a warning and goes on with master only.
-- `bench/push_branches.sh` runs `bench/prune_branches.py` against `main`
-  and pushes what it changes. See [The report](#the-report).
+- `bench/push_branches.sh` brings `branches/` on `main` up to date with
+  that list and pushes what changes, in one commit. See
+  [The report](#the-report).
 
 One run then does this for each commit (`bench/run_one.sh`):
 
@@ -92,7 +93,20 @@ branches that have one in the branch selector, and no others. A branch
 whose pull request is closed says nothing about Clash today, and the
 selector stays short enough to use.
 
-`bench/prune_branches.py` keeps the field in step with GitHub on every run:
+A snapshot is not a side effect of a benchmark. `bench/pr_snapshots.py`
+records the branch of every labelled pull request on every run, whether or
+not that pull request has a commit left to measure. Without that, a pull
+request whose commits all have a result already would be invisible with no
+way to become visible: there is nothing left to measure, so nothing would
+ever write its snapshot. That happens as soon as somebody labels a pull
+request whose commits this machine measured earlier under another name.
+
+The snapshot is rewritten only when it says something new. Every write
+gives it a fresh `updated` stamp, and writing that alone would put a
+commit on `main` at every poll and say nothing.
+
+`bench/prune_branches.py` keeps the `pr` field in step with GitHub on
+every run:
 
 | On GitHub | In the data |
 |---|---|

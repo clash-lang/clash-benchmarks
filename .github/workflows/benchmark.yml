@@ -119,20 +119,24 @@ jobs:
             rm -f out/prs.json
           fi
 
-      # A branch without an open pull request is not in the report, and a
-      # branch that is gone loses its snapshot. This is cheap, so it runs
-      # before the measurements: the report is right even when the
-      # benchmark below fails. A failure here does not stop the run,
-      # because a measurement is worth more than a tidy report.
-      - name: Prune the branch snapshots
+      # Every labelled pull request gets a snapshot, so that one whose
+      # commits all have a result already is on the site too. A branch
+      # without an open pull request drops out of the report, and one that
+      # is gone loses its snapshot. This is cheap, so it runs before the
+      # measurements: the report is right even when the benchmark below
+      # fails. A failure here does not stop the run, because a
+      # measurement is worth more than a tidy report.
+      - name: Update the branch snapshots
         working-directory: benchmarks
+        env:
+          BENCH_PR_LABEL: ${{ vars.BENCH_PR_LABEL || 'performance' }}
         run: |
           if [[ ! -f ../out/prs.json ]]; then
             echo "no pull request list; leaving the branch snapshots alone"
             exit 0
           fi
-          if ! bench/push_branches.sh ../out/prs.json; then
-            echo "::warning::could not prune the branch snapshots;" \
+          if ! bench/push_branches.sh ../out/prs.json ../clash-compiler; then
+            echo "::warning::could not update the branch snapshots;" \
                  "going on with the benchmark"
           fi
 
