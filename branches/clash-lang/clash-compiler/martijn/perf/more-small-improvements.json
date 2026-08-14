@@ -1,0 +1,34 @@
+{
+  "base": "c43cf9fc5ac3a1fb6c848a7ea39947be25c0d9bd",
+  "commits": [
+    {
+      "date": "2026-08-11",
+      "sha": "f65839e72755720c669a0a20f275722e129b708e",
+      "subject": "Count transformation attempts under -fclash-debug-count-transformations"
+    },
+    {
+      "date": "2026-08-11",
+      "sha": "6f36110a60c3d320194bf6431c01210bda2ca6d3",
+      "subject": "Run cheap transformation guards before expensive ones"
+    },
+    {
+      "date": "2026-08-11",
+      "sha": "fae5d5fc5c7f9d2470b13804b3ff01ed125ee772",
+      "subject": "Stop measuring term size once it exceeds the inline limit"
+    },
+    {
+      "date": "2026-08-11",
+      "sha": "b2d085b360d01a9adb2db08a472432019abcb199",
+      "subject": "Skip inline attempts at inner application-spine nodes"
+    },
+    {
+      "date": "2026-08-11",
+      "sha": "675282dfd05318e7c1e0079b6c57eaf85d480664",
+      "subject": "Add changelog entries for inline-guard and counter changes"
+    }
+  ],
+  "pr": 3356,
+  "ref": "martijn/perf/more-small-improvements",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-08-14T09:35:33+00:00"
+}
