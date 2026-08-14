@@ -14,6 +14,16 @@ on:
       - render.py
       - bench/result_schema.py
       - .github/workflows/publish.yml
+  # The trigger above never sees a new result. bench/push_result.sh and
+  # bench/push_branches.sh push with the GITHUB_TOKEN, and GitHub starts
+  # no workflow from a push that carries that token; only a push by a
+  # person reaches it. So watch the benchmark run itself as well.
+  #
+  # "completed", not "success": each commit pushes its own result, so a
+  # run that stopped in the middle still brought new data to render.
+  workflow_run:
+    workflows: [Benchmark]
+    types: [completed]
   workflow_dispatch:
 
 concurrency:
@@ -32,6 +42,11 @@ jobs:
     steps:
       - name: Checkout clash-benchmarks
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          # Always the newest data. A workflow_run event points at the
+          # commit that the benchmark started from, which is older than
+          # the results that the benchmark went on to push.
+          ref: main
 
       # The graphs show the first-parent commits of master, also the ones
       # that have no result yet. That order comes from git, not from the

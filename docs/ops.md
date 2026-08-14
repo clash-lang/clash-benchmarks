@@ -8,7 +8,7 @@ and how to read the site, see the [README](../README.md).
 | Workflow | When | What it does |
 |---|---|---|
 | `benchmark.yml` | every six hours, and on demand | prunes the branch snapshots, measures one or more commits, and pushes each result to `main` |
-| `publish.yml` | after a push to `main`, and on demand | renders the site and pushes it to the `pages` branch |
+| `publish.yml` | after a benchmark run, after a push to `main`, and on demand | renders the site and pushes it to the `pages` branch |
 
 `benchmark.yml` has no concurrency group on purpose: a concurrency group
 cancels queued runs, and a cancelled run is a lost datapoint. The runner
@@ -68,6 +68,21 @@ more than that.
 GitHub disables a schedule after 60 days without activity in the
 repository. A result push is activity, so the schedule keeps itself alive
 while it works. After a long stop, enable it again in the Actions tab.
+
+### Why publish.yml watches the benchmark run
+
+A push that carries the `GITHUB_TOKEN` starts no workflow. GitHub does that
+to keep a workflow from setting itself off again. `push_result.sh` and
+`push_branches.sh` push with that token, so the `push` trigger of
+`publish.yml` only ever sees a push by a person, never a new result. That
+is why `publish.yml` also triggers on `workflow_run` of `Benchmark`, and
+why it checks out `main` by name: a `workflow_run` event points at the
+commit that the benchmark started from, which is older than the results
+that the benchmark went on to push.
+
+Symptom when this breaks: the results are on `main`, the benchmark run is
+green, and the site does not change. `gh workflow run publish.yml` renders
+it by hand.
 
 ### The report
 
