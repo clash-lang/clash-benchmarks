@@ -1,0 +1,56 @@
+name: Publish
+
+# This workflow makes the graphs. It runs after each new result on main,
+# and on demand. The output goes to the pages branch, which GitHub Pages
+# serves at https://clash-lang.github.io/clash-benchmarks/.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - results/**
+      - machines/**
+      - branches/**
+      - render.py
+      - bench/result_schema.py
+      - .github/workflows/publish.yml
+  workflow_dispatch:
+
+concurrency:
+  # Only the newest data matters. Cancel a render that is on the way out.
+  group: publish
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  publish:
+    name: Render the site
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # push_site.sh pushes to the pages branch
+    steps:
+      - name: Checkout clash-benchmarks
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      # The graphs show the first-parent commits of master, also the ones
+      # that have no result yet. That order comes from git, not from the
+      # results. Commits are all this clone needs, so leave the trees and
+      # the blobs on the server.
+      - name: Clone clash-compiler
+        run: |
+          git clone --filter=tree:0 --no-checkout --single-branch --branch master \
+            https://github.com/clash-lang/clash-compiler.git clash-compiler
+
+      - name: Render
+        run: ./render.py --clash-repo clash-compiler --out site/index.html
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: site
+          path: site/
+          if-no-files-found: error
+
+      - name: Push to the pages branch
+        run: ./tools/push_site.sh site
