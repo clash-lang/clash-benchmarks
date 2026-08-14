@@ -363,10 +363,14 @@ TEMPLATE = """<!DOCTYPE html>
     padding: 16px 16px 8px;
     margin-bottom: 16px;
   }
+  /* Two rows: the machine with the date range, then the branch. The
+     branch goes on its own row because the name of a branch is long. */
+  .filterbar { margin: 16px 0; }
   .filters {
     display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center;
-    margin: 16px 0; font-size: 12.5px; color: var(--ink-2);
+    font-size: 12.5px; color: var(--ink-2);
   }
+  .filters + .filters { margin-top: 10px; }
   .filters button, .filters select, .filters input[type="date"] {
     font: inherit; color: var(--ink-1); background: var(--surface-1);
     border: 1px solid var(--border); border-radius: 6px;
@@ -377,7 +381,10 @@ TEMPLATE = """<!DOCTYPE html>
   .filters button[aria-pressed="true"] {
     color: var(--ink-1); font-weight: 600; border-color: var(--series-1);
   }
-  .filters label { display: flex; gap: 6px; align-items: center; }
+  .filters label { display: flex; gap: 6px; align-items: center; max-width: 100%; }
+  /* A select is as wide as its widest option. "owner/repo @ branch (#N)"
+     would push the page wider than a phone; let it shrink instead. */
+  .filters select { min-width: 0; }
   .filters .sep { width: 1px; height: 20px; background: var(--border); }
   .card h2 { font-size: 13px; font-weight: 600; margin: 0 0 2px; color: var(--ink-1); }
   .card .note { font-size: 11.5px; color: var(--muted); margin: 0 0 8px; }
@@ -449,15 +456,19 @@ TEMPLATE = """<!DOCTYPE html>
     <p class="empty">This page draws its graphs with JavaScript. The data is in
     the results/ directory of the clash-benchmarks repository.</p>
   </noscript>
-  <div class="filters">
-    <label>Machine <select id="f-machine"></select></label>
-    <label>Branch <select id="f-ref"></select></label>
-    <span class="sep"></span>
-    <button type="button" data-days="30">Last 30 days</button>
-    <button type="button" data-days="90">Last 90 days</button>
-    <button type="button" data-days="0" aria-pressed="true">All</button>
-    <label>From <input type="date" id="f-from"></label>
-    <label>To <input type="date" id="f-to"></label>
+  <div class="filterbar">
+    <div class="filters">
+      <label>Machine <select id="f-machine"></select></label>
+      <span class="sep"></span>
+      <button type="button" data-days="30">Last 30 days</button>
+      <button type="button" data-days="90">Last 90 days</button>
+      <button type="button" data-days="0" aria-pressed="true">All</button>
+      <label>From <input type="date" id="f-from"></label>
+      <label>To <input type="date" id="f-to"></label>
+    </div>
+    <div class="filters">
+      <label>Branch <select id="f-ref"></select></label>
+    </div>
   </div>
   <div id="headline"></div>
   <div class="grid" id="panels"></div>
