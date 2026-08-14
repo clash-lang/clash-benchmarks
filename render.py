@@ -380,7 +380,12 @@ TEMPLATE = """<!DOCTYPE html>
   svg text { font: 10.5px system-ui, -apple-system, "Segoe UI", sans-serif; fill: var(--muted); }
   svg .endlabel { font-size: 11px; font-weight: 600; fill: var(--ink-2); }
   svg .branchlabel { font-size: 10.5px; font-weight: 600; fill: var(--ink-2); }
-  svg .plot-hit { cursor: pointer; outline: none; }
+  svg .plot-hit {
+    cursor: pointer;
+    outline: none;
+    /* A swipe over a chart must scroll the page, not select points. */
+    touch-action: pan-y;
+  }
   svg .plot-hit:focus-visible { outline: 2px solid var(--series-1); outline-offset: -2px; }
   #tooltip {
     position: fixed;
@@ -391,7 +396,7 @@ TEMPLATE = """<!DOCTYPE html>
     box-shadow: 0 4px 16px rgba(0,0,0,0.18);
     padding: 8px 11px;
     font-size: 12px;
-    max-width: 340px;
+    max-width: min(340px, calc(100vw - 24px));
     z-index: 10;
     display: none;
   }
@@ -450,6 +455,12 @@ TEMPLATE = """<!DOCTYPE html>
 const DATA = __DATA__;
 
 const M = { top: 14, right: 56, bottom: 26, left: 64 };
+// The right margin holds the label of the newest value, which is up to
+// five digits wide.
+const M_NARROW = { top: 14, right: 44, bottom: 26, left: 42 };
+// Below this width a panel has no room for a y-axis label. Then the
+// unit goes into the heading of the card. See drawPanel().
+const NARROW = 420;
 const SERIES_COLORS = ["var(--series-1)", "var(--series-2)"];
 const BRANCH_COLOR = "var(--branch)";
 
@@ -627,16 +638,20 @@ function colorParts(points) {
   ];
 }
 
+// Draw one panel. Return true when the panel is too narrow for a
+// y-axis label.
 function renderPanel(container, panel, height) {
   container.replaceChildren();
   const W = Math.max(280, container.clientWidth);
   const H = height;
-  const iw = W - M.left - M.right, ih = H - M.top - M.bottom;
+  const m = W < NARROW ? M_NARROW : M;
+  const tight = m === M_NARROW;
+  const iw = W - m.left - m.right, ih = H - m.top - m.bottom;
   const n = VD.commits.length;
   const ns = panel.series.length;
   const pts = [];
   panel.values.forEach((val, i) => { if (val) pts.push([i, val]); });
-  if (!pts.length) return;
+  if (!pts.length) return tight;
 
   let lo = Infinity, hi = -Infinity;
   for (const [, val] of pts) {
@@ -651,8 +666,8 @@ function renderPanel(container, panel, height) {
   lo -= pad; hi += pad;
   if (positive && lo < 0) lo = 0; // A time is never negative.
 
-  const x = i => M.left + (n <= 1 ? iw / 2 : (i / (n - 1)) * iw);
-  const y = v => M.top + ih - ((v - lo) / (hi - lo)) * ih;
+  const x = i => m.left + (n <= 1 ? iw / 2 : (i / (n - 1)) * iw);
+  const y = v => m.top + ih - ((v - lo) / (hi - lo)) * ih;
 
   const svg = el("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}` });
 
@@ -660,28 +675,30 @@ function renderPanel(container, panel, height) {
   // together with the rule at the branch point and the legend.
   const bp = VD.branchPoint;
   if (bp != null && bp < n - 1) {
-    const x0 = bp < 0 ? M.left : x(bp);
-    svg.appendChild(el("rect", { x: x0, y: M.top, width: M.left + iw - x0,
+    const x0 = bp < 0 ? m.left : x(bp);
+    svg.appendChild(el("rect", { x: x0, y: m.top, width: m.left + iw - x0,
       height: ih, fill: BRANCH_COLOR, opacity: 0.07 }));
   }
 
   const { ticks, step } = niceTicks(lo, hi, Math.max(3, Math.floor(ih / 45)));
   for (const t of ticks) {
-    svg.appendChild(el("line", { x1: M.left, x2: M.left + iw, y1: y(t), y2: y(t),
+    svg.appendChild(el("line", { x1: m.left, x2: m.left + iw, y1: y(t), y2: y(t),
       stroke: "var(--grid)", "stroke-width": 1 }));
-    const lab = el("text", { x: M.left - 8, y: y(t) + 3.5, "text-anchor": "end",
+    const lab = el("text", { x: m.left - 8, y: y(t) + 3.5, "text-anchor": "end",
       style: "font-variant-numeric: tabular-nums" });
     lab.textContent = fmt(t, step);
     svg.appendChild(lab);
   }
-  svg.appendChild(el("line", { x1: M.left, x2: M.left + iw,
-    y1: M.top + ih, y2: M.top + ih, stroke: "var(--axis)", "stroke-width": 1 }));
+  svg.appendChild(el("line", { x1: m.left, x2: m.left + iw,
+    y1: m.top + ih, y2: m.top + ih, stroke: "var(--axis)", "stroke-width": 1 }));
 
-  const cy = M.top + ih / 2;
-  const ylab = el("text", { x: 12, y: cy, "text-anchor": "middle",
-    transform: `rotate(-90 12 ${cy})` });
-  ylab.textContent = "time (" + panel.unit + ")";
-  svg.appendChild(ylab);
+  if (!tight) {
+    const cy = m.top + ih / 2;
+    const ylab = el("text", { x: 12, y: cy, "text-anchor": "middle",
+      transform: `rotate(-90 12 ${cy})` });
+    ylab.textContent = "time (" + panel.unit + ")";
+    svg.appendChild(ylab);
+  }
 
   const nx = Math.max(2, Math.floor(iw / 120));
   const seen = new Set();
@@ -692,7 +709,7 @@ function renderPanel(container, panel, height) {
     if (seen.has(i) || date === prevDate) continue;
     seen.add(i);
     prevDate = date;
-    const lab = el("text", { x: x(i), y: M.top + ih + 16, "text-anchor": "middle" });
+    const lab = el("text", { x: x(i), y: m.top + ih + 16, "text-anchor": "middle" });
     lab.textContent = date;
     svg.appendChild(lab);
   }
@@ -733,13 +750,13 @@ function renderPanel(container, panel, height) {
 
   // The rule at the branch point, with a label on the big panel.
   if (bp != null && bp >= 0 && bp < n - 1) {
-    svg.appendChild(el("line", { x1: x(bp), x2: x(bp), y1: M.top, y2: M.top + ih,
+    svg.appendChild(el("line", { x1: x(bp), x2: x(bp), y1: m.top, y2: m.top + ih,
       stroke: BRANCH_COLOR, "stroke-width": 1.5, "stroke-dasharray": "4 3" }));
     if (panel.headline) {
       // Keep the label inside the plot: put it left of the rule when the
       // branch point sits near the right edge.
-      const late = x(bp) > M.left + iw * 0.6;
-      const lab = el("text", { x: x(bp) + (late ? -6 : 6), y: M.top + 11,
+      const late = x(bp) > m.left + iw * 0.6;
+      const lab = el("text", { x: x(bp) + (late ? -6 : 6), y: m.top + 11,
         "text-anchor": late ? "end" : "start", class: "branchlabel" });
       lab.textContent = "branch point " + VD.commits[bp].slice(0, 9);
       svg.appendChild(lab);
@@ -777,11 +794,11 @@ function renderPanel(container, panel, height) {
     svg.appendChild(end);
   }
 
-  const cross = el("line", { y1: M.top, y2: M.top + ih,
+  const cross = el("line", { y1: m.top, y2: m.top + ih,
     stroke: "var(--axis)", "stroke-width": 1, visibility: "hidden" });
   svg.appendChild(cross);
 
-  const hit = el("rect", { x: M.left, y: M.top, width: iw, height: ih,
+  const hit = el("rect", { x: m.left, y: m.top, width: iw, height: ih,
     fill: "transparent", class: "plot-hit", tabindex: 0 });
   svg.appendChild(hit);
 
@@ -819,14 +836,36 @@ function renderPanel(container, panel, height) {
   function openCommit(i) {
     window.open(commitUrl(VD.commits[i], isBranch(i)), "_blank");
   }
-  hit.addEventListener("pointermove", e => {
+  function at(clientX) {
     const rect = svg.getBoundingClientRect();
-    const fx = (e.clientX - rect.left - M.left) / iw * (n - 1);
-    const i = nearest(fx);
+    return nearest((clientX - rect.left - m.left) / iw * (n - 1));
+  }
+  // A touch move is a scroll gesture, so follow the pointer only for a
+  // mouse. On a touch screen a tap selects the nearest point instead.
+  let fresh = false;
+  hit.addEventListener("pointermove", e => {
+    if (e.pointerType === "touch") return;
+    const i = at(e.clientX);
     if (i != null) highlight(i, e.clientX, e.clientY);
   });
-  hit.addEventListener("click", () => { if (active != null) openCommit(active); });
-  hit.addEventListener("pointerleave", clear);
+  hit.addEventListener("pointerdown", e => {
+    if (e.pointerType !== "touch") return;
+    const i = at(e.clientX);
+    // The first tap shows the values. Only a tap on a point that is
+    // already selected opens the commit: one tap must not take a reader
+    // away from the page.
+    fresh = i !== active;
+    if (i != null) highlight(i, e.clientX, e.clientY);
+  });
+  hit.addEventListener("click", () => {
+    if (fresh) { fresh = false; return; }
+    if (active != null) openCommit(active);
+  });
+  // A touch pointer leaves as soon as the finger goes up. Keep the
+  // tooltip then; it goes away with the next tap or on blur.
+  hit.addEventListener("pointerleave", e => {
+    if (e.pointerType !== "touch") clear();
+  });
   hit.addEventListener("focus", () => {
     // A pointer click fires focus before click. Keep the point that the
     // pointer selected; go to the newest point only on keyboard focus,
@@ -850,6 +889,7 @@ function renderPanel(container, panel, height) {
   });
 
   container.appendChild(svg);
+  return tight;
 }
 
 // ------------------------------------------------------------------ table
@@ -909,7 +949,17 @@ function renderTable() {
 
 // ----------------------------------------------------------------- render
 
+// The panels that are on screen now, for redraw().
+let DRAWN = [];
+
+function drawPanel(entry) {
+  const tight = renderPanel(entry.holder, entry.panel, entry.height);
+  entry.heading.textContent =
+    entry.panel.title + (tight ? " (" + entry.panel.unit + ")" : "");
+}
+
 function renderAll() {
+  DRAWN = [];
   const headline = document.getElementById("headline");
   const grid = document.getElementById("panels");
   const empty = document.getElementById("empty");
@@ -940,7 +990,6 @@ function renderAll() {
     const card = document.createElement("div");
     card.className = "card";
     const h = document.createElement("h2");
-    h.textContent = panel.title;
     card.appendChild(h);
     if (panel.note) {
       const note = document.createElement("p");
@@ -973,13 +1022,11 @@ function renderAll() {
     }
     const holder = document.createElement("div");
     card.appendChild(holder);
-    if (panel.headline) {
-      headline.appendChild(card);
-      renderPanel(holder, panel, 280);
-    } else {
-      grid.appendChild(card);
-      renderPanel(holder, panel, 190);
-    }
+    const entry = { panel, holder, heading: h,
+                    height: panel.headline ? 280 : 190 };
+    (panel.headline ? headline : grid).appendChild(card);
+    drawPanel(entry);
+    DRAWN.push(entry);
   }
   renderTable();
 }
@@ -1108,11 +1155,29 @@ for (const input of [fromInput, toInput]) {
 }
 addEventListener("hashchange", () => { readHash(); apply(); });
 
-let resizeTimer = null;
-addEventListener("resize", () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(renderAll, 150);
-});
+function redraw() {
+  DRAWN.forEach(drawPanel);
+}
+
+// A plot gets the width of its card at the moment that it is drawn. Two
+// things change that width later: a new selection, and the scrollbar that
+// appears when the page becomes longer than the window. Watch the width
+// of the grid and draw the plots again when it changes.
+//
+// Watch the element, not the window: a phone fires "resize" while it
+// scrolls, because the address bar comes and goes, and only the height
+// changes there. Redrawing the plots in place also keeps the height of
+// the page, so the reader stays where they are. A rebuild of the page
+// would send them back to the top.
+let observedWidth = 0;
+let redrawTimer = null;
+new ResizeObserver(entries => {
+  const width = entries[0].contentRect.width;
+  if (Math.abs(width - observedWidth) < 1) return;
+  observedWidth = width;
+  clearTimeout(redrawTimer);
+  redrawTimer = setTimeout(redraw, 120);
+}).observe(document.getElementById("panels"));
 
 readHash();
 apply();
