@@ -1,0 +1,29 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: clash-benchmark-bot
+ <41898282+github-actions[bot]@users.noreply.github.com>
+Date: Thu, 13 Aug 2026 09:50:27 +0200
+Subject: [PATCH] Give rom an Unsigned address for old clash
+
+rom before clash-lang/clash-compiler#3320 (0d32dde3) takes an Unsigned
+address, not any Enum type. bitCoerce keeps the value: Index n and
+Unsigned (CLog 2 n) have the same bit width.
+---
+ bittide/src/Bittide/ClockControl/Si539xSpi.hs | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/bittide/src/Bittide/ClockControl/Si539xSpi.hs b/bittide/src/Bittide/ClockControl/Si539xSpi.hs
+index c02c1e21..11fb7911 100644
+--- a/bittide/src/Bittide/ClockControl/Si539xSpi.hs
++++ b/bittide/src/Bittide/ClockControl/Si539xSpi.hs
+@@ -310,7 +310,10 @@ si539xSpi
+       _ -> False
+ 
+     romOut = rom (configPreamble ++ config ++ configPostamble) romAddress
+-    romAddress = getStateAddress <$> configState
++    -- Patched by the Clash benchmark bot: rom before
++    -- clash-lang/clash-compiler#3320 (0d32dde3) takes an Unsigned
++    -- address, not any Enum type. The value does not change.
++    romAddress = bitCoerce . getStateAddress <$> configState
+ 
+     (configState, spiOperation, configBusy, configByte) =
+       mealyB go (WaitForReady False) (romOut, externalOperation, driverByte, driverBusy)

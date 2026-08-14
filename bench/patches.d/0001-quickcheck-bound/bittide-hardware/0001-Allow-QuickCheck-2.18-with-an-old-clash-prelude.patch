@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: clash-benchmark-bot
+ <41898282+github-actions[bot]@users.noreply.github.com>
+Date: Thu, 13 Aug 2026 09:40:44 +0200
+Subject: [PATCH] Allow QuickCheck 2.18 with an old clash-prelude
+
+clash-prelude before clash-lang/clash-compiler#3262 (63ae08a7) limits
+QuickCheck to < 2.16. The limit was conservative: the bound bump has no
+source changes. Lift it so the pinned freeze file solves.
+---
+ cabal.project | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/cabal.project b/cabal.project
+index 27d195cb..6947376c 100644
+--- a/cabal.project
++++ b/cabal.project
+@@ -76,3 +76,8 @@ source-repository-package
+ --
+ --   ghcid -c repld
+ multi-repl: True
++
++-- The freeze file pins QuickCheck 2.18. Old clash-prelude limits
++-- QuickCheck to < 2.16. The limit was only conservative: clash-lang PR
++-- #3262 lifts it without source changes.
++allow-newer: clash-prelude:QuickCheck

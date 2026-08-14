@@ -1,0 +1,169 @@
+name: Benchmark
+
+# This workflow measures the compile time of Clash. It stores one result
+# file for each (machine, commit) pair on the main branch of this
+# repository. The publish workflow makes the graphs from those files.
+#
+# There are two ways in:
+#
+# - the schedule. It benchmarks the commits of clash-lang master that have
+#   no result on this machine yet, oldest first.
+# - workflow_dispatch. It benchmarks a branch, or one exact commit. Use
+#   this for a backfill and to measure a branch before a merge.
+#
+# See docs/ops.md.
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: "Repository with the commits (owner/name)"
+        required: false
+        default: clash-lang/clash-compiler
+      ref:
+        description: "Branch to benchmark"
+        required: false
+        default: master
+      sha:
+        description: "Exact commit to benchmark; empty means the newest commits without a result"
+        required: false
+      count:
+        description: "Most commits to benchmark in this run (master only)"
+        required: false
+        default: "1"
+  schedule:
+    # Every six hours. A full run takes 45 to 90 minutes per commit.
+    - cron: "0 */6 * * *"
+
+run-name: >-
+  ${{ inputs.sha && format('Benchmark {0}', inputs.sha)
+      || (inputs.ref && format('Benchmark {0} of {1}', inputs.ref, inputs.repo))
+      || 'Benchmark new master commits' }}
+
+# There is no concurrency group on purpose: a group cancels queued runs,
+# and a cancelled run is a lost datapoint. The benchmark runner has one
+# job slot, so runs wait for each other in the runner queue.
+
+permissions: {}
+
+env:
+  BENCH_CONTAINER: ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11
+  CLASH_REPO: ${{ inputs.repo || 'clash-lang/clash-compiler' }}
+  CLASH_REF: ${{ inputs.ref || 'master' }}
+
+jobs:
+  bench:
+    name: Benchmark
+    runs-on: ${{ fromJSON(vars.BENCH_RUNS_ON || '["self-hosted","benchmark"]') }}
+    defaults:
+      run:
+        # The container image has no toolchain on the default PATH. This
+        # wrapper runs each step in the bittide-hardware nix dev shell
+        # that is pre-built into the image at /build. It gives GHC, cabal,
+        # python3, sbt and verilator.
+        shell: git-nix-shell {0} /build
+    container:
+      image: ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11
+      volumes:
+        # Keep the cabal store and the package index on the runner
+        # between jobs. See docs/ops.md.
+        - /var/cache/clash-bench:/bench-cache
+    permissions:
+      contents: write # push_result.sh pushes the result to main
+    env:
+      BENCH_QUICK: ${{ vars.BENCH_QUICK }}
+      BENCH_MACHINE: ${{ vars.BENCH_MACHINE }}
+      CABAL_DIR: /bench-cache/cabal
+    steps:
+      - name: Checkout clash-benchmarks
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          path: benchmarks
+
+      # The directory name must be clash-compiler: the patched
+      # bittide-hardware cabal.project points to sibling directories with
+      # fixed names. See bench/run_bittide.sh.
+      - name: Checkout clash-compiler
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: ${{ env.CLASH_REPO }}
+          ref: ${{ env.CLASH_REF }}
+          path: clash-compiler
+          fetch-depth: 0
+
+      # The branch point of a branch is relative to clash-lang master.
+      # A fork checkout does not have it, so fetch it into a fixed local
+      # ref. Self-hosted workspaces persist, so force the update.
+      - name: Fetch clash-lang master
+        working-directory: clash-compiler
+        run: |
+          git fetch --no-tags --force \
+            https://github.com/clash-lang/clash-compiler.git \
+            master:refs/bench/upstream-master
+          git log -1 --format='clash-lang master is %h %s' refs/bench/upstream-master
+
+      - name: Update package index
+        working-directory: clash-compiler
+        run: |
+          # Force https. With the default http URL, a cache on the
+          # network path can serve a stale package index.
+          mkdir -p "${CABAL_DIR}"
+          printf 'repository hackage.haskell.org\n  url: https://hackage.haskell.org/\n  secure: True\n' \
+            > "${CABAL_DIR}/config"
+          # Cache format marker. Bump the version to discard a bad
+          # package index (v2: drop the index that came in over http).
+          if [[ ! -f "${CABAL_DIR}/.bench-cache-v2" ]]; then
+            rm -rf "${CABAL_DIR}/packages"
+            touch "${CABAL_DIR}/.bench-cache-v2"
+          fi
+          ../benchmarks/bench/retry.sh cabal update
+          # The benchmark needs the index-state from cabal.project. Fail
+          # here, with a clear message, when the index does not reach it.
+          required=$(sed -n 's/^index-state: //p' cabal.project)
+          latest=$(cabal update 2>&1 | sed -n 's/^The index-state is set to \(.*\)\.$/\1/p')
+          if [[ "${latest}" < "${required}" ]]; then
+            echo "package index only reaches ${latest}, need ${required}" >&2
+            exit 1
+          fi
+
+      - name: Choose the commits
+        env:
+          IN_SHA: ${{ inputs.sha }}
+          IN_COUNT: ${{ inputs.count || vars.BENCH_CATCHUP_MAX || '5' }}
+        run: |
+          mkdir -p out
+          if [[ -n "${IN_SHA}" ]]; then
+            git -C clash-compiler rev-parse --verify "${IN_SHA}^{commit}" > out/shas.txt
+          elif [[ "${CLASH_REPO}/${CLASH_REF}" == "clash-lang/clash-compiler/master" ]]; then
+            benchmarks/bench/catchup.py \
+              --clash-repo clash-compiler \
+              --results benchmarks \
+              --ref refs/bench/upstream-master \
+              --max "${IN_COUNT}" > out/shas.txt
+          else
+            git -C clash-compiler rev-parse HEAD > out/shas.txt
+          fi
+          echo "commits to benchmark:"
+          cat out/shas.txt
+
+      - name: Benchmark
+        env:
+          TRIGGER: ${{ github.event_name == 'schedule' && 'schedule' || 'dispatch' }}
+        run: |
+          if [[ ! -s out/shas.txt ]]; then
+            echo "nothing to benchmark"
+            exit 0
+          fi
+          while read -r sha; do
+            benchmarks/bench/run_one.sh \
+              clash-compiler "out/${sha}" \
+              "${sha}" "${CLASH_REPO}" "${CLASH_REF}" "${TRIGGER}"
+          done < out/shas.txt
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: bench-output
+          path: out/
+          if-no-files-found: error

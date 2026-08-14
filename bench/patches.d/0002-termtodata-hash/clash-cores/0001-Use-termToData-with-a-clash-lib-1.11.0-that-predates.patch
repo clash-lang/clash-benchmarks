@@ -1,0 +1,46 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: clash-benchmark-bot
+ <41898282+github-actions[bot]@users.noreply.github.com>
+Date: Thu, 13 Aug 2026 09:47:20 +0200
+Subject: [PATCH] Use termToData with a clash-lib 1.11.0 that predates
+ termToData#
+
+clash-lang/clash-compiler#3260 (48bcc4fd) renamed the TermLiteral
+method to termToData# without a version bump. The version test in the
+CPP guards selects the wrong branch for older clash-lib commits. Force
+the old branch.
+---
+ src/Clash/Cores/Xilinx/Ila/Internal.hs     | 4 +++-
+ src/Clash/Cores/Xilinx/Xpm/Cdc/Internal.hs | 4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/src/Clash/Cores/Xilinx/Ila/Internal.hs b/src/Clash/Cores/Xilinx/Ila/Internal.hs
+index 775303f..12eab65 100644
+--- a/src/Clash/Cores/Xilinx/Ila/Internal.hs
++++ b/src/Clash/Cores/Xilinx/Ila/Internal.hs
+@@ -137,7 +137,9 @@ data IlaConfig n = IlaConfig
+ deriveTermLiteral ''ProbeType
+ deriveTermLiteral ''Depth
+ instance KnownNat n => TermLiteral (IlaConfig n) where
+-#if MIN_VERSION_clash_lib(1,11,0)
++-- Patched by the Clash benchmark bot: this clash-lib 1.11.0
++-- predates termToData# (clash-lang/clash-compiler#3260).
++#if 0
+   termToData# = $(deriveTermToData ''IlaConfig)
+ #else
+   termToData = $(deriveTermToData ''IlaConfig)
+diff --git a/src/Clash/Cores/Xilinx/Xpm/Cdc/Internal.hs b/src/Clash/Cores/Xilinx/Xpm/Cdc/Internal.hs
+index f88a2e0..b4963ea 100644
+--- a/src/Clash/Cores/Xilinx/Xpm/Cdc/Internal.hs
++++ b/src/Clash/Cores/Xilinx/Xpm/Cdc/Internal.hs
+@@ -195,7 +195,9 @@ collectDataArgs (collectArgs -> (f, args))
+ 
+ -- | Interprets any of 'Param', 'ClockPort', 'DiffClockPort', 'NamedDiffClockPort',
+ -- 'ResetPort', or 'Port' into a single data type 'PrimPortOrParam'.
+-#if MIN_VERSION_clash_lib(1,11,0)
++-- Patched by the Clash benchmark bot: this clash-lib 1.11.0
++-- predates termToData# (clash-lang/clash-compiler#3260).
++#if 0
+ #define TERM_TO_DATA termToData#
+ #else
+ #define TERM_TO_DATA termToData
