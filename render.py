@@ -31,6 +31,15 @@ request, and no others: a branch whose pull request is closed says nothing
 about Clash today, and the list stays short enough to use.
 bench/prune_branches.py keeps the "pr" field of the snapshots up to date.
 Use --all-branches to see the rest as well, on your own machine.
+
+The page names its view in the URL by commit, not by branch: the fragment
+is #machine=<id>&head=<sha>. A commit does not move, so such a link stays
+good after the branch advances, loses its pull request, or goes away. The
+page looks for a branch that carries the commit; without one it shows the
+commit and its ancestors as "detached -- <sha>". For that fallback, every
+commit record carries its first parent, taken from the snapshots and from
+the results themselves - so the chain of a measured commit survives the
+pruning of its branch.
 """
 
 import argparse
@@ -132,9 +141,14 @@ def load_machines(root, results):
 
 
 def load_branches(root, all_branches):
-    """Read the branch snapshots that belong to an open pull request."""
+    """Read all branch snapshots, and say which go into the selector.
+
+    A snapshot without an open pull request stays out of the selector,
+    but its commits still go into the page: a permalink to one of them
+    must keep working, as a detached view.
+    """
     snapshots = []
-    skipped = 0
+    hidden = 0
     for path in sorted((root / "branches").glob("**/*.json")):
         snapshot = json.loads(path.read_text())
         problems = validate_branch(snapshot)
@@ -142,13 +156,12 @@ def load_branches(root, all_branches):
             for problem in problems:
                 print(f"{path}: {problem}", file=sys.stderr)
             sys.exit("render.py: bad branch snapshot")
-        if snapshot["pr"] is None and not all_branches:
-            skipped += 1
-            continue
+        snapshot["shown"] = all_branches or snapshot["pr"] is not None
+        hidden += not snapshot["shown"]
         snapshots.append(snapshot)
-    if skipped:
-        print(f"render.py: left out {skipped} branch(es) without an open pull "
-              f"request (--all-branches shows them)")
+    if hidden:
+        print(f"render.py: left {hidden} branch(es) without an open pull "
+              f"request out of the selector (--all-branches shows them)")
     return snapshots
 
 
@@ -197,17 +210,21 @@ def main():
     master_index = {c["sha"]: i for i, c in enumerate(master)}
 
     # One metadata record for each commit, for the tooltips and the table.
+    # "p" is the first parent: the page follows it to draw the chain of a
+    # commit whose branch is not in the selector any more.
     commits = {}
 
-    def add_commit(commit):
-        commits.setdefault(commit["sha"], {
+    def add_commit(commit, parent=None):
+        entry = commits.setdefault(commit["sha"], {
             "s": commit["subject"],
             "d": commit["date"],
             "pr": pr_number(commit["subject"]),
         })
+        if parent and "p" not in entry:
+            entry["p"] = parent
 
-    for commit in master:
-        add_commit(commit)
+    for i, commit in enumerate(master):
+        add_commit(commit, master[i - 1]["sha"] if i else None)
 
     refs = [{
         "key": "master",
@@ -220,8 +237,14 @@ def main():
     }]
 
     for snapshot in snapshots:
+        # The snapshot is a first-parent chain from the base, so the chain
+        # itself gives the parent of each commit.
+        parent = snapshot["base"]
         for commit in snapshot["commits"]:
-            add_commit(commit)
+            add_commit(commit, parent)
+            parent = commit["sha"]
+        if not snapshot["shown"]:
+            continue
         base = snapshot["base"]
         if base in master_index:
             head = [c["sha"] for c in master[: master_index[base] + 1]]
@@ -245,11 +268,19 @@ def main():
         })
 
     # The measurements, in a small form: one entry for each machine and
-    # commit that has a result.
+    # commit that has a result. A result also carries the subject, date
+    # and parents of its commit: with those, a measured commit stays on
+    # the page after bench/prune_branches.py removes its branch.
     benchmarks = set()
     packed = {}
     for machine, own in results.items():
         for sha, result in own.items():
+            clash = result["clash"]
+            add_commit(
+                {"sha": sha, "subject": clash["subject"],
+                 "date": clash["committer_date"]},
+                clash["parents"][0] if clash["parents"] else None,
+            )
             benchmarks.update(result["normalization"])
             wd = result["wire_demo"]
             entry = {
@@ -615,7 +646,8 @@ function showTooltip(px, py, panel, idx) {
   mono.textContent = sha.slice(0, 9);
   meta.appendChild(mono);
   meta.appendChild(document.createTextNode(
-    " · " + c.d + " · " + (onBranch ? "branch " + VD.ref.label : "master")));
+    " · " + c.d + " · " + (!onBranch ? "master"
+      : VD.ref.detached ? VD.ref.label : "branch " + VD.ref.label)));
   tooltip.appendChild(meta);
   const subj = document.createElement("div");
   subj.className = "sub";
@@ -1030,10 +1062,11 @@ function renderAll() {
     if (panel.series.length > 1)
       panel.series.forEach((name, k) => items.push([panel.colors[k], name, false]));
     if (VD.branchPoint != null) {
+      const name = VD.ref.detached ? VD.ref.label : "branch " + VD.ref.label;
       if (panel.series.length === 1)
-        items.push([BRANCH_COLOR, "on branch " + VD.ref.label, false]);
+        items.push([BRANCH_COLOR, "on " + name, false]);
       else
-        items.push([BRANCH_COLOR, "commits on branch " + VD.ref.label, true]);
+        items.push([BRANCH_COLOR, "commits on " + name, true]);
     }
     if (items.length) {
       const leg = document.createElement("div");
@@ -1067,8 +1100,16 @@ const refSelect = document.getElementById("f-ref");
 const fromInput = document.getElementById("f-from");
 const toInput = document.getElementById("f-to");
 
-const state = { machine: DATA.machines[0].id, ref: "master", from: null, to: null };
+// The selection is either a branch from the selector or a commit from
+// the URL. A commit keeps its sha here even when a branch carries it:
+// the sha is what makes the link permanent, so writeHash() must not
+// replace it with the name of the branch that carries it today.
+const state = { machine: DATA.machines[0].id,
+                sel: { type: "ref", key: "master" }, from: null, to: null };
 let VD = { commits: [], panels: [], ref: DATA.refs[0], branchPoint: null };
+
+const MASTER = DATA.refs[0];
+const MASTER_INDEX = new Map(MASTER.commits.map((sha, i) => [sha, i]));
 
 for (const m of DATA.machines) {
   const option = document.createElement("option");
@@ -1084,28 +1125,111 @@ for (const r of DATA.refs) {
   refSelect.appendChild(option);
 }
 
+// Grow a sha prefix from the URL to the full sha, when there is exactly
+// one commit that matches.
+function findCommit(prefix) {
+  if (!prefix || DATA.commits[prefix]) return prefix || null;
+  if (prefix.length < 7) return null;
+  let found = null;
+  for (const sha in DATA.commits) {
+    if (sha.startsWith(prefix)) {
+      if (found) return null;
+      found = sha;
+    }
+  }
+  return found;
+}
+
+// The view of one commit that no branch of the selector carries: the
+// commit and its first-parent ancestors, joined to master where the
+// parents reach it. The parents come from the branch snapshots and from
+// the results themselves, so this works after the branch is pruned.
+function detachedRef(sha) {
+  const chain = [];
+  const seen = new Set();
+  let cur = sha;
+  while (cur && DATA.commits[cur] && !MASTER_INDEX.has(cur) && !seen.has(cur)) {
+    seen.add(cur);
+    chain.push(cur);
+    cur = DATA.commits[cur].p;
+  }
+  chain.reverse();
+  let head = [], branchPoint = -1;
+  if (cur && MASTER_INDEX.has(cur)) {
+    head = MASTER.commits.slice(0, MASTER_INDEX.get(cur) + 1);
+    branchPoint = head.length - 1;
+  }
+  return {
+    key: "detached", detached: true,
+    label: "detached -- " + sha.slice(0, 9),
+    repo: DATA.upstreamRepo, ref: null, pr: null,
+    commits: head.concat(chain),
+    branchPoint: branchPoint,
+  };
+}
+
+// Find the branch that carries one commit: a branch of the selector where
+// the commit sits past the branch point, else master, else nothing - then
+// the commit gets a detached view.
+function resolveView(rawSha) {
+  const sha = findCommit(rawSha);
+  if (sha) {
+    for (const ref of DATA.refs) {
+      if (ref.branchPoint != null && ref.commits.indexOf(sha) > ref.branchPoint)
+        return ref;
+    }
+    if (MASTER_INDEX.has(sha)) return MASTER;
+  }
+  return detachedRef(sha || rawSha);
+}
+
 function readHash() {
   const params = new URLSearchParams(location.hash.slice(1));
   const machine = params.get("machine");
+  const head = params.get("head");
   const ref = params.get("ref");
   if (machine && DATA.machines.some(m => m.id === machine)) state.machine = machine;
-  if (ref && DATA.refs.some(r => r.key === ref)) state.ref = ref;
+  if (head) state.sel = { type: "head", sha: head.toLowerCase() };
+  // Old links name the branch. The branch moves and can go away, which is
+  // why new links name a commit instead; see writeHash().
+  else if (ref && DATA.refs.some(r => r.key === ref)) state.sel = { type: "ref", key: ref };
 }
 
 function writeHash() {
   const params = new URLSearchParams();
   params.set("machine", state.machine);
-  params.set("ref", state.ref);
+  params.set("head", state.sel.type === "head" ? state.sel.sha
+    : VD.ref.commits[VD.ref.commits.length - 1] || "");
   history.replaceState(null, "", "#" + params.toString());
+}
+
+// Show the view in the branch selector. A detached view is not a branch,
+// so it gets an option of its own for as long as it is on screen.
+function syncRefSelect(ref) {
+  let detachedOption = document.getElementById("detached-option");
+  if (!ref.detached) {
+    if (detachedOption) detachedOption.remove();
+    refSelect.value = ref.key;
+    return;
+  }
+  if (!detachedOption) {
+    detachedOption = document.createElement("option");
+    detachedOption.id = "detached-option";
+    detachedOption.value = "detached";
+    refSelect.appendChild(detachedOption);
+  }
+  detachedOption.textContent = ref.label;
+  refSelect.value = "detached";
 }
 
 // Rebuild the view from the state: pick the branch, build the panels,
 // then cut everything to the date range.
 function apply() {
-  const ref = DATA.refs.find(r => r.key === state.ref) || DATA.refs[0];
+  const ref = state.sel.type === "head" ? resolveView(state.sel.sha)
+    : DATA.refs.find(r => r.key === state.sel.key) || DATA.refs[0];
   const panels = buildPanels(state.machine, ref);
   const dates = ref.commits.map(sha => DATA.commits[sha].d);
-  const first = dates[0], last = dates[dates.length - 1];
+  const first = dates[0] || "", last = dates[dates.length - 1] || "";
 
   fromInput.min = toInput.min = first;
   fromInput.max = toInput.max = last;
@@ -1136,7 +1260,7 @@ function apply() {
     };
   }
   machineSelect.value = state.machine;
-  refSelect.value = state.ref;
+  syncRefSelect(ref);
   writeHash();
   renderAll();
 }
@@ -1146,7 +1270,8 @@ machineSelect.addEventListener("change", () => {
   apply();
 });
 refSelect.addEventListener("change", () => {
-  state.ref = refSelect.value;
+  if (refSelect.value === "detached") return;
+  state.sel = { type: "ref", key: refSelect.value };
   // The branches cover different date ranges. Start from the whole range.
   state.from = state.to = null;
   markPreset(document.querySelector('.filters button[data-days="0"]'));
@@ -1161,12 +1286,12 @@ for (const b of document.querySelectorAll(".filters button")) {
   b.addEventListener("click", () => {
     // The presets count back from the newest commit, not from today.
     const days = Number(b.dataset.days);
+    const chain = VD.ref.commits;
     state.to = null;
-    if (!days) {
+    if (!days || !chain.length) {
       state.from = null;
     } else {
-      const ref = DATA.refs.find(r => r.key === state.ref) || DATA.refs[0];
-      const last = DATA.commits[ref.commits[ref.commits.length - 1]].d;
+      const last = DATA.commits[chain[chain.length - 1]].d;
       const d = new Date(last + "T00:00:00Z");
       d.setUTCDate(d.getUTCDate() - days);
       state.from = d.toISOString().slice(0, 10);
