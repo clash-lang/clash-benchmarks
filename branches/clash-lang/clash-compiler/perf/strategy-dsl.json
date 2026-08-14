@@ -3,22 +3,27 @@
   "commits": [
     {
       "date": "2026-08-14",
-      "sha": "62311c5997ca26f5944c26fd0e9826b105926bff",
-      "subject": "Add a Template Haskell strategy-compilation DSL"
-    },
-    {
-      "date": "2026-08-14",
-      "sha": "dc9488b93b7f55fc7a29241f4d6d68a5d01d4b24",
+      "sha": "31b9c967cecf32c77a095730ed383eb939479eb5",
       "subject": "Give normalization transformations top-level field workers"
     },
     {
       "date": "2026-08-14",
-      "sha": "74753e8328a7198f0e0d6a01bd81d42ae63ad09d",
-      "subject": "Compile the normalization strategies from StrategyDSL specs"
+      "sha": "2c20454c67e2b0b40844033b657a82076b7a63c9",
+      "subject": "Add a runtime strategy-compilation DSL"
+    },
+    {
+      "date": "2026-08-14",
+      "sha": "6c810f7fc489662fa320fdde36bcce3c4f4b0324",
+      "subject": "Compile the normalization strategies from `StrategyDSL` specs"
+    },
+    {
+      "date": "2026-08-14",
+      "sha": "2f141e3d6defb9a83635497095e17e0e46023318",
+      "subject": "Generate the strategy dispatch code with Template Haskell"
     }
   ],
   "pr": 3328,
   "ref": "perf/strategy-dsl",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-14T12:36:43+00:00"
+  "updated": "2026-08-14T18:27:36+00:00"
 }

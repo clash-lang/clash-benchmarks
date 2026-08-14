@@ -3,12 +3,12 @@
   "commits": [
     {
       "date": "2026-08-14",
-      "sha": "aa7e79eea24d1cc924b633fcb1ef4c834b8e3085",
-      "subject": "[skip ci] Fix performance regression"
+      "sha": "22505bfbe2aebb46875f8e86d3b04cbe41eeaed3",
+      "subject": "Fix performance regressions introduced on `master`"
     }
   ],
   "pr": 3357,
   "ref": "martijn/fix-performance-regressions",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-14T11:13:25+00:00"
+  "updated": "2026-08-14T18:27:37+00:00"
 }
