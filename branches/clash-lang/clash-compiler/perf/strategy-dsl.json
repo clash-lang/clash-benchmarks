@@ -1,0 +1,24 @@
+{
+  "base": "d58f9cedaaa26ee2c1c9b417257a938321a95550",
+  "commits": [
+    {
+      "date": "2026-07-24",
+      "sha": "5f97d9783aa895ade4c09d2b9c795c43d4431b9c",
+      "subject": "Add a Template Haskell strategy-compilation DSL"
+    },
+    {
+      "date": "2026-07-24",
+      "sha": "6034ef2a7cd0df06179ab537dc54b5af10c9adfa",
+      "subject": "Give normalization transformations top-level field workers"
+    },
+    {
+      "date": "2026-07-24",
+      "sha": "cce188b022c2e74052a3f64a226386fe6c59a69d",
+      "subject": "Compile the normalization strategies from StrategyDSL specs"
+    }
+  ],
+  "pr": 3328,
+  "ref": "perf/strategy-dsl",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-08-14T10:41:29+00:00"
+}
