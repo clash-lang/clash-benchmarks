@@ -1,0 +1,69 @@
+{
+  "clash": {
+    "commit": "537583aaacb8478ebc3bf8b338b98427bf6d2539",
+    "committer_date": "2026-06-01",
+    "parents": [
+      "56cc0c0bf485475062e703b5d8c60a14f839f1be"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Run Nix CI for all pushes (#3285)"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.013590316054039977,
+      "stddev_s": 0.00012473075798026607
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.23881688938284545,
+      "stddev_s": 0.0013388581178211832
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.0246205548629104,
+      "stddev_s": 0.0002444633439859137
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.013775587065244227,
+      "stddev_s": 9.482040147719482e-05
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.9605112217707301,
+      "stddev_s": 0.003093259983690999
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.29501013186988223,
+      "stddev_s": 0.0008007426305146472
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.15849671183663627,
+      "stddev_s": 0.004608785449945847
+    }
+  },
+  "run": {
+    "date": "2026-08-13T14:31:59+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "netlist_s": 2.149,
+        "normalization_s": 289.0,
+        "total_s": 309.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

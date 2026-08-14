@@ -1,0 +1,71 @@
+{
+  "clash": {
+    "commit": "38cfe90c0a370d60dd0ddd1186995c90757ae16c",
+    "committer_date": "2026-05-07",
+    "parents": [
+      "be0e3c2460a0a855aba3d3061571c26699087764"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "use GHC-style RTS defaults through executable (#3244)"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.013491888405811607,
+      "stddev_s": 0.00023051615922453368
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.23645718656935058,
+      "stddev_s": 0.0033129968229124868
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.02413224287892976,
+      "stddev_s": 0.00038046789323172416
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.013771415326664883,
+      "stddev_s": 0.0001768920931556502
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.9274548445415954,
+      "stddev_s": 0.010658055326039136
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.28733602975994776,
+      "stddev_s": 0.0015157806765141132
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.1141902009493771,
+      "stddev_s": 0.0003245290759840745
+    }
+  },
+  "run": {
+    "date": "2026-08-13T11:09:13+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0001-quickcheck-bound",
+      "0002-termtodata-hash",
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "netlist_s": 1.805,
+        "normalization_s": 359.0,
+        "total_s": 379.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "clash": {
+    "commit": "632a34c01156054a93bc93a2c4473ff2bccc19ee",
+    "committer_date": "2026-06-08",
+    "parents": [
+      "e16599387a68d6361134b4fe7e63bf4ad3ae8408"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Fix `reduceTraverse` crash on zero-length vectors (#3292)"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.013693487747655738,
+      "stddev_s": 0.0002070142592494487
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.23772349885658817,
+      "stddev_s": 0.000816627615834545
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.024507623681222154,
+      "stddev_s": 0.0001078104664616008
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.013817085309367821,
+      "stddev_s": 0.00015143175183939247
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.9778968748128893,
+      "stddev_s": 0.03736631395114656
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.2927166498236087,
+      "stddev_s": 0.0005936566734111533
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.1563589130886142,
+      "stddev_s": 0.0012481119944969944
+    }
+  },
+  "run": {
+    "date": "2026-08-13T14:51:23+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "netlist_s": 1.794,
+        "normalization_s": 291.0,
+        "total_s": 311.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

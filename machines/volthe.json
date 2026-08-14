@@ -1,0 +1,10 @@
+{
+  "cpu": "12th Gen Intel(R) Core(TM) i5-1240P",
+  "default": true,
+  "hostname": "volthe",
+  "id": "volthe",
+  "label": "volthe",
+  "notes": "Dedicated benchmark runner. GitHub Actions labels: self-hosted, benchmark.",
+  "ram_gib": 32,
+  "threads": 16
+}

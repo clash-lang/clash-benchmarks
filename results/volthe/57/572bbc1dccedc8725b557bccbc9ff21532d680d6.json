@@ -1,0 +1,69 @@
+{
+  "clash": {
+    "commit": "572bbc1dccedc8725b557bccbc9ff21532d680d6",
+    "committer_date": "2026-07-07",
+    "parents": [
+      "c02f3aa387bbc0bd0eea83063a1792f0cc8be147"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Fix vhdl prims integerToNaturalThrow and integerToNaturalClamp (#3315)"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.013703789356742819,
+      "stddev_s": 0.00026324177351551623
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.23869327215637895,
+      "stddev_s": 0.000899841494226872
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.024488968354681565,
+      "stddev_s": 0.00011016340668367363
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.013870244408633789,
+      "stddev_s": 0.00023081263495500494
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.9578079482498651,
+      "stddev_s": 0.0068220145165047725
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.29438987715671827,
+      "stddev_s": 0.0005020737551806287
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.1599256736059355,
+      "stddev_s": 0.00152909785891068
+    }
+  },
+  "run": {
+    "date": "2026-08-13T15:49:10+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "netlist_s": 1.77,
+        "normalization_s": 290.0,
+        "total_s": 310.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "clash": {
+    "commit": "3806e4c27d51572acdae512f05bce84dc2d385ec",
+    "committer_date": "2026-05-28",
+    "parents": [
+      "0e62b1d21d72740e0df286031a75f2f2ce8fde5a",
+      "ad66f24c58a5535d3840c76675f03ba956c9f213"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Merge pull request #3277 from clash-lang/2801-signalautomaton-gets-shared-to-disastrous-results"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.013634082312997918,
+      "stddev_s": 0.00022494077992718498
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.23850148349317654,
+      "stddev_s": 0.0012058639375062362
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.024672184959875932,
+      "stddev_s": 0.00016928709650930647
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.013775860593689451,
+      "stddev_s": 0.00016576085744911622
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.9585643476456577,
+      "stddev_s": 0.0034698103813908597
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.29588786913000753,
+      "stddev_s": 0.001979732522242999
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.15708273804814527,
+      "stddev_s": 0.00046476490791520374
+    }
+  },
+  "run": {
+    "date": "2026-08-13T14:13:39+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "netlist_s": 1.759,
+        "normalization_s": 288.0,
+        "total_s": 308.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

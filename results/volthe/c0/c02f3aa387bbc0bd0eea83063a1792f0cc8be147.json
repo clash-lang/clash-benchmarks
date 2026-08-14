@@ -1,0 +1,69 @@
+{
+  "clash": {
+    "commit": "c02f3aa387bbc0bd0eea83063a1792f0cc8be147",
+    "committer_date": "2026-07-07",
+    "parents": [
+      "f672b6c8c3aa53529f946f5d2627ebc0c65c1fdc"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Check `Synthesize` annotation issues before normalization (#3307)"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.013742328964232267,
+      "stddev_s": 0.00017148074729729138
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.23851498115386977,
+      "stddev_s": 0.0010029284175794438
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.028250722806984447,
+      "stddev_s": 0.0010332237614127013
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.013855327271468805,
+      "stddev_s": 0.0002863532600077825
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.9551339397710308,
+      "stddev_s": 0.006867176363569636
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.30485180305610504,
+      "stddev_s": 0.02277159499406566
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.15772395138639175,
+      "stddev_s": 0.0010183215176375457
+    }
+  },
+  "run": {
+    "date": "2026-08-13T15:40:12+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "netlist_s": 1.787,
+        "normalization_s": 292.0,
+        "total_s": 311.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

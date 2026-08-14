@@ -1,0 +1,67 @@
+{
+  "clash": {
+    "commit": "04e7ba0aa20e82babcd39d9e3df16f339528b4b3",
+    "committer_date": "2026-08-04",
+    "parents": [
+      "900a84a387ccf6edda94a88072d1ab654e8f351e"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Read family instance interfaces for precompiled modules (#3343)"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.010950050943278854,
+      "stddev_s": 0.0001941097955060484
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.19128051403695281,
+      "stddev_s": 0.00048193298877102336
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.01975847277364437,
+      "stddev_s": 0.0012532220130622
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.011674739409073594,
+      "stddev_s": 9.788275609926497e-05
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.7505620333540719,
+      "stddev_s": 0.0027057987566966478
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.23609634823913236,
+      "stddev_s": 0.00045358441590024755
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.13645233642094548,
+      "stddev_s": 0.0012116383664026067
+    }
+  },
+  "run": {
+    "date": "2026-08-13T17:58:19+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "netlist_s": 1.81,
+        "normalization_s": 133.0,
+        "total_s": 141.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

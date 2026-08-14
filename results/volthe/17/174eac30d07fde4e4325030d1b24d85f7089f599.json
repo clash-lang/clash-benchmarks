@@ -1,0 +1,69 @@
+{
+  "clash": {
+    "commit": "174eac30d07fde4e4325030d1b24d85f7089f599",
+    "committer_date": "2026-06-12",
+    "parents": [
+      "755e6570f59e447babca253e510f77916ab612be"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Add `extra-substitutors` to `flake.nix` (#3301)"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.013688640140887604,
+      "stddev_s": 0.00032038687584351244
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.23731373267229275,
+      "stddev_s": 0.0002539493065633183
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.024734374515423953,
+      "stddev_s": 0.0004384011909389646
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.013968076123349438,
+      "stddev_s": 0.00016812075656504914
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.9584224925005552,
+      "stddev_s": 0.002780088299387985
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.29314477545961076,
+      "stddev_s": 0.00035034799054907954
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.15547226832396907,
+      "stddev_s": 0.0005269558904934321
+    }
+  },
+  "run": {
+    "date": "2026-08-13T15:19:20+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "netlist_s": 1.757,
+        "normalization_s": 289.0,
+        "total_s": 309.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

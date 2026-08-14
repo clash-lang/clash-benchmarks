@@ -1,0 +1,68 @@
+{
+  "clash": {
+    "commit": "cdb9dd50c872e71ae6fc4807f64e3d3265cb706c",
+    "committer_date": "2026-08-03",
+    "parents": [
+      "b9a45911f1b2b19c9476e46917ad33810e08b295",
+      "296ea39c0724aa748c99aa45931e1cf792bca3c9"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Merge pull request #3339 from clash-lang/martijn/hashmap-in-reduceNonRepPrim"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.010791466780325772,
+      "stddev_s": 0.00011457670220492242
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.1912627290420763,
+      "stddev_s": 0.0008628928281911882
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.019426686555963153,
+      "stddev_s": 0.0003449622592347765
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.011652656833514793,
+      "stddev_s": 0.0001591321813725897
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.7457348557269748,
+      "stddev_s": 0.0016381965151820237
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.24075691440436153,
+      "stddev_s": 0.005131772559265518
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.1287677070768777,
+      "stddev_s": 0.00046921956547019416
+    }
+  },
+  "run": {
+    "date": "2026-08-13T17:38:10+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "netlist_s": 1.825,
+        "normalization_s": 134.0,
+        "total_s": 146.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "clash": {
+    "commit": "f002b5612333963d06e3e649b80b9a5fc5db16cb",
+    "committer_date": "2026-08-06",
+    "parents": [
+      "bb4045857d3ce20bc79777b3cb2f5ebe8f3bd0cf"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Account for zero-length/under-applied primitives (#3349)"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.01090586845084375,
+      "stddev_s": 9.406812673319586e-05
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.19124855169468194,
+      "stddev_s": 0.0014086932162401932
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.01957459458125658,
+      "stddev_s": 0.00021543703031094417
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.011527409162329706,
+      "stddev_s": 0.00013719351571187823
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.7486145969592144,
+      "stddev_s": 0.0025202754715522905
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.23568526497504838,
+      "stddev_s": 0.0006720773460786502
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.13436356338785074,
+      "stddev_s": 0.001047207972742933
+    }
+  },
+  "run": {
+    "date": "2026-08-13T18:29:03+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "netlist_s": 1.807,
+        "normalization_s": 134.0,
+        "total_s": 142.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

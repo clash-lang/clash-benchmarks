@@ -1,0 +1,67 @@
+{
+  "clash": {
+    "commit": "b0e8027876d00358112b478828fab3f93fabe1db",
+    "committer_date": "2026-08-03",
+    "parents": [
+      "cdb9dd50c872e71ae6fc4807f64e3d3265cb706c"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Add `DefaultPat` in DEC when necessary (#3344)"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.010874606476996687,
+      "stddev_s": 0.00024349807985783357
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.18931587666421465,
+      "stddev_s": 0.0004946139736732154
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.019725298699528316,
+      "stddev_s": 0.00021710238953529746
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.011616829912825059,
+      "stddev_s": 0.00015381768858344942
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.7526975115421616,
+      "stddev_s": 0.005198079375623293
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.23771723936071795,
+      "stddev_s": 0.001256573614675652
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.1295700053133541,
+      "stddev_s": 0.00030479284476442694
+    }
+  },
+  "run": {
+    "date": "2026-08-13T17:45:26+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "netlist_s": 1.812,
+        "normalization_s": 134.0,
+        "total_s": 146.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

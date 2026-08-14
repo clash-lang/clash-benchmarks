@@ -1,0 +1,13 @@
+{
+  "base": "c43cf9fc5ac3a1fb6c848a7ea39947be25c0d9bd",
+  "commits": [
+    {
+      "date": "2026-08-14",
+      "sha": "aa7e79eea24d1cc924b633fcb1ef4c834b8e3085",
+      "subject": "[skip ci] Fix performance regression"
+    }
+  ],
+  "ref": "bench/aa7e79ee",
+  "repo": "martijnbastiaan/clash-compiler",
+  "updated": "2026-08-14T07:02:41+00:00"
+}

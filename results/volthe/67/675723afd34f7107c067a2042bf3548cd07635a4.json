@@ -1,0 +1,69 @@
+{
+  "clash": {
+    "commit": "675723afd34f7107c067a2042bf3548cd07635a4",
+    "committer_date": "2026-06-08",
+    "parents": [
+      "632a34c01156054a93bc93a2c4473ff2bccc19ee"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Clear stack in `reduceWHNF'` (#3294)"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.013654485588262967,
+      "stddev_s": 0.00017339484673604123
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.238042613310281,
+      "stddev_s": 0.0009377450147911282
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.024521499252710934,
+      "stddev_s": 0.0002721957997954303
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.013768157718494087,
+      "stddev_s": 0.00016720630227693003
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.9523872776878003,
+      "stddev_s": 0.002558992901490566
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.29845809783654353,
+      "stddev_s": 0.008303358662103265
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.15651611018744177,
+      "stddev_s": 0.0008633528951149009
+    }
+  },
+  "run": {
+    "date": "2026-08-13T15:01:20+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "netlist_s": 1.741,
+        "normalization_s": 289.0,
+        "total_s": 309.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "clash": {
+    "commit": "a8f0cfb3f78006a32c5a36c8c87e08b21b5e57d1",
+    "committer_date": "2026-05-08",
+    "parents": [
+      "38cfe90c0a370d60dd0ddd1186995c90757ae16c",
+      "75dafbd8d994a856a155669d1953c4b76afb24f1"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Merge pull request #3251 from clash-lang/martijn/fix-3247"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.013759993396708211,
+      "stddev_s": 0.0001798104148134506
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.24075465883950525,
+      "stddev_s": 0.0028656753912320704
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.024543604108839726,
+      "stddev_s": 0.0002882669392296564
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.013770624344040035,
+      "stddev_s": 0.0001489824303821018
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.9220967492907827,
+      "stddev_s": 0.0032405680496270617
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.28755879949703134,
+      "stddev_s": 0.002737090358860201
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.11636939733912835,
+      "stddev_s": 0.001057604699334909
+    }
+  },
+  "run": {
+    "date": "2026-08-13T18:56:26+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0001-quickcheck-bound",
+      "0002-termtodata-hash",
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "netlist_s": 2.117,
+        "normalization_s": 363.0,
+        "total_s": 383.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

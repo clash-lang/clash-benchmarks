@@ -1,0 +1,71 @@
+{
+  "clash": {
+    "commit": "96b1547db7b892259dd21e35fb0fe57c27d4691a",
+    "committer_date": "2026-04-30",
+    "parents": [
+      "ea6ca83346d495ca66c803c4b5ca95ef96d948e1"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Account for unary product types in `makeTopEntity` (#3220)"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.013624504612017524,
+      "stddev_s": 0.00013774284638180047
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.2383980435499234,
+      "stddev_s": 0.0022393232832052
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.02405784817340822,
+      "stddev_s": 0.00016975480666598053
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.013845759479330382,
+      "stddev_s": 0.0005037365928450909
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.8965673818124363,
+      "stddev_s": 0.004791735444005782
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.28325332326659314,
+      "stddev_s": 0.0012170047498945456
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.11402747384238857,
+      "stddev_s": 0.0006853907142418122
+    }
+  },
+  "run": {
+    "date": "2026-08-13T09:24:08+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0001-quickcheck-bound",
+      "0002-termtodata-hash",
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "netlist_s": 1.732,
+        "normalization_s": 392.0,
+        "total_s": 412.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

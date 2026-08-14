@@ -1,0 +1,68 @@
+{
+  "clash": {
+    "commit": "67035c75131083908524abef6ccedcbf8ca48dda",
+    "committer_date": "2026-07-31",
+    "parents": [
+      "df6369060086e126d8a4cc5e6f77622aa190f71c",
+      "d8eba1831a818ef251fdc5d86c58579ca77282b4"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Merge pull request #3335 from clash-lang/martijn/sweepless-term-ord-and-eq"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.01101356638644155,
+      "stddev_s": 0.0001246826571793152
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.211930720327574,
+      "stddev_s": 0.0007782921589301617
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.020935753612124915,
+      "stddev_s": 0.00016910309699896378
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.012288477143022178,
+      "stddev_s": 8.27541585776555e-05
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.8055080173759658,
+      "stddev_s": 0.004167113838537861
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.2671418560998427,
+      "stddev_s": 0.0009666824872157882
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.1357757188730624,
+      "stddev_s": 0.0004981860294330458
+    }
+  },
+  "run": {
+    "date": "2026-08-13T17:05:49+00:00",
+    "quick": false,
+    "trigger": "migration",
+    "workflow_run_url": null
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "netlist_s": 1.815,
+        "normalization_s": 143.0,
+        "total_s": 157.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
