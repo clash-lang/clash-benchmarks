@@ -1,0 +1,67 @@
+{
+  "clash": {
+    "commit": "6f36110a60c3d320194bf6431c01210bda2ca6d3",
+    "committer_date": "2026-08-11",
+    "parents": [
+      "f65839e72755720c669a0a20f275722e129b708e"
+    ],
+    "ref": "martijn/perf/more-small-improvements",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Run cheap transformation guards before expensive ones"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.01045026174543204,
+      "stddev_s": 0.00016493167924169593
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.17031464697534263,
+      "stddev_s": 0.001419033430012606
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.01796249547221904,
+      "stddev_s": 0.0009133572771482705
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.011013418394470583,
+      "stddev_s": 0.000123951959299465
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.7792260427710668,
+      "stddev_s": 0.0023704441442827916
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.2570589182154314,
+      "stddev_s": 0.0005521437000104242
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.12324141062301697,
+      "stddev_s": 0.0009595558668213659
+    }
+  },
+  "run": {
+    "date": "2026-08-14T09:44:04+00:00",
+    "quick": false,
+    "trigger": "dispatch",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/31788000096"
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "netlist_s": 1.816,
+        "normalization_s": 80.0,
+        "total_s": 88.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
