@@ -1,0 +1,67 @@
+{
+  "clash": {
+    "commit": "22505bfbe2aebb46875f8e86d3b04cbe41eeaed3",
+    "committer_date": "2026-08-14",
+    "parents": [
+      "c43cf9fc5ac3a1fb6c848a7ea39947be25c0d9bd"
+    ],
+    "ref": "martijn/fix-performance-regressions",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Fix performance regressions introduced on `master`"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.010564898335457805,
+      "stddev_s": 9.615669115582335e-05
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.17786741007014387,
+      "stddev_s": 0.0008859710356019117
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.01715290955111303,
+      "stddev_s": 0.0004044514232630862
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.011173029494508914,
+      "stddev_s": 0.0006050100009414017
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.6962191634611372,
+      "stddev_s": 0.0031708280355772045
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.2401869630929529,
+      "stddev_s": 0.0011871338855384006
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.09227160728493417,
+      "stddev_s": 0.0016919902104891218
+    }
+  },
+  "run": {
+    "date": "2026-08-14T18:38:27+00:00",
+    "quick": false,
+    "trigger": "schedule",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/31803716360"
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "netlist_s": 1.799,
+        "normalization_s": 79.0,
+        "total_s": 88.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
