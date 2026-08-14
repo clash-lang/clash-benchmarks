@@ -1,0 +1,67 @@
+{
+  "clash": {
+    "commit": "62311c5997ca26f5944c26fd0e9826b105926bff",
+    "committer_date": "2026-08-14",
+    "parents": [
+      "c43cf9fc5ac3a1fb6c848a7ea39947be25c0d9bd"
+    ],
+    "ref": "perf/strategy-dsl",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Add a Template Haskell strategy-compilation DSL"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.010547677696130029,
+      "stddev_s": 0.00013078033938619123
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.17812881567208555,
+      "stddev_s": 0.0004389138888471028
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.01813564890425233,
+      "stddev_s": 0.0002713147232041632
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.011376019421324877,
+      "stddev_s": 0.00020199927039620295
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.8135736344802353,
+      "stddev_s": 0.0026952288015116895
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.26776456417777805,
+      "stddev_s": 0.0005749842245464169
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.12453055989204542,
+      "stddev_s": 0.0012587196269062315
+    }
+  },
+  "run": {
+    "date": "2026-08-14T12:32:49+00:00",
+    "quick": false,
+    "trigger": "dispatch",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/31799901260"
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "netlist_s": 1.837,
+        "normalization_s": 84.0,
+        "total_s": 92.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
