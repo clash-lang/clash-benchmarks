@@ -1,0 +1,67 @@
+{
+  "clash": {
+    "commit": "d91e84cfb125583a71920478982cba1f9b33845f",
+    "committer_date": "2026-08-15",
+    "parents": [
+      "c43cf9fc5ac3a1fb6c848a7ea39947be25c0d9bd"
+    ],
+    "ref": "perf/strategy-dsl",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Make the rewrite traversal combinators inlineable"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.01014927910102176,
+      "stddev_s": 0.000694523252720921
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.1602273526041987,
+      "stddev_s": 0.00034966835516119665
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.014414969214270823,
+      "stddev_s": 8.282744221313898e-05
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.008891886263054127,
+      "stddev_s": 0.00014654142663199355
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.5026173333735642,
+      "stddev_s": 0.006710061051772362
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.19682032367159585,
+      "stddev_s": 0.0009424167698987343
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.11881705144448157,
+      "stddev_s": 0.0006386080799566588
+    }
+  },
+  "run": {
+    "date": "2026-08-15T12:43:57+00:00",
+    "quick": false,
+    "trigger": "schedule",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/31870109619"
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "netlist_s": 1.797,
+        "normalization_s": 77.0,
+        "total_s": 85.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
