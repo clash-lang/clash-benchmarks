@@ -1,0 +1,67 @@
+{
+  "clash": {
+    "commit": "14346043564993a91252ee6673b198b45aa78f24",
+    "committer_date": "2026-08-15",
+    "parents": [
+      "d91e84cfb125583a71920478982cba1f9b33845f"
+    ],
+    "ref": "perf/strategy-dsl",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Give normalization transformations top-level field workers"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.009819181683445762,
+      "stddev_s": 6.086417051510447e-05
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.15891416896057203,
+      "stddev_s": 0.0025706816680048953
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.013699144289784526,
+      "stddev_s": 0.00010275720759942195
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.008461966130640002,
+      "stddev_s": 0.0003012831430012154
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.47092574551970756,
+      "stddev_s": 0.02760947110610945
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.17193073313377383,
+      "stddev_s": 0.0006325489973568031
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.11155678822648216,
+      "stddev_s": 0.0016071439679781353
+    }
+  },
+  "run": {
+    "date": "2026-08-15T12:48:37+00:00",
+    "quick": false,
+    "trigger": "schedule",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/31870109619"
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "netlist_s": 1.823,
+        "normalization_s": 75.0,
+        "total_s": 83.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
