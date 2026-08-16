@@ -1,0 +1,67 @@
+{
+  "clash": {
+    "commit": "645eb3852b0d6f1f2d70a40d21cf8817594ba7b5",
+    "committer_date": "2026-08-16",
+    "parents": [
+      "8a2cc5322f2120d0c24c829ef3a3dd93aae8e418"
+    ],
+    "ref": "perf/strategy-dsl",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Add strategy DSL"
+  },
+  "machine": "volthe",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.010114475463754739,
+      "stddev_s": 0.00021080459608295
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.15721974921203694,
+      "stddev_s": 0.00040032835416097977
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.013771082827029504,
+      "stddev_s": 0.00017511349593030595
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.008493168972637489,
+      "stddev_s": 0.00010195491621990434
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.45355880308367585,
+      "stddev_s": 0.0050541082779636155
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.17602227832981446,
+      "stddev_s": 0.0018207903459699823
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.10986778702723053,
+      "stddev_s": 0.0016294132619968122
+    }
+  },
+  "run": {
+    "date": "2026-08-16T13:05:20+00:00",
+    "quick": false,
+    "trigger": "schedule",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/31947901525"
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "netlist_s": 1.786,
+        "normalization_s": 74.0,
+        "total_s": 82.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
