@@ -2,33 +2,33 @@
   "base": "c43cf9fc5ac3a1fb6c848a7ea39947be25c0d9bd",
   "commits": [
     {
-      "date": "2026-08-15",
-      "sha": "d91e84cfb125583a71920478982cba1f9b33845f",
+      "date": "2026-08-16",
+      "sha": "b1717081c7791c34826fd2e444dc734eda93d01d",
       "subject": "Make the rewrite traversal combinators inlineable"
     },
     {
-      "date": "2026-08-15",
-      "sha": "14346043564993a91252ee6673b198b45aa78f24",
-      "subject": "Give normalization transformations top-level field workers"
+      "date": "2026-08-16",
+      "sha": "8a2cc5322f2120d0c24c829ef3a3dd93aae8e418",
+      "subject": "Give normalization transformations top-level workers"
     },
     {
-      "date": "2026-08-15",
-      "sha": "348cf76ecc582a55be6059a6421aac6f1e542f1e",
-      "subject": "Add a runtime strategy-compilation DSL"
+      "date": "2026-08-16",
+      "sha": "645eb3852b0d6f1f2d70a40d21cf8817594ba7b5",
+      "subject": "Add strategy DSL"
     },
     {
-      "date": "2026-08-15",
-      "sha": "70f58c0077977896c69654fa6fed5291d44cc404",
+      "date": "2026-08-16",
+      "sha": "853426a36597ad38e24dcc44396bd014c4c7e6af",
       "subject": "Compile the normalization strategies from `StrategyDSL` specs"
     },
     {
-      "date": "2026-08-15",
-      "sha": "cef766fd677d77babdf2b50e58f9c105cd9b0e2c",
+      "date": "2026-08-16",
+      "sha": "bd2ca4142049203c1d10e3795d43fb60d92eee0e",
       "subject": "Generate the strategy dispatch code with Template Haskell"
     }
   ],
   "pr": 3328,
   "ref": "perf/strategy-dsl",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-15T12:56:40+00:00"
+  "updated": "2026-08-16T12:45:27+00:00"
 }
