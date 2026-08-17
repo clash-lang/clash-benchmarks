@@ -122,11 +122,16 @@ fi
 hdl_dir=$(mktemp -d)
 run_log="${out%.json}-run.log"
 echo "run_bittide.sh: running wireDemoTest (log: ${run_log})"
+# "+RTS -t" prints one line of GC statistics to stderr when the process
+# exits, into the run log that the parser below reads. Plain -t is one of
+# the safe RTS flags, so the clash executable accepts it although it is
+# built without -rtsopts.
 if ! (cd "${ws}/bittide-hardware" \
       && cabal run --offline bittide-instances:clash -- \
           Bittide.Instances.Hitl.WireDemo.TopEntity \
           -fclash-hdldir "${hdl_dir}" -main-is wireDemoTest \
-          --verilog -fclash-clear -fclash-spec-limit=100) &> "${run_log}"; then
+          --verilog -fclash-clear -fclash-spec-limit=100 \
+          +RTS -t -RTS) &> "${run_log}"; then
   tail -n 50 "${run_log}" >&2
   # The build was fine, so the PR probably broke HDL generation for
   # bittide. Record this as a skip with its own reason.
@@ -137,7 +142,9 @@ fi
 rm -rf "${hdl_dir}"
 
 # Parse the three unconditional "Clash: ... took <time>" lines. The time
-# format is [Nd][Nh][Nm]N[.fff]s (see reportTimeDiff in clash-lib).
+# format is [Nd][Nh][Nm]N[.fff]s (see reportTimeDiff in clash-lib). Also
+# parse the "<<ghc: ... :ghc>>" line that "+RTS -t" prints on exit (see
+# report_one_line in the GHC RTS).
 if ! python3 - "$out" "$run_log" "$bittide_rev" ${overlays} <<'EOF'
 import json
 import re
@@ -154,6 +161,17 @@ def to_seconds(text):
   return (int(d or 0) * 86400 + int(h or 0) * 3600
           + int(mins or 0) * 60 + float(s))
 
+GHC_RE = re.compile(
+  r'<<ghc: (\d+) bytes, (\d+) GCs, '
+  r'(\d+)/(\d+) avg/max bytes residency \((\d+) samples\), '
+  r'(\d+)M in use, (-?[\d.]+) INIT \((-?[\d.]+) elapsed\), '
+  r'(-?[\d.]+) MUT \((-?[\d.]+) elapsed\), '
+  r'(-?[\d.]+) GC \((-?[\d.]+) elapsed\) :ghc>>')
+
+def seconds(text):
+  # The RTS can print a tiny negative time as -0.000.
+  return max(0.0, float(text))
+
 wanted = {
   'Clash: Normalization took ': 'normalization_s',
   'Clash: Netlist generation took ': 'netlist_s',
@@ -167,10 +185,25 @@ for line in open(sys.argv[2]):
   for prefix, key in wanted.items():
     if line.startswith(prefix):
       run[key] = to_seconds(line[len(prefix):])
+  m = GHC_RE.search(line)
+  if m:
+    run.update({
+      'alloc_bytes': int(m.group(1)),
+      'num_gcs': int(m.group(2)),
+      'max_live_bytes': int(m.group(4)),
+      'peak_mb': int(m.group(6)),
+      'mut_cpu_s': seconds(m.group(9)),
+      'mut_wall_s': seconds(m.group(10)),
+      'gc_cpu_s': seconds(m.group(11)),
+      'gc_wall_s': seconds(m.group(12)),
+    })
 
-missing = set(wanted.values()) - set(run)
+needed = set(wanted.values()) | {
+  'alloc_bytes', 'num_gcs', 'max_live_bytes', 'peak_mb',
+  'mut_cpu_s', 'mut_wall_s', 'gc_cpu_s', 'gc_wall_s'}
+missing = needed - set(run)
 if missing:
-  sys.exit(f'run_bittide.sh: missing timings in log: {sorted(missing)}')
+  sys.exit(f'run_bittide.sh: missing in log: {sorted(missing)}')
 
 json.dump({'status': 'ok', 'skip_reason': None,
            'bittide_rev': sys.argv[3], 'overlays': sys.argv[4:],

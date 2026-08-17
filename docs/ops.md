@@ -159,6 +159,27 @@ The jobs want a self-hosted runner with the labels `self-hosted` and
 | `BENCH_PR_MAX` | most pull request commits per scheduled run (default 5). |
 | `BENCH_PR_LABEL` | label that asks for a benchmark (default `performance`). |
 
+## What a run measures
+
+Both legs benchmark the Clash that a user gets. The cabal.project of
+clash-compiler builds clash-lib with its `debug` flag, so
+`run_clash_benchmarks.sh` writes a cabal.project.local that turns the
+flag off before it builds. The wireDemo leg needs no counterpart: the
+freeze file of bittide-hardware pins clash-lib without the flag.
+
+Every measurement records memory next to time, from the GHC runtime:
+total allocation, the largest live heap, the memory the process took
+from the OS (wireDemo only), and the split of the runtime into mutator
+and collector time. The normalization leg gets them from criterion with
+`+RTS -T`; the wireDemo leg parses the one-line `+RTS -t` summary from
+the run log. The site does not show these numbers yet; they are in the
+result files for analysis by hand.
+
+The fields and their units are in the docstring of
+`bench/result_schema.py`. The schema version went to 3 with these
+fields on 2026-08-17; the older results were deleted, not migrated,
+because the debug flag change also changed what the times mean.
+
 ## Add a machine
 
 1. Register the runner with the labels above.

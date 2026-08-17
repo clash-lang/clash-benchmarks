@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Shape of a benchmark result file, schema version 2.
+"""Shape of a benchmark result file, schema version 3.
 
 A result file holds the measurements of one benchmark run: one machine,
 one clash-compiler commit. The file name comes from the machine and the
 commit, see result_path(). The layout of the file is:
 
     {
-      "schema_version": 2,
-      "machine": "volthe",
+      "schema_version": 3,
+      "machine": "oele",
       "run": {
         "date": "2026-08-13T08:12:24+00:00",
         "trigger": "schedule" | "dispatch" | "migration",
@@ -23,19 +23,34 @@ commit, see result_path(). The layout of the file is:
         "committer_date": "2026-08-11"
       },
       "toolchain": {"ghc_version": "9.10.3", "container": "ghcr.io/..." | null},
-      "normalization": {"examples/FIR.hs": {"mean_s": 1.2, "stddev_s": 0.01}},
+      "normalization": {"examples/FIR.hs": {
+        "mean_s": 1.2, "stddev_s": 0.01,
+        "alloc_bytes": 2.1e9, "mut_wall_s": 1.1, "gc_wall_s": 0.1
+      }},
       "wire_demo": {
         "status": "ok" | "skipped",
         "skip_reason": null | "...",
         "bittide_rev": "<40 hex>" | null,
         "overlays": ["0001-quickcheck-bound"],
-        "runs": [{"normalization_s": 291.0, "netlist_s": 1.8, "total_s": 311.0}]
+        "runs": [{
+          "normalization_s": 291.0, "netlist_s": 1.8, "total_s": 311.0,
+          "alloc_bytes": 1.9e12, "max_live_bytes": 2.3e9, "peak_mb": 7000,
+          "num_gcs": 1200, "mut_cpu_s": 250.0, "mut_wall_s": 240.0,
+          "gc_cpu_s": 80.0, "gc_wall_s": 70.0
+        }]
       }
     }
 
 The "normalization" and "wire_demo" parts are the measurements. The other
 parts say what was measured, on which machine, and with which toolchain.
 Hardware facts are not in the result: they are in machines/<machine>.json.
+
+The memory numbers come from the GHC runtime. In "normalization" they are
+means over one run of the benchmark; in "wire_demo" they cover the whole
+clash process. "alloc_bytes" is the total allocation, "max_live_bytes" the
+largest live heap that a major collection saw, and "peak_mb" the most
+memory (in MiB) the process ever took from the OS. The MUT and GC times
+split the runtime into work and collection, in CPU and in wall seconds.
 
 The second kind of file is a branch snapshot. A branch does not stay where
 it is, so the graphs read the commits of a branch from here and not from a
@@ -69,11 +84,15 @@ import re
 import socket
 import sys
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 TRIGGERS = ("schedule", "dispatch", "migration")
 WIRE_DEMO_STATUSES = ("ok", "skipped")
-RUN_KEYS = ("normalization_s", "netlist_s", "total_s")
+NORMALIZATION_KEYS = ("mean_s", "stddev_s", "alloc_bytes", "mut_wall_s",
+                      "gc_wall_s")
+RUN_KEYS = ("normalization_s", "netlist_s", "total_s", "alloc_bytes",
+            "max_live_bytes", "peak_mb", "num_gcs", "mut_cpu_s",
+            "mut_wall_s", "gc_cpu_s", "gc_wall_s")
 
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
@@ -200,9 +219,9 @@ def validate_result(result):
     else:
         for name, entry in norm.items():
             where = f"normalization[{name!r}]"
-            if _keys(problems, where, entry, ("mean_s", "stddev_s")):
-                _num(problems, f"{where}.mean_s", entry["mean_s"], minimum=0)
-                _num(problems, f"{where}.stddev_s", entry["stddev_s"], minimum=0)
+            if _keys(problems, where, entry, NORMALIZATION_KEYS):
+                for key in NORMALIZATION_KEYS:
+                    _num(problems, f"{where}.{key}", entry[key], minimum=0)
 
     wd = result["wire_demo"]
     if _keys(problems, "wire_demo", wd, (

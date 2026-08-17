@@ -21,7 +21,7 @@ Environment:
   BENCH_QUICK       1 marks the result as a quick, partial run
   GITHUB_*          GitHub Actions gives the link to the workflow run
 
-The result format is schema version 2, see bench/result_schema.py.
+The result format is schema version 3, see bench/result_schema.py.
 """
 
 import argparse
@@ -72,8 +72,40 @@ def criterion_reports(path):
     sys.exit(f"collect_result.py: unrecognized criterion JSON in {path}")
 
 
+def measured_means(report, name):
+    """Read the memory numbers of one benchmark, per run.
+
+    Criterion writes the raw measurements as rows whose column order is in
+    reportKeys. Each row covers a batch of runs (iters), so the number for
+    one run is the total of a column over the whole series divided by the
+    total number of runs. The GC columns are null when the benchmark did
+    not run with "+RTS -T".
+    """
+    keys = report.get("reportKeys")
+    rows = report.get("reportMeasured")
+    if not keys or not rows:
+        sys.exit(f"collect_result.py: no measurements for {name}")
+    wanted = {"allocated": "alloc_bytes",
+              "mutatorWallSeconds": "mut_wall_s",
+              "gcWallSeconds": "gc_wall_s"}
+    try:
+        iters = keys.index("iters")
+        columns = {out: keys.index(key) for key, out in wanted.items()}
+    except ValueError as missing:
+        sys.exit(f"collect_result.py: {name}: {missing} not in reportKeys")
+    runs = sum(row[iters] for row in rows)
+    means = {}
+    for out, column in columns.items():
+        values = [row[column] for row in rows]
+        if any(value is None for value in values):
+            sys.exit(f"collect_result.py: {name} has no GC statistics; "
+                     "did the benchmark run with +RTS -T?")
+        means[out] = sum(values) / runs
+    return means
+
+
 def normalization(path):
-    """Read the mean and the standard deviation of each benchmark."""
+    """Read the time and memory of each benchmark."""
     results = {}
     for report in criterion_reports(path):
         name = report["reportName"]
@@ -83,6 +115,7 @@ def normalization(path):
         results[name] = {
             "mean_s": analysis["anMean"]["estPoint"],
             "stddev_s": analysis["anStdDev"]["estPoint"],
+            **measured_means(report, name),
         }
     if not results:
         sys.exit(f"collect_result.py: no benchmark reports found in {path}")
