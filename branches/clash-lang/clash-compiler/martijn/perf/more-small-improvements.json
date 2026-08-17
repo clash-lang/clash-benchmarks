@@ -2,33 +2,38 @@
   "base": "c43cf9fc5ac3a1fb6c848a7ea39947be25c0d9bd",
   "commits": [
     {
-      "date": "2026-08-11",
-      "sha": "f65839e72755720c669a0a20f275722e129b708e",
-      "subject": "Count transformation attempts under -fclash-debug-count-transformations"
+      "date": "2026-08-17",
+      "sha": "123df082abd6ffdf56606f767bec47b696d82ec2",
+      "subject": "Count transformation attempts with `-fclash-debug-count-transformations`"
     },
     {
-      "date": "2026-08-11",
-      "sha": "6f36110a60c3d320194bf6431c01210bda2ca6d3",
-      "subject": "Run cheap transformation guards before expensive ones"
+      "date": "2026-08-17",
+      "sha": "9ac1ca333e31892a9645158fa6687377603cbb58",
+      "subject": "Short-circuit `HasFreeVar Term`'s `isClosed`"
     },
     {
-      "date": "2026-08-11",
-      "sha": "fae5d5fc5c7f9d2470b13804b3ff01ed125ee772",
+      "date": "2026-08-17",
+      "sha": "79084457bc934934587afe62012414f31d41b2d0",
+      "subject": "Perform cheap checks first in various transformations"
+    },
+    {
+      "date": "2026-08-17",
+      "sha": "f51078b63e746b268e3d6c55692bc33bdcc12e2c",
       "subject": "Stop measuring term size once it exceeds the inline limit"
     },
     {
-      "date": "2026-08-11",
-      "sha": "b2d085b360d01a9adb2db08a472432019abcb199",
+      "date": "2026-08-17",
+      "sha": "43e2178fbbdc7ecd4242a8bdd7e8fa9ef09f84a8",
       "subject": "Skip inline attempts at inner application-spine nodes"
     },
     {
-      "date": "2026-08-11",
-      "sha": "675282dfd05318e7c1e0079b6c57eaf85d480664",
-      "subject": "Add changelog entries for inline-guard and counter changes"
+      "date": "2026-08-17",
+      "sha": "33ec00c193a77e48d6f32e5b2a4b2509ca72d100",
+      "subject": "Add changelog for cheap checks"
     }
   ],
   "pr": 3356,
   "ref": "martijn/perf/more-small-improvements",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-17T12:23:33+00:00"
+  "updated": "2026-08-17T15:11:57+00:00"
 }
