@@ -1,0 +1,67 @@
+{
+  "clash": {
+    "commit": "675282dfd05318e7c1e0079b6c57eaf85d480664",
+    "committer_date": "2026-08-11",
+    "parents": [
+      "b2d085b360d01a9adb2db08a472432019abcb199"
+    ],
+    "ref": "martijn/perf/more-small-improvements",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Add changelog entries for inline-guard and counter changes"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.0133960136032739,
+      "stddev_s": 0.00011024690708614826
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.21226830939168873,
+      "stddev_s": 0.0002991533525393766
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.0216671680619454,
+      "stddev_s": 0.0004164635171658549
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.013852237338894404,
+      "stddev_s": 0.0008590696800669743
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 0.9266192173749251,
+      "stddev_s": 0.004381243532966873
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.3225070604000151,
+      "stddev_s": 0.0010549402222731266
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.1495448516067778,
+      "stddev_s": 0.002459904929549253
+    }
+  },
+  "run": {
+    "date": "2026-08-17T12:23:33+00:00",
+    "quick": false,
+    "trigger": "dispatch",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32027926061"
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "netlist_s": 2.222,
+        "normalization_s": 95.0,
+        "total_s": 105.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
