@@ -1,0 +1,71 @@
+{
+  "clash": {
+    "commit": "2e1aa386a86745f5eb49218c523b85054c3e5bdd",
+    "committer_date": "2026-04-26",
+    "parents": [
+      "1523a9a5371cecd7016e9bf99c6c739c456e0325"
+    ],
+    "ref": "master",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Add support for `ghdl-{gcc,mcode}` in `clash-testsuite` (#3219)"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "mean_s": 0.017102512881893076,
+      "stddev_s": 0.00014141295881381116
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "mean_s": 0.29364527511005084,
+      "stddev_s": 0.0009533749958543709
+    },
+    "examples/FIR.hs": {
+      "mean_s": 0.030619929495683568,
+      "stddev_s": 0.002074811566835081
+    },
+    "examples/Queens.hs": {
+      "mean_s": 0.017408671039092275,
+      "stddev_s": 0.00015358982391688286
+    },
+    "examples/Reducer.hs": {
+      "mean_s": 1.074429107500028,
+      "stddev_s": 0.005997452865118799
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "mean_s": 0.35720091447907026,
+      "stddev_s": 0.0006157208736814113
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "mean_s": 0.14393060750307715,
+      "stddev_s": 0.00017236591498428396
+    }
+  },
+  "run": {
+    "date": "2026-08-17T13:01:52+00:00",
+    "quick": false,
+    "trigger": "dispatch",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32027941615"
+  },
+  "schema_version": 2,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0001-quickcheck-bound",
+      "0002-termtodata-hash",
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "netlist_s": 2.133,
+        "normalization_s": 482.0,
+        "total_s": 506.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
