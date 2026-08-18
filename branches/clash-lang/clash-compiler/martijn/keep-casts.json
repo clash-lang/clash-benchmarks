@@ -1,0 +1,139 @@
+{
+  "base": "a06d3452bd8317ab3d01b75b13c59090f9d59fc1",
+  "commits": [
+    {
+      "date": "2026-08-06",
+      "sha": "dd216079692fd1e790969f9478615f8715a0749d",
+      "subject": "Add cast push-rule infrastructure to Clash core"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "cc9f74744305340a7cb7bfc478e2268d74c4a79a",
+      "subject": "Teach the WHNF evaluator to evaluate casts"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "963af9b6053b03dc7e172b898bd5d55578a87ca4",
+      "subject": "Make normalization and netlist generation robust to casts"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "f285a9ba8b66083cd9f8afe7698dd075ffe1aa73",
+      "subject": "Keep all casts when translating GHC Core to Clash Core"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "d6cad8e3bcad091a1e1371249892b834cc2f9cdf",
+      "subject": "Translate the Signal combinators to casts; make Signal opaque"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "da72e5f0a7efb29463116e2fda54f19c714cb494",
+      "subject": "Make BiSignalIn/BiSignalOut opaque in coreView1"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "a2bb1b2e774c22071df0eadc6cb3bfb3c6442149",
+      "subject": "Make newtypes opaque in Clash's type system"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "f878689569f009d7e214001664828adf94be9f26",
+      "subject": "Add changelog entry for Signal-as-cast and opaque newtypes"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "fca1b954d97857bb4a248209d347ab7218f4ced7",
+      "subject": "recToLetRec: recognize self-calls under casts"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "a339fb4315820e7a6a41284093f9ebb2fcd4d9f2",
+      "subject": "Handle casts in ANF, blackbox result names, and undefined values"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "a298ad3ddaedb06fb84cfa26c91cf5255dd0b4e5",
+      "subject": "Support top entities returning a newtype of a function type"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "6c6756330103a676481099e7ee0a5e328b9dcc53",
+      "subject": "Only inline casts that cannot cancel otherwise"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "3b21ee46e863c3a819af9f3796015f0a6ae0a0f7",
+      "subject": "Don't specialize when a term argument is applied to a type variable"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "738e484e8f26cae48b335f300b1caa59f5f4fa6f",
+      "subject": "argCastSpec: don't specialize on casts that are refl under the oracle"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "ab31ef299bca53d775e24a1436b8f2ca6c2fa601",
+      "subject": "Netlist: compile non-ANF single-alternative cases via projections"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "b29356b922551d2d548bf203f1af888e949df67a",
+      "subject": "Recognize newtype-of-function types as function types"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "c27f16f3a3e5680644305cdfe9afc95fee35f051",
+      "subject": "Keep binders with newtype-of-function types as separate components"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "4befe7498ec25ea1dbfb0b56e7c17f4db23eaa15",
+      "subject": "inlineCastNonRep: only apply the inline limit to recursive binders"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "ee820e707da2a856215d913edf59479fa0e5208c",
+      "subject": "Run propagation and cast transformations to a fixpoint after etaTL"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "a8c8f946fe2f3f8aa87d42d7c7b5051a46a3ae2b",
+      "subject": "Revert \"inlineCastNonRep: only apply the inline limit to recursive binders\""
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "e1c95bc4bacc014738641ee3b4f75e14ce8a116d",
+      "subject": "Make the type-preservation check a hard error under debug-invariants"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "664d4acd9eb5a7dc232a3e07c8c8d2b2cb417909",
+      "subject": "inlineCastNonRep: only respect newtype-of-function casts for OPAQUE binders"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "b1e84c04fada999a76fdc3f9167a8ca02b94112f",
+      "subject": "splitCastWork: bring the letrec binders into scope"
+    },
+    {
+      "date": "2026-08-06",
+      "sha": "1384f1161a058f2952141a7cb6ce4e4f8d4ef01d",
+      "subject": "Add regression tests for the keep-all-casts fixes"
+    },
+    {
+      "date": "2026-08-07",
+      "sha": "301f8637aa2c320d3747937c8cb2e71ab374b754",
+      "subject": "inlineCastNonRep: share the inlined body through a worker/wrapper split"
+    },
+    {
+      "date": "2026-08-07",
+      "sha": "9b7f0803caa1d900ecede1b8db8371a9cbe35655",
+      "subject": "castEqType: compare types without normalizing them first"
+    }
+  ],
+  "pr": 3352,
+  "ref": "martijn/keep-casts",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-08-18T10:10:40+00:00"
+}
