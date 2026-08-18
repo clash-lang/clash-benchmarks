@@ -11,55 +11,59 @@
   },
   "machine": "oele",
   "normalization": {
-    "benchmark/tests/BundleMapRepeat.hs": {
-      "alloc_bytes": 37512580.65914221,
-      "gc_wall_s": 1.7418645598194462e-06,
-      "mean_s": 0.011134157420620452,
-      "mut_wall_s": 0.011101641410835182,
-      "stddev_s": 0.00013967931468727928
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 37512580.65914221,
+        "gc_wall_s": 1.7418645598194462e-06,
+        "mean_s": 0.011134157420620452,
+        "mut_wall_s": 0.011101641410835182,
+        "stddev_s": 0.00013967931468727928
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 692154122.6666666,
+        "gc_wall_s": 0.00029033928571428483,
+        "mean_s": 0.18162806689986408,
+        "mut_wall_s": 0.18135719676190476,
+        "stddev_s": 0.0006242245484732443
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 58743168.903654486,
+        "gc_wall_s": 5.037558139534892e-06,
+        "mean_s": 0.015702076833900534,
+        "mut_wall_s": 0.015654362820598,
+        "stddev_s": 0.00017925302575208367
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 37930358.63796478,
+        "gc_wall_s": 3.983864970645847e-06,
+        "mean_s": 0.009727727639026785,
+        "mut_wall_s": 0.009698318420743627,
+        "stddev_s": 0.00025200504842383197
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 2104221148.0,
+        "gc_wall_s": 0.005126133800000002,
+        "mean_s": 0.5545093385830265,
+        "mut_wall_s": 0.5485150972999999,
+        "stddev_s": 0.002681699338396292
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 943656349.3333334,
+        "gc_wall_s": 0.00020934585714285503,
+        "mean_s": 0.22275955494171487,
+        "mut_wall_s": 0.2225251013333334,
+        "stddev_s": 0.00034968669903859474
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 369499593.7777778,
+        "gc_wall_s": 6.881952777776984e-05,
+        "mean_s": 0.12189171288374825,
+        "mut_wall_s": 0.12180278194444484,
+        "stddev_s": 0.0014887658700765839
+      }
     },
-    "benchmark/tests/PipelinesViaFolds.hs": {
-      "alloc_bytes": 692154122.6666666,
-      "gc_wall_s": 0.00029033928571428483,
-      "mean_s": 0.18162806689986408,
-      "mut_wall_s": 0.18135719676190476,
-      "stddev_s": 0.0006242245484732443
-    },
-    "examples/FIR.hs": {
-      "alloc_bytes": 58743168.903654486,
-      "gc_wall_s": 5.037558139534892e-06,
-      "mean_s": 0.015702076833900534,
-      "mut_wall_s": 0.015654362820598,
-      "stddev_s": 0.00017925302575208367
-    },
-    "examples/Queens.hs": {
-      "alloc_bytes": 37930358.63796478,
-      "gc_wall_s": 3.983864970645847e-06,
-      "mean_s": 0.009727727639026785,
-      "mut_wall_s": 0.009698318420743627,
-      "stddev_s": 0.00025200504842383197
-    },
-    "examples/Reducer.hs": {
-      "alloc_bytes": 2104221148.0,
-      "gc_wall_s": 0.005126133800000002,
-      "mean_s": 0.5545093385830265,
-      "mut_wall_s": 0.5485150972999999,
-      "stddev_s": 0.002681699338396292
-    },
-    "tests/shouldwork/Basic/AES.hs": {
-      "alloc_bytes": 943656349.3333334,
-      "gc_wall_s": 0.00020934585714285503,
-      "mean_s": 0.22275955494171487,
-      "mut_wall_s": 0.2225251013333334,
-      "stddev_s": 0.00034968669903859474
-    },
-    "tests/shouldwork/Basic/T1354B.hs": {
-      "alloc_bytes": 369499593.7777778,
-      "gc_wall_s": 6.881952777776984e-05,
-      "mean_s": 0.12189171288374825,
-      "mut_wall_s": 0.12180278194444484,
-      "stddev_s": 0.0014887658700765839
-    }
+    "skip_reason": null,
+    "status": "ok"
   },
   "run": {
     "date": "2026-08-17T19:07:44+00:00",
@@ -67,7 +71,7 @@
     "trigger": "schedule",
     "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32056314364"
   },
-  "schema_version": 3,
+  "schema_version": 4,
   "toolchain": {
     "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
     "ghc_version": "9.10.3"

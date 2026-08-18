@@ -16,8 +16,8 @@
 #
 # An identical result that is already there is a success. A different
 # result that is already there is an error. With --replace-skipped, a
-# result whose wireDemo leg was skipped is replaced instead. A backfill
-# run upgrades earlier incomplete results this way.
+# result with a skipped leg (normalization or wireDemo) is replaced
+# instead. A backfill run upgrades earlier incomplete results this way.
 #
 # A branch snapshot always replaces the one that is there: the newest run
 # has the newest view of the branch.
@@ -82,9 +82,11 @@ for attempt in 1 2 3; do
       # Go on: the branch snapshot can still need an update.
       echo "push_result.sh: identical result for ${sha} already present"
     else
-      old_status=$(field "${wt}/${rel}" wire_demo.status)
-      if [[ ${replace_skipped} -eq 1 && "${old_status}" == "skipped" ]]; then
-        echo "push_result.sh: replacing result for ${sha} (wireDemo was skipped)"
+      old_wire=$(field "${wt}/${rel}" wire_demo.status)
+      old_norm=$(field "${wt}/${rel}" normalization.status)
+      if [[ ${replace_skipped} -eq 1 \
+            && ( "${old_wire}" == "skipped" || "${old_norm}" == "skipped" ) ]]; then
+        echo "push_result.sh: replacing result for ${sha} (a leg was skipped)"
       else
         echo "push_result.sh: different result for ${sha} already present; refusing to overwrite" >&2
         exit 1

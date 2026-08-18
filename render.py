@@ -286,7 +286,8 @@ def main():
                  "date": clash["committer_date"]},
                 clash["parents"][0] if clash["parents"] else None,
             )
-            benchmarks.update(result["normalization"])
+            norm = result["normalization"]
+            benchmarks.update(norm["benchmarks"])
             wd = result["wire_demo"]
             entry = {
                 # The page reads these by position: mean, stddev,
@@ -295,11 +296,14 @@ def main():
                 "norm": {name: [v["mean_s"], v["stddev_s"],
                                 round(v["alloc_bytes"]),
                                 v["mut_wall_s"], v["gc_wall_s"]]
-                         for name, v in result["normalization"].items()},
+                         for name, v in norm["benchmarks"].items()},
                 "wire": {"status": wd["status"]},
                 "quick": result["run"]["quick"],
                 "url": result["run"]["workflow_run_url"],
             }
+            if norm["status"] != "ok":
+                # The commit table shows why the examples have no value.
+                entry["normReason"] = norm["skip_reason"]
             if wd["status"] == "ok" and wd["runs"]:
                 run = wd["runs"][0]
                 entry["wire"].update({
@@ -1134,7 +1138,8 @@ function renderTable() {
       if (!val) {
         cell.className = "muted";
         cell.textContent = !result ? "—"
-          : panel.wire ? (result.wire.reason || "skipped") : "—";
+          : panel.wire ? (result.wire.reason || "skipped")
+          : (result.normReason || "—");
         continue;
       }
       cell.className = "num";

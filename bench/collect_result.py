@@ -8,7 +8,8 @@ Usage:
   --trigger      "schedule", "dispatch" or "migration"
   --clash-repo   owner/name of the repository under test
   --clash-ref    branch that was benchmarked, for example "master"
-  --normalization  criterion --json output of run_clash_benchmarks.sh
+  --normalization  output of run_clash_benchmarks.sh: the criterion
+                 --json report, or the skip object of a leg that failed
   --wire-demo    output of run_bittide.sh, or "none" when the leg did not run
   --out          path of the result file
 
@@ -21,7 +22,7 @@ Environment:
   BENCH_QUICK       1 marks the result as a quick, partial run
   GITHUB_*          GitHub Actions gives the link to the workflow run
 
-The result format is schema version 3, see bench/result_schema.py.
+The result format is schema version 4, see bench/result_schema.py.
 """
 
 import argparse
@@ -55,15 +56,13 @@ def git(*cmd):
     return res.stdout.strip()
 
 
-def criterion_reports(path):
+def criterion_reports(data, path):
     """Extract the list of reports from the criterion --json output.
 
-    The file holds a JSON array. The last element is the report list. Do
-    not depend on the exact shape: find the element that looks like a
+    The output holds a JSON array. The last element is the report list.
+    Do not depend on the exact shape: find the element that looks like a
     list of reports.
     """
-    with open(path) as f:
-        data = json.load(f)
     if isinstance(data, list):
         for element in reversed(data):
             if (isinstance(element, list)
@@ -105,9 +104,21 @@ def measured_means(report, name):
 
 
 def normalization(path):
-    """Read the time and memory of each benchmark."""
+    """Read the normalization leg: the benchmarks, or a skip.
+
+    run_clash_benchmarks.sh writes the criterion --json report (a JSON
+    array), or a skip object when the leg failed or ran into its timeout.
+    """
+    with open(path) as f:
+        data = json.load(f)
+    if isinstance(data, dict) and data.get("status") == "skipped":
+        return {
+            "status": "skipped",
+            "skip_reason": data.get("skip_reason"),
+            "benchmarks": {},
+        }
     results = {}
-    for report in criterion_reports(path):
+    for report in criterion_reports(data, path):
         name = report["reportName"]
         if name.startswith(NAME_PREFIX):
             name = name[len(NAME_PREFIX):]
@@ -119,7 +130,7 @@ def normalization(path):
         }
     if not results:
         sys.exit(f"collect_result.py: no benchmark reports found in {path}")
-    return results
+    return {"status": "ok", "skip_reason": None, "benchmarks": results}
 
 
 def cpu_model():

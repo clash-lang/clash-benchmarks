@@ -28,7 +28,7 @@ One run then does this for each commit (`bench/run_one.sh`):
 1. check the commit out;
 2. `bench/run_clash_benchmarks.sh` builds and runs the normalization suite;
 3. `bench/run_bittide.sh` builds bittide-hardware and generates HDL one
-   time. A build failure is not an error: the leg becomes `skipped`;
+   time;
 4. `bench/collect_result.py` makes the result file;
 5. `bench/branch_snapshot.py` records the commits of the branch, if the
    commit does not come from clash-lang master;
@@ -36,6 +36,14 @@ One run then does this for each commit (`bench/run_one.sh`):
 
 Each commit pushes its own result. A run that stops in the middle keeps the
 results of the commits that are done.
+
+A leg that the commit under test breaks is not an error: a build failure,
+broken HDL generation, or a hang that runs into the timeout of the leg
+(see the variables below for the defaults) makes that leg `skipped`, with
+the reason in the result. The skip is a stored result on purpose: the
+catch-up logic sees the file and does not pick the commit again, so one
+broken commit cannot wedge the schedule. To measure such a commit again,
+see [Backfill](#backfill).
 
 ### The schedule
 
@@ -158,6 +166,10 @@ The jobs want a self-hosted runner with the labels `self-hosted` and
 | `BENCH_CATCHUP_MAX` | most master commits per scheduled run (default 5). |
 | `BENCH_PR_MAX` | most pull request commits per scheduled run (default 5). |
 | `BENCH_PR_LABEL` | label that asks for a benchmark (default `performance`). |
+| `BENCH_NORM_BUILD_TIMEOUT` | seconds the clash-benchmark build may take (default 3600). |
+| `BENCH_NORM_RUN_TIMEOUT` | seconds the normalization suite may take (default 1800). |
+| `BENCH_BITTIDE_BUILD_TIMEOUT` | seconds the bittide-hardware build may take (default 3600). |
+| `BENCH_BITTIDE_RUN_TIMEOUT` | seconds the wireDemo HDL generation may take (default 900). |
 
 ## What a run measures
 
@@ -179,7 +191,10 @@ and the memory from the OS, the allocation, and the MUT/GC split.
 The fields and their units are in the docstring of
 `bench/result_schema.py`. The schema version went to 3 with these
 fields on 2026-08-17; the older results were deleted, not migrated,
-because the debug flag change also changed what the times mean.
+because the debug flag change also changed what the times mean. Version
+4 (2026-08-18) gave the normalization leg the same status envelope as
+the wireDemo leg, so a broken or hanging commit gets a stored result;
+`tools/migrate_v3.py` rewrapped the v3 files in place.
 
 ## Add a machine
 
@@ -220,9 +235,11 @@ cancels a job that waits more than 24 hours for a runner, so dispatch a
 long campaign in portions.
 
 `push_result.sh --replace-skipped` (what `run_one.sh` uses) may replace a
-result whose wireDemo leg was skipped with a complete one. It never
-replaces a complete result. To measure a commit again, for example after an
-outlier, delete its result file from `main` first:
+result with a skipped leg — a build failure, or a timeout — with a better
+one, so a dispatch of that exact commit is enough to try it again. It
+never replaces a result whose legs are both complete. To measure such a
+commit again, for example after an outlier, delete its result file from
+`main` first:
 
 ```console
 git rm results/<machine>/<ab>/<sha>.json && git commit && git push

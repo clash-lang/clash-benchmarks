@@ -11,55 +11,59 @@
   },
   "machine": "oele",
   "normalization": {
-    "benchmark/tests/BundleMapRepeat.hs": {
-      "alloc_bytes": 37144551.85553047,
-      "gc_wall_s": 1.5190993227991591e-06,
-      "mean_s": 0.010826924657729383,
-      "mut_wall_s": 0.010791825668171568,
-      "stddev_s": 0.00010590085846771206
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 37144551.85553047,
+        "gc_wall_s": 1.5190993227991591e-06,
+        "mean_s": 0.010826924657729383,
+        "mut_wall_s": 0.010791825668171568,
+        "stddev_s": 0.00010590085846771206
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 677301448.2857143,
+        "gc_wall_s": 0.0003525285000000005,
+        "mean_s": 0.17716921157011867,
+        "mut_wall_s": 0.17685159192857178,
+        "stddev_s": 0.00033127263484312476
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 55002744.70948012,
+        "gc_wall_s": 5.002342507645293e-06,
+        "mean_s": 0.014668367584036422,
+        "mut_wall_s": 0.014649142703363913,
+        "stddev_s": 9.71800432806827e-05
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 35535941.07495429,
+        "gc_wall_s": 2.0929890310785e-06,
+        "mean_s": 0.0091057954592784,
+        "mut_wall_s": 0.009060794557586856,
+        "stddev_s": 0.00019640244303745366
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 1922076433.6,
+        "gc_wall_s": 0.002481597500000002,
+        "mean_s": 0.5171693786257189,
+        "mut_wall_s": 0.5142225964,
+        "stddev_s": 0.002217823808534881
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 837140514.2857143,
+        "gc_wall_s": 0.0002714567619047621,
+        "mean_s": 0.2009638319223086,
+        "mut_wall_s": 0.20065747014285729,
+        "stddev_s": 0.00046751877526125454
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 358515820.2222222,
+        "gc_wall_s": 6.839363888888926e-05,
+        "mean_s": 0.11190928861031764,
+        "mut_wall_s": 0.11179047994444463,
+        "stddev_s": 0.00023991850778468901
+      }
     },
-    "benchmark/tests/PipelinesViaFolds.hs": {
-      "alloc_bytes": 677301448.2857143,
-      "gc_wall_s": 0.0003525285000000005,
-      "mean_s": 0.17716921157011867,
-      "mut_wall_s": 0.17685159192857178,
-      "stddev_s": 0.00033127263484312476
-    },
-    "examples/FIR.hs": {
-      "alloc_bytes": 55002744.70948012,
-      "gc_wall_s": 5.002342507645293e-06,
-      "mean_s": 0.014668367584036422,
-      "mut_wall_s": 0.014649142703363913,
-      "stddev_s": 9.71800432806827e-05
-    },
-    "examples/Queens.hs": {
-      "alloc_bytes": 35535941.07495429,
-      "gc_wall_s": 2.0929890310785e-06,
-      "mean_s": 0.0091057954592784,
-      "mut_wall_s": 0.009060794557586856,
-      "stddev_s": 0.00019640244303745366
-    },
-    "examples/Reducer.hs": {
-      "alloc_bytes": 1922076433.6,
-      "gc_wall_s": 0.002481597500000002,
-      "mean_s": 0.5171693786257189,
-      "mut_wall_s": 0.5142225964,
-      "stddev_s": 0.002217823808534881
-    },
-    "tests/shouldwork/Basic/AES.hs": {
-      "alloc_bytes": 837140514.2857143,
-      "gc_wall_s": 0.0002714567619047621,
-      "mean_s": 0.2009638319223086,
-      "mut_wall_s": 0.20065747014285729,
-      "stddev_s": 0.00046751877526125454
-    },
-    "tests/shouldwork/Basic/T1354B.hs": {
-      "alloc_bytes": 358515820.2222222,
-      "gc_wall_s": 6.839363888888926e-05,
-      "mean_s": 0.11190928861031764,
-      "mut_wall_s": 0.11179047994444463,
-      "stddev_s": 0.00023991850778468901
-    }
+    "skip_reason": null,
+    "status": "ok"
   },
   "run": {
     "date": "2026-08-18T01:30:05+00:00",
@@ -67,7 +71,7 @@
     "trigger": "schedule",
     "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32088005748"
   },
-  "schema_version": 3,
+  "schema_version": 4,
   "toolchain": {
     "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
     "ghc_version": "9.10.3"

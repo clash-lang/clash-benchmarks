@@ -14,7 +14,11 @@
 #
 # A build failure is not an error: bittide-hardware does not always
 # build against the newest clash-compiler. Then the output records the
-# wireDemo leg as skipped and the script exits with code 0.
+# wireDemo leg as skipped and the script exits with code 0. The build
+# and the HDL generation also run under a timeout, because a commit
+# under test can make Clash hang (a normalization that does not
+# terminate, for example). A timeout is a skip with its own reason: the
+# stored result keeps the commit from being picked up again.
 #
 # Patch overlays: each directory bench/patches.d/<name>/ holds a
 # file "applies-before" with one clash-compiler sha B, plus one
@@ -26,6 +30,9 @@
 #
 # Environment:
 #   BENCH_QUICK=1   do not build; write a skipped result
+#   BENCH_BITTIDE_BUILD_TIMEOUT   seconds the build may take (default 3600)
+#   BENCH_BITTIDE_RUN_TIMEOUT     seconds the wireDemo run may take
+#                                 (default 900)
 
 set -euo pipefail
 
@@ -110,10 +117,27 @@ for overlay in "${script_dir}"/patches.d/*/; do
   fi
 done
 
+# A commit under test can make the build or the HDL generation hang,
+# with a normalization that does not terminate for example. Without the
+# --foreground option, timeout signals the whole process group, so the
+# clash child of cabal dies too and does not stay behind to disturb the
+# next measurement. Exit code 124 means the time ran out; the KILL a
+# minute later gives a different code and lands in the plain failure
+# skip, which is still a stored result.
+build_timeout="${BENCH_BITTIDE_BUILD_TIMEOUT:-3600}"
+run_timeout="${BENCH_BITTIDE_RUN_TIMEOUT:-900}"
+
 build_log="${out%.json}-build.log"
 echo "run_bittide.sh: building bittide-instances:exe:clash (log: ${build_log})"
-if ! (cd "${ws}/bittide-hardware" \
-      && cabal build bittide-instances:exe:clash) &> "${build_log}"; then
+build_status=0
+(cd "${ws}/bittide-hardware" \
+  && timeout -k 60 "${build_timeout}" \
+       cabal build bittide-instances:exe:clash) &> "${build_log}" \
+  || build_status=$?
+if [[ ${build_status} -eq 124 ]]; then
+  skip "bittide-hardware build timed out after ${build_timeout}s"
+  exit 0
+elif [[ ${build_status} -ne 0 ]]; then
   tail -n 50 "${build_log}" >&2
   skip "bittide-hardware does not build"
   exit 0
@@ -126,12 +150,20 @@ echo "run_bittide.sh: running wireDemoTest (log: ${run_log})"
 # exits, into the run log that the parser below reads. Plain -t is one of
 # the safe RTS flags, so the clash executable accepts it although it is
 # built without -rtsopts.
-if ! (cd "${ws}/bittide-hardware" \
-      && cabal run --offline bittide-instances:clash -- \
-          Bittide.Instances.Hitl.WireDemo.TopEntity \
-          -fclash-hdldir "${hdl_dir}" -main-is wireDemoTest \
-          --verilog -fclash-clear -fclash-spec-limit=100 \
-          +RTS -t -RTS) &> "${run_log}"; then
+run_status=0
+(cd "${ws}/bittide-hardware" \
+  && timeout -k 60 "${run_timeout}" \
+       cabal run --offline bittide-instances:clash -- \
+         Bittide.Instances.Hitl.WireDemo.TopEntity \
+         -fclash-hdldir "${hdl_dir}" -main-is wireDemoTest \
+         --verilog -fclash-clear -fclash-spec-limit=100 \
+         +RTS -t -RTS) &> "${run_log}" \
+  || run_status=$?
+if [[ ${run_status} -eq 124 ]]; then
+  skip "wireDemo HDL generation timed out after ${run_timeout}s"
+  rm -rf "${hdl_dir}"
+  exit 0
+elif [[ ${run_status} -ne 0 ]]; then
   tail -n 50 "${run_log}" >&2
   # The build was fine, so the PR probably broke HDL generation for
   # bittide. Record this as a skip with its own reason.

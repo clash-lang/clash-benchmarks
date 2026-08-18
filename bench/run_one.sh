@@ -18,6 +18,11 @@
 # calls the script one time for each commit. A run that stops early keeps
 # the results of the commits that are done.
 #
+# A leg that the commit breaks (a build failure, broken HDL generation,
+# or a hang that runs into the timeout of the leg) becomes a skipped leg
+# in the result, not an error: the stored result keeps the commit out of
+# later scheduled runs. See run_clash_benchmarks.sh and run_bittide.sh.
+#
 # For a branch other than clash-lang master, the script also writes the
 # branch snapshot. The clone must then have the ref
 # refs/bench/upstream-master, which is master of

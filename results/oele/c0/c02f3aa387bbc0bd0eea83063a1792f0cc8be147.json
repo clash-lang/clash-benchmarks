@@ -11,55 +11,59 @@
   },
   "machine": "oele",
   "normalization": {
-    "benchmark/tests/BundleMapRepeat.hs": {
-      "alloc_bytes": 57460627.7475083,
-      "gc_wall_s": 5.145013289036404e-06,
-      "mean_s": 0.01551093003343872,
-      "mut_wall_s": 0.015414505790697688,
-      "stddev_s": 0.00022615379342643356
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 57460627.7475083,
+        "gc_wall_s": 5.145013289036404e-06,
+        "mean_s": 0.01551093003343872,
+        "mut_wall_s": 0.015414505790697688,
+        "stddev_s": 0.00022615379342643356
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 1021644226.6666666,
+        "gc_wall_s": 0.00013994886666667631,
+        "mean_s": 0.2631128779456291,
+        "mut_wall_s": 0.26339726246666684,
+        "stddev_s": 0.0014821083643171743
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 104449989.14619882,
+        "gc_wall_s": 1.124956140350869e-05,
+        "mean_s": 0.02710808555289111,
+        "mut_wall_s": 0.027046176953216372,
+        "stddev_s": 0.0002701190135702108
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 58888399.946843855,
+        "gc_wall_s": 4.810315614617846e-06,
+        "mean_s": 0.015272491179747045,
+        "mut_wall_s": 0.015282868817275768,
+        "stddev_s": 0.0005116665930104574
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 4415166501.6,
+        "gc_wall_s": 0.008425194800000004,
+        "mean_s": 1.0607354745407065,
+        "mut_wall_s": 1.0561540373000002,
+        "stddev_s": 0.011314277472071949
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 1415392795.2,
+        "gc_wall_s": 0.0006245697333333355,
+        "mean_s": 0.33005905550521375,
+        "mut_wall_s": 0.32958216186666645,
+        "stddev_s": 0.001084629300877828
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 540162354.5714285,
+        "gc_wall_s": 9.503424999999867e-05,
+        "mean_s": 0.17066920248017553,
+        "mut_wall_s": 0.1705289810000001,
+        "stddev_s": 0.00022256594662443745
+      }
     },
-    "benchmark/tests/PipelinesViaFolds.hs": {
-      "alloc_bytes": 1021644226.6666666,
-      "gc_wall_s": 0.00013994886666667631,
-      "mean_s": 0.2631128779456291,
-      "mut_wall_s": 0.26339726246666684,
-      "stddev_s": 0.0014821083643171743
-    },
-    "examples/FIR.hs": {
-      "alloc_bytes": 104449989.14619882,
-      "gc_wall_s": 1.124956140350869e-05,
-      "mean_s": 0.02710808555289111,
-      "mut_wall_s": 0.027046176953216372,
-      "stddev_s": 0.0002701190135702108
-    },
-    "examples/Queens.hs": {
-      "alloc_bytes": 58888399.946843855,
-      "gc_wall_s": 4.810315614617846e-06,
-      "mean_s": 0.015272491179747045,
-      "mut_wall_s": 0.015282868817275768,
-      "stddev_s": 0.0005116665930104574
-    },
-    "examples/Reducer.hs": {
-      "alloc_bytes": 4415166501.6,
-      "gc_wall_s": 0.008425194800000004,
-      "mean_s": 1.0607354745407065,
-      "mut_wall_s": 1.0561540373000002,
-      "stddev_s": 0.011314277472071949
-    },
-    "tests/shouldwork/Basic/AES.hs": {
-      "alloc_bytes": 1415392795.2,
-      "gc_wall_s": 0.0006245697333333355,
-      "mean_s": 0.33005905550521375,
-      "mut_wall_s": 0.32958216186666645,
-      "stddev_s": 0.001084629300877828
-    },
-    "tests/shouldwork/Basic/T1354B.hs": {
-      "alloc_bytes": 540162354.5714285,
-      "gc_wall_s": 9.503424999999867e-05,
-      "mean_s": 0.17066920248017553,
-      "mut_wall_s": 0.1705289810000001,
-      "stddev_s": 0.00022256594662443745
-    }
+    "skip_reason": null,
+    "status": "ok"
   },
   "run": {
     "date": "2026-08-18T10:10:05+00:00",
@@ -67,7 +71,7 @@
     "trigger": "dispatch",
     "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32103168601"
   },
-  "schema_version": 3,
+  "schema_version": 4,
   "toolchain": {
     "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
     "ghc_version": "9.10.3"

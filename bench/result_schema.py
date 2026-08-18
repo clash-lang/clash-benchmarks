@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Shape of a benchmark result file, schema version 3.
+"""Shape of a benchmark result file, schema version 4.
 
 A result file holds the measurements of one benchmark run: one machine,
 one clash-compiler commit. The file name comes from the machine and the
 commit, see result_path(). The layout of the file is:
 
     {
-      "schema_version": 3,
+      "schema_version": 4,
       "machine": "oele",
       "run": {
         "date": "2026-08-13T08:12:24+00:00",
@@ -23,10 +23,14 @@ commit, see result_path(). The layout of the file is:
         "committer_date": "2026-08-11"
       },
       "toolchain": {"ghc_version": "9.10.3", "container": "ghcr.io/..." | null},
-      "normalization": {"examples/FIR.hs": {
-        "mean_s": 1.2, "stddev_s": 0.01,
-        "alloc_bytes": 2.1e9, "mut_wall_s": 1.1, "gc_wall_s": 0.1
-      }},
+      "normalization": {
+        "status": "ok" | "skipped",
+        "skip_reason": null | "...",
+        "benchmarks": {"examples/FIR.hs": {
+          "mean_s": 1.2, "stddev_s": 0.01,
+          "alloc_bytes": 2.1e9, "mut_wall_s": 1.1, "gc_wall_s": 0.1
+        }}
+      },
       "wire_demo": {
         "status": "ok" | "skipped",
         "skip_reason": null | "...",
@@ -44,6 +48,12 @@ commit, see result_path(). The layout of the file is:
 The "normalization" and "wire_demo" parts are the measurements. The other
 parts say what was measured, on which machine, and with which toolchain.
 Hardware facts are not in the result: they are in machines/<machine>.json.
+
+Either leg can be "skipped", with a reason: a commit under test can fail
+to build, break the HDL generation, or make Clash hang until the timeout
+of the leg. A skipped leg is a stored result on purpose, so the catch-up
+logic does not pick the commit again. See docs/ops.md for how to measure
+such a commit again.
 
 The memory numbers come from the GHC runtime. In "normalization" they are
 means over one run of the benchmark; in "wire_demo" they cover the whole
@@ -84,10 +94,10 @@ import re
 import socket
 import sys
 
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 
 TRIGGERS = ("schedule", "dispatch", "migration")
-WIRE_DEMO_STATUSES = ("ok", "skipped")
+LEG_STATUSES = ("ok", "skipped")
 NORMALIZATION_KEYS = ("mean_s", "stddev_s", "alloc_bytes", "mut_wall_s",
                       "gc_wall_s")
 RUN_KEYS = ("normalization_s", "netlist_s", "total_s", "alloc_bytes",
@@ -214,21 +224,35 @@ def validate_result(result):
             problems.append("toolchain.container: not a string or null")
 
     norm = result["normalization"]
-    if not isinstance(norm, dict) or not norm:
-        problems.append("normalization: not a non-empty object")
-    else:
-        for name, entry in norm.items():
-            where = f"normalization[{name!r}]"
-            if _keys(problems, where, entry, NORMALIZATION_KEYS):
-                for key in NORMALIZATION_KEYS:
-                    _num(problems, f"{where}.{key}", entry[key], minimum=0)
+    if _keys(problems, "normalization", norm, (
+            "status", "skip_reason", "benchmarks")):
+        if norm["status"] not in LEG_STATUSES:
+            problems.append(
+                f"normalization.status: not one of {LEG_STATUSES}: {norm['status']!r}")
+        if norm["skip_reason"] is not None and not isinstance(norm["skip_reason"], str):
+            problems.append("normalization.skip_reason: not a string or null")
+        if not isinstance(norm["benchmarks"], dict):
+            problems.append("normalization.benchmarks: not an object")
+        else:
+            for name, entry in norm["benchmarks"].items():
+                where = f"normalization.benchmarks[{name!r}]"
+                if _keys(problems, where, entry, NORMALIZATION_KEYS):
+                    for key in NORMALIZATION_KEYS:
+                        _num(problems, f"{where}.{key}", entry[key], minimum=0)
+            if norm["status"] == "ok" and not norm["benchmarks"]:
+                problems.append("normalization: status is ok but there are no benchmarks")
+            if norm["status"] == "skipped":
+                if norm["benchmarks"]:
+                    problems.append("normalization: status is skipped but there are benchmarks")
+                if not norm["skip_reason"]:
+                    problems.append("normalization: status is skipped without a skip_reason")
 
     wd = result["wire_demo"]
     if _keys(problems, "wire_demo", wd, (
             "status", "skip_reason", "bittide_rev", "overlays", "runs")):
-        if wd["status"] not in WIRE_DEMO_STATUSES:
+        if wd["status"] not in LEG_STATUSES:
             problems.append(
-                f"wire_demo.status: not one of {WIRE_DEMO_STATUSES}: {wd['status']!r}")
+                f"wire_demo.status: not one of {LEG_STATUSES}: {wd['status']!r}")
         if wd["skip_reason"] is not None and not isinstance(wd["skip_reason"], str):
             problems.append("wire_demo.skip_reason: not a string or null")
         if wd["bittide_rev"] is not None and (

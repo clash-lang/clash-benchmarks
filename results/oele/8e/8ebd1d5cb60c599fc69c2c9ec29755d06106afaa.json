@@ -11,55 +11,59 @@
   },
   "machine": "oele",
   "normalization": {
-    "benchmark/tests/BundleMapRepeat.hs": {
-      "alloc_bytes": 41136759.941747576,
-      "gc_wall_s": 2.1062621359222927e-06,
-      "mean_s": 0.012117102999376675,
-      "mut_wall_s": 0.01205887804854368,
-      "stddev_s": 0.00022731108634453526
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 41136759.941747576,
+        "gc_wall_s": 2.1062621359222927e-06,
+        "mean_s": 0.012117102999376675,
+        "mut_wall_s": 0.01205887804854368,
+        "stddev_s": 0.00022731108634453526
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 907212909.8666667,
+        "gc_wall_s": 0.00022087106666666503,
+        "mean_s": 0.23928795941518427,
+        "mut_wall_s": 0.23913879166666732,
+        "stddev_s": 0.00031668258007092276
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 102856787.04093567,
+        "gc_wall_s": 1.2389807017543837e-05,
+        "mean_s": 0.02647844381441561,
+        "mut_wall_s": 0.026421987269005857,
+        "stddev_s": 0.0001666489689799294
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 57273072.95412844,
+        "gc_wall_s": 5.688672782874728e-06,
+        "mean_s": 0.014603816829928703,
+        "mut_wall_s": 0.014549987636085629,
+        "stddev_s": 0.00016606173946741114
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 3938776610.4,
+        "gc_wall_s": 0.007280772100000008,
+        "mean_s": 0.9836032577907948,
+        "mut_wall_s": 0.9763902064000002,
+        "stddev_s": 0.0023628290813057324
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 1408585517.8666666,
+        "gc_wall_s": 0.000534599733333326,
+        "mean_s": 0.3255284126321203,
+        "mut_wall_s": 0.3251059872666673,
+        "stddev_s": 0.0006213299466834977
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 499187216.85714287,
+        "gc_wall_s": 7.203571428571595e-05,
+        "mean_s": 0.16119599368980156,
+        "mut_wall_s": 0.16109672407142867,
+        "stddev_s": 0.0015273935592439636
+      }
     },
-    "benchmark/tests/PipelinesViaFolds.hs": {
-      "alloc_bytes": 907212909.8666667,
-      "gc_wall_s": 0.00022087106666666503,
-      "mean_s": 0.23928795941518427,
-      "mut_wall_s": 0.23913879166666732,
-      "stddev_s": 0.00031668258007092276
-    },
-    "examples/FIR.hs": {
-      "alloc_bytes": 102856787.04093567,
-      "gc_wall_s": 1.2389807017543837e-05,
-      "mean_s": 0.02647844381441561,
-      "mut_wall_s": 0.026421987269005857,
-      "stddev_s": 0.0001666489689799294
-    },
-    "examples/Queens.hs": {
-      "alloc_bytes": 57273072.95412844,
-      "gc_wall_s": 5.688672782874728e-06,
-      "mean_s": 0.014603816829928703,
-      "mut_wall_s": 0.014549987636085629,
-      "stddev_s": 0.00016606173946741114
-    },
-    "examples/Reducer.hs": {
-      "alloc_bytes": 3938776610.4,
-      "gc_wall_s": 0.007280772100000008,
-      "mean_s": 0.9836032577907948,
-      "mut_wall_s": 0.9763902064000002,
-      "stddev_s": 0.0023628290813057324
-    },
-    "tests/shouldwork/Basic/AES.hs": {
-      "alloc_bytes": 1408585517.8666666,
-      "gc_wall_s": 0.000534599733333326,
-      "mean_s": 0.3255284126321203,
-      "mut_wall_s": 0.3251059872666673,
-      "stddev_s": 0.0006213299466834977
-    },
-    "tests/shouldwork/Basic/T1354B.hs": {
-      "alloc_bytes": 499187216.85714287,
-      "gc_wall_s": 7.203571428571595e-05,
-      "mean_s": 0.16119599368980156,
-      "mut_wall_s": 0.16109672407142867,
-      "stddev_s": 0.0015273935592439636
-    }
+    "skip_reason": null,
+    "status": "ok"
   },
   "run": {
     "date": "2026-08-18T10:59:07+00:00",
@@ -67,7 +71,7 @@
     "trigger": "dispatch",
     "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32103190268"
   },
-  "schema_version": 3,
+  "schema_version": 4,
   "toolchain": {
     "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
     "ghc_version": "9.10.3"

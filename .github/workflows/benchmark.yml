@@ -76,6 +76,10 @@ jobs:
     env:
       BENCH_QUICK: ${{ vars.BENCH_QUICK }}
       BENCH_MACHINE: ${{ vars.BENCH_MACHINE }}
+      BENCH_NORM_BUILD_TIMEOUT: ${{ vars.BENCH_NORM_BUILD_TIMEOUT }}
+      BENCH_NORM_RUN_TIMEOUT: ${{ vars.BENCH_NORM_RUN_TIMEOUT }}
+      BENCH_BITTIDE_BUILD_TIMEOUT: ${{ vars.BENCH_BITTIDE_BUILD_TIMEOUT }}
+      BENCH_BITTIDE_RUN_TIMEOUT: ${{ vars.BENCH_BITTIDE_RUN_TIMEOUT }}
       CABAL_DIR: /bench-cache/cabal
     steps:
       # The explicit ref makes the checkout resolve main when the job

@@ -11,55 +11,59 @@
   },
   "machine": "oele",
   "normalization": {
-    "benchmark/tests/BundleMapRepeat.hs": {
-      "alloc_bytes": 39521301.39805825,
-      "gc_wall_s": 1.5624999999999963e-06,
-      "mean_s": 0.011564665206405419,
-      "mut_wall_s": 0.01153152106067962,
-      "stddev_s": 0.00011185244337367947
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 39521301.39805825,
+        "gc_wall_s": 1.5624999999999963e-06,
+        "mean_s": 0.011564665206405419,
+        "mut_wall_s": 0.01153152106067962,
+        "stddev_s": 0.00011185244337367947
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 751085484.5714285,
+        "gc_wall_s": 0.0002236938095238088,
+        "mean_s": 0.19886234529194555,
+        "mut_wall_s": 0.19856551642857143,
+        "stddev_s": 0.00039143192883994113
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 71397777.48616602,
+        "gc_wall_s": 6.698960474308346e-06,
+        "mean_s": 0.018918531598508415,
+        "mut_wall_s": 0.01887711049802371,
+        "stddev_s": 0.00015434770844233457
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 47814858.63874345,
+        "gc_wall_s": 3.646212041884888e-06,
+        "mean_s": 0.012362786626693191,
+        "mut_wall_s": 0.012352871476439766,
+        "stddev_s": 7.440557211677857e-05
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 2890484250.4,
+        "gc_wall_s": 0.005570928,
+        "mean_s": 0.7924413783340091,
+        "mut_wall_s": 0.7869017655000002,
+        "stddev_s": 0.0031354996754824963
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 1133280697.6,
+        "gc_wall_s": 0.0006304769333333274,
+        "mean_s": 0.28071689184694454,
+        "mut_wall_s": 0.2801979336000002,
+        "stddev_s": 0.0005245441278323865
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 281756777.24444443,
+        "gc_wall_s": 5.063340000000465e-05,
+        "mean_s": 0.09163197764969666,
+        "mut_wall_s": 0.0915792464888892,
+        "stddev_s": 0.0001896148097911544
+      }
     },
-    "benchmark/tests/PipelinesViaFolds.hs": {
-      "alloc_bytes": 751085484.5714285,
-      "gc_wall_s": 0.0002236938095238088,
-      "mean_s": 0.19886234529194555,
-      "mut_wall_s": 0.19856551642857143,
-      "stddev_s": 0.00039143192883994113
-    },
-    "examples/FIR.hs": {
-      "alloc_bytes": 71397777.48616602,
-      "gc_wall_s": 6.698960474308346e-06,
-      "mean_s": 0.018918531598508415,
-      "mut_wall_s": 0.01887711049802371,
-      "stddev_s": 0.00015434770844233457
-    },
-    "examples/Queens.hs": {
-      "alloc_bytes": 47814858.63874345,
-      "gc_wall_s": 3.646212041884888e-06,
-      "mean_s": 0.012362786626693191,
-      "mut_wall_s": 0.012352871476439766,
-      "stddev_s": 7.440557211677857e-05
-    },
-    "examples/Reducer.hs": {
-      "alloc_bytes": 2890484250.4,
-      "gc_wall_s": 0.005570928,
-      "mean_s": 0.7924413783340091,
-      "mut_wall_s": 0.7869017655000002,
-      "stddev_s": 0.0031354996754824963
-    },
-    "tests/shouldwork/Basic/AES.hs": {
-      "alloc_bytes": 1133280697.6,
-      "gc_wall_s": 0.0006304769333333274,
-      "mean_s": 0.28071689184694454,
-      "mut_wall_s": 0.2801979336000002,
-      "stddev_s": 0.0005245441278323865
-    },
-    "tests/shouldwork/Basic/T1354B.hs": {
-      "alloc_bytes": 281756777.24444443,
-      "gc_wall_s": 5.063340000000465e-05,
-      "mean_s": 0.09163197764969666,
-      "mut_wall_s": 0.0915792464888892,
-      "stddev_s": 0.0001896148097911544
-    }
+    "skip_reason": null,
+    "status": "ok"
   },
   "run": {
     "date": "2026-08-17T19:03:15+00:00",
@@ -67,7 +71,7 @@
     "trigger": "schedule",
     "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32056314364"
   },
-  "schema_version": 3,
+  "schema_version": 4,
   "toolchain": {
     "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
     "ghc_version": "9.10.3"

@@ -11,55 +11,59 @@
   },
   "machine": "oele",
   "normalization": {
-    "benchmark/tests/BundleMapRepeat.hs": {
-      "alloc_bytes": 57093904.47840532,
-      "gc_wall_s": 4.600926910299206e-06,
-      "mean_s": 0.015268769410540927,
-      "mut_wall_s": 0.015263606196013337,
-      "stddev_s": 7.66851087153035e-05
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 57093904.47840532,
+        "gc_wall_s": 4.600926910299206e-06,
+        "mean_s": 0.015268769410540927,
+        "mut_wall_s": 0.015263606196013337,
+        "stddev_s": 7.66851087153035e-05
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 1016874654.9333333,
+        "gc_wall_s": 0.00015977920000000237,
+        "mean_s": 0.2596450668341519,
+        "mut_wall_s": 0.2596192101999994,
+        "stddev_s": 0.0002774117445501243
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 102829627.28421053,
+        "gc_wall_s": 1.3019000000000005e-05,
+        "mean_s": 0.025896667129553352,
+        "mut_wall_s": 0.025858901184210536,
+        "stddev_s": 0.00013861991802227558
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 58838845.06422018,
+        "gc_wall_s": 5.610195718654091e-06,
+        "mean_s": 0.014891353409535216,
+        "mut_wall_s": 0.014841258623853212,
+        "stddev_s": 0.00014125361455299387
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 4163800940.0,
+        "gc_wall_s": 0.008055080699999995,
+        "mean_s": 0.984247074147485,
+        "mut_wall_s": 0.9753255731999998,
+        "stddev_s": 0.0026095681235351075
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 1369326182.4,
+        "gc_wall_s": 0.0005635349333333428,
+        "mean_s": 0.31011975593423513,
+        "mut_wall_s": 0.30951157000000035,
+        "stddev_s": 0.0007243960522958742
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 393698740.6666667,
+        "gc_wall_s": 6.679402777777356e-05,
+        "mean_s": 0.1194766728009459,
+        "mut_wall_s": 0.11924695716666653,
+        "stddev_s": 0.0004752639569616437
+      }
     },
-    "benchmark/tests/PipelinesViaFolds.hs": {
-      "alloc_bytes": 1016874654.9333333,
-      "gc_wall_s": 0.00015977920000000237,
-      "mean_s": 0.2596450668341519,
-      "mut_wall_s": 0.2596192101999994,
-      "stddev_s": 0.0002774117445501243
-    },
-    "examples/FIR.hs": {
-      "alloc_bytes": 102829627.28421053,
-      "gc_wall_s": 1.3019000000000005e-05,
-      "mean_s": 0.025896667129553352,
-      "mut_wall_s": 0.025858901184210536,
-      "stddev_s": 0.00013861991802227558
-    },
-    "examples/Queens.hs": {
-      "alloc_bytes": 58838845.06422018,
-      "gc_wall_s": 5.610195718654091e-06,
-      "mean_s": 0.014891353409535216,
-      "mut_wall_s": 0.014841258623853212,
-      "stddev_s": 0.00014125361455299387
-    },
-    "examples/Reducer.hs": {
-      "alloc_bytes": 4163800940.0,
-      "gc_wall_s": 0.008055080699999995,
-      "mean_s": 0.984247074147485,
-      "mut_wall_s": 0.9753255731999998,
-      "stddev_s": 0.0026095681235351075
-    },
-    "tests/shouldwork/Basic/AES.hs": {
-      "alloc_bytes": 1369326182.4,
-      "gc_wall_s": 0.0005635349333333428,
-      "mean_s": 0.31011975593423513,
-      "mut_wall_s": 0.30951157000000035,
-      "stddev_s": 0.0007243960522958742
-    },
-    "tests/shouldwork/Basic/T1354B.hs": {
-      "alloc_bytes": 393698740.6666667,
-      "gc_wall_s": 6.679402777777356e-05,
-      "mean_s": 0.1194766728009459,
-      "mut_wall_s": 0.11924695716666653,
-      "stddev_s": 0.0004752639569616437
-    }
+    "skip_reason": null,
+    "status": "ok"
   },
   "run": {
     "date": "2026-08-18T06:11:20+00:00",
@@ -67,7 +71,7 @@
     "trigger": "dispatch",
     "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32103077829"
   },
-  "schema_version": 3,
+  "schema_version": 4,
   "toolchain": {
     "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
     "ghc_version": "9.10.3"
