@@ -12,28 +12,28 @@
       "subject": "Short-circuit `HasFreeVar Term`'s `isClosed`"
     },
     {
-      "date": "2026-08-17",
-      "sha": "79084457bc934934587afe62012414f31d41b2d0",
+      "date": "2026-08-18",
+      "sha": "f4a91f54c5e8ebd8017862391c3d4376d7f53b97",
       "subject": "Perform cheap checks first in various transformations"
     },
     {
-      "date": "2026-08-17",
-      "sha": "f51078b63e746b268e3d6c55692bc33bdcc12e2c",
+      "date": "2026-08-18",
+      "sha": "cc1beb4a1de2ef2363f14b5ade483b1c71adf083",
       "subject": "Stop measuring term size once it exceeds the inline limit"
     },
     {
-      "date": "2026-08-17",
-      "sha": "43e2178fbbdc7ecd4242a8bdd7e8fa9ef09f84a8",
+      "date": "2026-08-18",
+      "sha": "1ffc070b8e6d6c2682a99983f3bc41fa4b97499e",
       "subject": "Skip inline attempts at inner application-spine nodes"
     },
     {
-      "date": "2026-08-17",
-      "sha": "33ec00c193a77e48d6f32e5b2a4b2509ca72d100",
+      "date": "2026-08-18",
+      "sha": "91aa665cbaa7d9b2894691c0daeea0efecb9d817",
       "subject": "Add changelog for cheap checks"
     }
   ],
   "pr": 3356,
   "ref": "martijn/perf/more-small-improvements",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-18T01:46:59+00:00"
+  "updated": "2026-08-18T08:19:08+00:00"
 }
