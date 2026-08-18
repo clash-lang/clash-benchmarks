@@ -1,0 +1,96 @@
+{
+  "clash": {
+    "commit": "cc1beb4a1de2ef2363f14b5ade483b1c71adf083",
+    "committer_date": "2026-08-18",
+    "parents": [
+      "f4a91f54c5e8ebd8017862391c3d4376d7f53b97"
+    ],
+    "ref": "martijn/perf/more-small-improvements",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Stop measuring term size once it exceeds the inline limit"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmark/tests/BundleMapRepeat.hs": {
+      "alloc_bytes": 39750876.25242718,
+      "gc_wall_s": 2.125635922330237e-06,
+      "mean_s": 0.01159423883771752,
+      "mut_wall_s": 0.011546147439320364,
+      "stddev_s": 0.0001687013210386083
+    },
+    "benchmark/tests/PipelinesViaFolds.hs": {
+      "alloc_bytes": 723746617.9047619,
+      "gc_wall_s": 0.00021150776190476383,
+      "mean_s": 0.1937652771051944,
+      "mut_wall_s": 0.19369533866666647,
+      "stddev_s": 0.000702462349264558
+    },
+    "examples/FIR.hs": {
+      "alloc_bytes": 74431331.47826087,
+      "gc_wall_s": 8.36724110671939e-06,
+      "mean_s": 0.01978410178743057,
+      "mut_wall_s": 0.01971567722134388,
+      "stddev_s": 0.00019028741691703305
+    },
+    "examples/Queens.hs": {
+      "alloc_bytes": 48409432.58638743,
+      "gc_wall_s": 3.4711413612562708e-06,
+      "mean_s": 0.01313422306959111,
+      "mut_wall_s": 0.012541212023560214,
+      "stddev_s": 0.003793305777985897
+    },
+    "examples/Reducer.hs": {
+      "alloc_bytes": 3150008004.8,
+      "gc_wall_s": 0.007675732099999996,
+      "mean_s": 0.8759816504386132,
+      "mut_wall_s": 0.8681499415999999,
+      "stddev_s": 0.0033076518166821932
+    },
+    "tests/shouldwork/Basic/AES.hs": {
+      "alloc_bytes": 1216136937.6,
+      "gc_wall_s": 0.00048798853333333894,
+      "mean_s": 0.2997986288791193,
+      "mut_wall_s": 0.2993708798000005,
+      "stddev_s": 0.0002355014284983151
+    },
+    "tests/shouldwork/Basic/T1354B.hs": {
+      "alloc_bytes": 388031049.3333333,
+      "gc_wall_s": 7.453836111111068e-05,
+      "mean_s": 0.12456363736739495,
+      "mut_wall_s": 0.12448615338888855,
+      "stddev_s": 0.00020956740326338294
+    }
+  },
+  "run": {
+    "date": "2026-08-18T16:46:47+00:00",
+    "quick": false,
+    "trigger": "schedule",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32160581088"
+  },
+  "schema_version": 3,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "alloc_bytes": 364425428720,
+        "gc_cpu_s": 7.773,
+        "gc_wall_s": 7.78,
+        "max_live_bytes": 609073688,
+        "mut_cpu_s": 106.615,
+        "mut_wall_s": 106.667,
+        "netlist_s": 2.258,
+        "normalization_s": 99.0,
+        "num_gcs": 3648,
+        "peak_mb": 1511,
+        "total_s": 109.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
