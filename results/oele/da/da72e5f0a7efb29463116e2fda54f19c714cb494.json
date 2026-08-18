@@ -1,0 +1,86 @@
+{
+  "clash": {
+    "commit": "da72e5f0a7efb29463116e2fda54f19c714cb494",
+    "committer_date": "2026-08-06",
+    "parents": [
+      "d6cad8e3bcad091a1e1371249892b834cc2f9cdf"
+    ],
+    "ref": "martijn/keep-casts",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Make BiSignalIn/BiSignalOut opaque in coreView1"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 40903553.48691099,
+        "gc_wall_s": 1.7449633507854183e-06,
+        "mean_s": 0.012218888122245608,
+        "mut_wall_s": 0.012196999439790588,
+        "stddev_s": 8.424782504535308e-05
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 853122573.8666667,
+        "gc_wall_s": 0.0003228925333333299,
+        "mean_s": 0.2478184137806238,
+        "mut_wall_s": 0.24745963613333355,
+        "stddev_s": 0.0024757360402421786
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 84608550.61052631,
+        "gc_wall_s": 8.064431578947385e-06,
+        "mean_s": 0.025232808624307393,
+        "mut_wall_s": 0.025099242094736844,
+        "stddev_s": 0.00035122217859824046
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 46548404.16753927,
+        "gc_wall_s": 2.773570680628243e-06,
+        "mean_s": 0.012484474793787287,
+        "mut_wall_s": 0.012454747528795827,
+        "stddev_s": 0.0009708202102356317
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 2677792488.0,
+        "gc_wall_s": 0.0041478921,
+        "mean_s": 0.7370974988574138,
+        "mut_wall_s": 0.7331013511999999,
+        "stddev_s": 0.0006773564296119225
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 1109827599.4666667,
+        "gc_wall_s": 0.0006468283333333306,
+        "mean_s": 0.2963265732387178,
+        "mut_wall_s": 0.29540670740000036,
+        "stddev_s": 0.0009988817680577529
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 370643379.5555556,
+        "gc_wall_s": 6.973930555555076e-05,
+        "mean_s": 0.12699023637763363,
+        "mut_wall_s": 0.12687004691666676,
+        "stddev_s": 0.0004143879748293884
+      }
+    },
+    "skip_reason": null,
+    "status": "ok"
+  },
+  "run": {
+    "date": "2026-08-18T21:53:00+00:00",
+    "quick": false,
+    "trigger": "schedule",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32187387998"
+  },
+  "schema_version": 4,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [],
+    "skip_reason": "wireDemo HDL generation failed",
+    "status": "skipped"
+  }
+}
