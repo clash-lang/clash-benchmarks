@@ -78,9 +78,15 @@ jobs:
       BENCH_MACHINE: ${{ vars.BENCH_MACHINE }}
       CABAL_DIR: /bench-cache/cabal
     steps:
+      # The explicit ref makes the checkout resolve main when the job
+      # starts. Without it, the checkout is the commit from trigger time;
+      # a run that waited in the runner queue would not see the results
+      # that were pushed while it waited, and would benchmark those
+      # commits again.
       - name: Checkout clash-benchmarks
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
+          ref: main
           path: benchmarks
 
       # The directory name must be clash-compiler: the patched
