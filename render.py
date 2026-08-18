@@ -13,13 +13,17 @@ Usage:
   --out PATH         output file (default site/index.html)
   --all-branches     also show the branches without an open pull request
 
-The page holds all data. It gives the reader two selectors:
+The page holds all data. It gives the reader three selectors:
 
 - the machine. Numbers from different machines are not comparable, so the
   page shows one machine at a time.
 - the branch. The default is master. For another branch, the x-axis is
   master up to the branch point, then the commits of the branch. The
   commits of the branch have their own colour.
+- the metric. The default is the compile time. The other choices show
+  the memory of the same runs: the live heap and the memory taken from
+  the OS, the total allocation, and the wall time split into mutator
+  and collector. See "What a run measures" in docs/ops.md.
 
 Master comes from the clone, not from the results: this way the graph also
 shows the commits that have no result yet, as holes. A branch comes from
@@ -33,7 +37,8 @@ bench/prune_branches.py keeps the "pr" field of the snapshots up to date.
 Use --all-branches to see the rest as well, on your own machine.
 
 The page names its view in the URL by commit, not by branch: the fragment
-is #machine=<id>&head=<sha>. A commit does not move, so such a link stays
+is #machine=<id>&head=<sha>, plus &metric=<m> when the metric is not the
+default. A commit does not move, so such a link stays
 good after the branch advances, loses its pull request, or goes away. The
 page looks for a branch that carries the commit; without one it shows the
 commit and its ancestors as "detached -- <sha>". For that fallback, every
@@ -284,7 +289,12 @@ def main():
             benchmarks.update(result["normalization"])
             wd = result["wire_demo"]
             entry = {
-                "norm": {name: [v["mean_s"], v["stddev_s"]]
+                # The page reads these by position: mean, stddev,
+                # allocation, mutator wall, gc wall. The allocation is a
+                # per-run mean; whole bytes are enough.
+                "norm": {name: [v["mean_s"], v["stddev_s"],
+                                round(v["alloc_bytes"]),
+                                v["mut_wall_s"], v["gc_wall_s"]]
                          for name, v in result["normalization"].items()},
                 "wire": {"status": wd["status"]},
                 "quick": result["run"]["quick"],
@@ -296,6 +306,11 @@ def main():
                     "norm_s": run["normalization_s"],
                     "netlist_s": run["netlist_s"],
                     "total_s": run["total_s"],
+                    "alloc_bytes": run["alloc_bytes"],
+                    "max_live_bytes": run["max_live_bytes"],
+                    "peak_mb": run["peak_mb"],
+                    "mut_wall_s": run["mut_wall_s"],
+                    "gc_wall_s": run["gc_wall_s"],
                     "overlays": wd["overlays"],
                 })
             else:
@@ -499,6 +514,13 @@ TEMPLATE = """<!DOCTYPE html>
     </div>
     <div class="filters">
       <label>Branch <select id="f-ref"></select></label>
+      <span class="sep"></span>
+      <label>Metric <select id="f-metric">
+        <option value="time">Time</option>
+        <option value="memory">Memory</option>
+        <option value="alloc">Allocation</option>
+        <option value="gc">MUT/GC split</option>
+      </select></label>
     </div>
   </div>
   <div id="headline"></div>
@@ -553,6 +575,18 @@ function fmtVal(v) {
   return v.toLocaleString("en-US", { maximumSignificantDigits: 4 });
 }
 
+// Pick one unit for a whole panel of byte values, from its largest value,
+// and scale the values to it. Binary units, because peak_mb is MiB from
+// the GHC runtime, so that conversion stays exact.
+const BYTE_UNITS = [["TiB", 2 ** 40], ["GiB", 2 ** 30], ["MiB", 2 ** 20]];
+function scaleBytes(values) {
+  const max = Math.max(...values.filter(Boolean).flatMap(v => v.vs));
+  const [unit, size] = BYTE_UNITS.find(([, s]) => max >= s)
+    || BYTE_UNITS[BYTE_UNITS.length - 1];
+  for (const v of values) if (v) v.vs = v.vs.map(b => b / size);
+  return unit;
+}
+
 function commitUrl(sha, onBranch) {
   const c = DATA.commits[sha];
   const repo = onBranch ? VD.ref.repo : DATA.upstreamRepo;
@@ -563,50 +597,154 @@ function commitUrl(sha, onBranch) {
 
 // ------------------------------------------------------------ panel model
 
-// Build the panels of one machine and one branch. A panel holds one value
-// for each commit of the branch, or null where there is no result.
-function buildPanels(machineId, ref) {
+// Build the panels of one machine, one branch and one metric. A panel
+// holds one value for each commit of the branch, or null where there is
+// no result. The series of one panel share the y-axis, so metrics with
+// different units get panels of their own.
+function buildPanels(machineId, ref, metric) {
   const own = DATA.results[machineId] || {};
   const shas = ref.commits;
   const panels = [];
 
-  const wireValues = shas.map(sha => {
+  // One value for each commit, read out of the wireDemo entry by pick().
+  // A commit whose wireDemo leg did not run is a hole.
+  const wireValues = pick => shas.map(sha => {
     const r = own[sha];
     if (!r || r.wire.status !== "ok") return null;
-    return { vs: [r.wire.norm_s, r.wire.total_s], extra: r.wire.overlays || [] };
+    return { vs: pick(r.wire), extra: r.wire.overlays || [] };
   });
-  if (wireValues.some(Boolean)) {
+  // The same for one normalization example. pick() reads the packed
+  // array of the example: mean, stddev, allocation, mutator, gc.
+  const normValues = (name, pick) => shas.map(sha => {
+    const entry = own[sha] && own[sha].norm[name];
+    return entry ? pick(entry) : null;
+  });
+  // The unit of a normalization time panel, over the values it shows.
+  const msScale = values => {
+    const max = Math.max(...values.filter(Boolean).flatMap(v => v.vs));
+    return max < DATA.msLimit ? ["ms", 1000] : ["s", 1];
+  };
+
+  if (metric === "memory") {
+    const values = wireValues(w => [w.max_live_bytes, w.peak_mb * 2 ** 20]);
+    if (values.some(Boolean)) {
+      panels.push({
+        id: "wire_demo-mem",
+        title: "wireDemo (bittide-hardware)",
+        note: "Largest live heap, and most memory taken from the OS, "
+          + "during one HDL generation of wireDemoTest",
+        unit: scaleBytes(values),
+        dim: "memory",
+        series: ["live heap", "peak (OS)"],
+        colors: SERIES_COLORS,
+        values,
+        headline: true,
+        wire: true,
+      });
+    }
+    // The examples have no live-heap numbers; see the Allocation metric.
+    return panels;
+  }
+
+  if (metric === "alloc") {
+    const values = wireValues(w => [w.alloc_bytes]);
+    if (values.some(Boolean)) {
+      panels.push({
+        id: "wire_demo-alloc",
+        title: "wireDemo (bittide-hardware)",
+        note: "Total allocation of one HDL generation of wireDemoTest",
+        unit: scaleBytes(values),
+        dim: "allocation",
+        series: ["allocated"],
+        colors: [SERIES_COLORS[0]],
+        values,
+        headline: true,
+        wire: true,
+      });
+    }
+    for (const name of DATA.benchmarks) {
+      const values = normValues(name, entry => ({ vs: [entry[2]] }));
+      if (!values.some(Boolean)) continue;
+      panels.push({
+        id: "norm-alloc-" + name,
+        title: name.split("/").pop(),
+        note: name,
+        unit: scaleBytes(values),
+        dim: "allocation",
+        series: ["allocated"],
+        colors: [SERIES_COLORS[0]],
+        values,
+      });
+    }
+    return panels;
+  }
+
+  if (metric === "gc") {
+    const values = wireValues(w => [w.mut_wall_s, w.gc_wall_s]);
+    if (values.some(Boolean)) {
+      panels.push({
+        id: "wire_demo-gc",
+        title: "wireDemo (bittide-hardware)",
+        note: "Wall time of one HDL generation of wireDemoTest, split "
+          + "into mutator and collector",
+        unit: "s",
+        dim: "time",
+        series: ["mutator", "gc"],
+        colors: SERIES_COLORS,
+        values,
+        headline: true,
+        wire: true,
+      });
+    }
+    for (const name of DATA.benchmarks) {
+      const raw = normValues(name, entry => ({ vs: [entry[3], entry[4]] }));
+      if (!raw.some(Boolean)) continue;
+      const [unit, scale] = msScale(raw);
+      panels.push({
+        id: "norm-gc-" + name,
+        title: name.split("/").pop(),
+        note: name,
+        unit,
+        dim: "time",
+        series: ["mutator", "gc"],
+        colors: SERIES_COLORS,
+        values: raw.map(v => v && { vs: v.vs.map(s => s * scale) }),
+      });
+    }
+    return panels;
+  }
+
+  // The default metric: the compile times.
+  const values = wireValues(w => [w.norm_s, w.total_s]);
+  if (values.some(Boolean)) {
     panels.push({
       id: "wire_demo",
       title: "wireDemo (bittide-hardware)",
       note: "Clash times of one HDL generation of wireDemoTest",
       unit: "s",
+      dim: "time",
       series: ["normalization", "total"],
       colors: SERIES_COLORS,
-      values: wireValues,
+      values,
       headline: true,
+      wire: true,
     });
   }
-
   for (const name of DATA.benchmarks) {
-    const means = shas
-      .map(sha => own[sha] && own[sha].norm[name])
-      .filter(Boolean)
-      .map(entry => entry[0]);
-    if (!means.length) continue;
-    const useMs = Math.max(...means) < DATA.msLimit;
-    const scale = useMs ? 1000 : 1;
+    const raw = normValues(name, entry => ({ vs: [entry[0]], sds: [entry[1]] }));
+    if (!raw.some(Boolean)) continue;
+    const [unit, scale] = msScale(raw);
     panels.push({
       id: "norm-" + name,
       title: name.split("/").pop(),
       note: name,
-      unit: useMs ? "ms" : "s",
+      unit,
+      dim: "time",
       series: ["mean"],
       colors: [SERIES_COLORS[0]],
-      values: shas.map(sha => {
-        const entry = own[sha] && own[sha].norm[name];
-        if (!entry) return null;
-        return { vs: [entry[0] * scale], sds: [entry[1] * scale] };
+      values: raw.map(v => v && {
+        vs: v.vs.map(s => s * scale),
+        sds: v.sds.map(s => s * scale),
       }),
     });
   }
@@ -724,7 +862,7 @@ function renderPanel(container, panel, height) {
   const pad = (hi - lo || Math.abs(hi) || 1) * 0.12;
   const positive = lo >= 0;
   lo -= pad; hi += pad;
-  if (positive && lo < 0) lo = 0; // A time is never negative.
+  if (positive && lo < 0) lo = 0; // A measurement is never negative.
 
   const x = i => m.left + (n <= 1 ? iw / 2 : (i / (n - 1)) * iw);
   const y = v => m.top + ih - ((v - lo) / (hi - lo)) * ih;
@@ -756,7 +894,7 @@ function renderPanel(container, panel, height) {
     const cy = m.top + ih / 2;
     const ylab = el("text", { x: 12, y: cy, "text-anchor": "middle",
       transform: `rotate(-90 12 ${cy})` });
-    ylab.textContent = "time (" + panel.unit + ")";
+    ylab.textContent = panel.dim + " (" + panel.unit + ")";
     svg.appendChild(ylab);
   }
 
@@ -996,7 +1134,7 @@ function renderTable() {
       if (!val) {
         cell.className = "muted";
         cell.textContent = !result ? "—"
-          : panel.id === "wire_demo" ? (result.wire.reason || "skipped") : "—";
+          : panel.wire ? (result.wire.reason || "skipped") : "—";
         continue;
       }
       cell.className = "num";
@@ -1097,6 +1235,7 @@ function renderAll() {
 
 const machineSelect = document.getElementById("f-machine");
 const refSelect = document.getElementById("f-ref");
+const metricSelect = document.getElementById("f-metric");
 const fromInput = document.getElementById("f-from");
 const toInput = document.getElementById("f-to");
 
@@ -1105,7 +1244,8 @@ const toInput = document.getElementById("f-to");
 // the sha is what makes the link permanent, so writeHash() must not
 // replace it with the name of the branch that carries it today.
 const state = { machine: DATA.machines[0].id,
-                sel: { type: "ref", key: "master" }, from: null, to: null };
+                sel: { type: "ref", key: "master" }, metric: "time",
+                from: null, to: null };
 let VD = { commits: [], panels: [], ref: DATA.refs[0], branchPoint: null };
 
 const MASTER = DATA.refs[0];
@@ -1193,6 +1333,10 @@ function readHash() {
   // Old links name the branch. The branch moves and can go away, which is
   // why new links name a commit instead; see writeHash().
   else if (ref && DATA.refs.some(r => r.key === ref)) state.sel = { type: "ref", key: ref };
+  // A link without a metric means the default, not "keep what is there":
+  // the URL names the whole view.
+  const metric = params.get("metric");
+  state.metric = ["memory", "alloc", "gc"].includes(metric) ? metric : "time";
 }
 
 function writeHash() {
@@ -1200,6 +1344,7 @@ function writeHash() {
   params.set("machine", state.machine);
   params.set("head", state.sel.type === "head" ? state.sel.sha
     : VD.ref.commits[VD.ref.commits.length - 1] || "");
+  if (state.metric !== "time") params.set("metric", state.metric);
   history.replaceState(null, "", "#" + params.toString());
 }
 
@@ -1227,7 +1372,7 @@ function syncRefSelect(ref) {
 function apply() {
   const ref = state.sel.type === "head" ? resolveView(state.sel.sha)
     : DATA.refs.find(r => r.key === state.sel.key) || DATA.refs[0];
-  const panels = buildPanels(state.machine, ref);
+  const panels = buildPanels(state.machine, ref, state.metric);
   const dates = ref.commits.map(sha => DATA.commits[sha].d);
   const first = dates[0] || "", last = dates[dates.length - 1] || "";
 
@@ -1260,6 +1405,7 @@ function apply() {
     };
   }
   machineSelect.value = state.machine;
+  metricSelect.value = state.metric;
   syncRefSelect(ref);
   writeHash();
   renderAll();
@@ -1275,6 +1421,11 @@ refSelect.addEventListener("change", () => {
   // The branches cover different date ranges. Start from the whole range.
   state.from = state.to = null;
   markPreset(document.querySelector('.filters button[data-days="0"]'));
+  apply();
+});
+metricSelect.addEventListener("change", () => {
+  state.metric = metricSelect.value;
+  // Another metric of the same commits: the date range stays.
   apply();
 });
 

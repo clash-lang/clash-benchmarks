@@ -172,8 +172,9 @@ total allocation, the largest live heap, the memory the process took
 from the OS (wireDemo only), and the split of the runtime into mutator
 and collector time. The normalization leg gets them from criterion with
 `+RTS -T`; the wireDemo leg parses the one-line `+RTS -t` summary from
-the run log. The site does not show these numbers yet; they are in the
-result files for analysis by hand.
+the run log. The metric selector on the site shows them: the live heap
+and the memory from the OS, the allocation, and the MUT/GC split.
+`num_gcs` and the CPU-time variants are in the result files only.
 
 The fields and their units are in the docstring of
 `bench/result_schema.py`. The schema version went to 3 with these
