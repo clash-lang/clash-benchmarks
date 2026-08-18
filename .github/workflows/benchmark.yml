@@ -34,8 +34,8 @@ on:
         required: false
         default: "1"
   schedule:
-    # Every six hours. A full run takes 45 to 90 minutes per commit.
-    - cron: "0 */6 * * *"
+    # Every six hours. A full run takes ~20 minutes per commit.
+    - cron: "0 * * * *"
 
 run-name: >-
   ${{ inputs.sha && format('Benchmark {0}', inputs.sha)
