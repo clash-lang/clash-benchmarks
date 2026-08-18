@@ -1,0 +1,14 @@
+{
+  "base": "9fc4bd2405c630011f2427efc34320fc650516a9",
+  "commits": [
+    {
+      "date": "2026-08-18",
+      "sha": "149ca37f4a25659fed68570d64508d414927dac5",
+      "subject": "Compare type variables structurally, not just by unique"
+    }
+  ],
+  "pr": 3362,
+  "ref": "martijn/fix-3361",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-08-18T12:33:52+00:00"
+}
