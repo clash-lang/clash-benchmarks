@@ -18,22 +18,22 @@
     },
     {
       "date": "2026-08-19",
-      "sha": "3f03a56eaa63bc2ea2370f62020d8bd0ce0e3935",
+      "sha": "20279b28706f76151e596539e7a5bb14010d9fb6",
       "subject": "Add strategy DSL"
     },
     {
       "date": "2026-08-19",
-      "sha": "3030b1523deca795b803e9f6bae7c4d0380732d7",
+      "sha": "2969fe0431615a8e8a49418de517d312e2925cbe",
       "subject": "Compile the normalization strategies from `StrategyDSL` specs"
     },
     {
       "date": "2026-08-19",
-      "sha": "d029c1834766dabf06a9c5b66218f6902b3abe4a",
+      "sha": "16c0c5f4e5518a5afc4cb6e87287374bb11c3965",
       "subject": "Generate the strategy dispatch code with Template Haskell"
     }
   ],
   "pr": 3328,
   "ref": "perf/strategy-dsl",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-19T10:07:29+00:00"
+  "updated": "2026-08-19T10:27:23+00:00"
 }

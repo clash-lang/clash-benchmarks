@@ -1,149 +1,149 @@
 {
-  "base": "a06d3452bd8317ab3d01b75b13c59090f9d59fc1",
+  "base": "9fc4bd2405c630011f2427efc34320fc650516a9",
   "commits": [
     {
-      "date": "2026-08-06",
-      "sha": "dd216079692fd1e790969f9478615f8715a0749d",
+      "date": "2026-08-19",
+      "sha": "49b0f79caa47326c3ed63491c28fc5fe18fbb93b",
       "subject": "Add cast push-rule infrastructure to Clash core"
     },
     {
-      "date": "2026-08-06",
-      "sha": "cc9f74744305340a7cb7bfc478e2268d74c4a79a",
+      "date": "2026-08-19",
+      "sha": "2fddcf3a464749f6a9eebc5337280062160402ef",
       "subject": "Teach the WHNF evaluator to evaluate casts"
     },
     {
-      "date": "2026-08-06",
-      "sha": "963af9b6053b03dc7e172b898bd5d55578a87ca4",
+      "date": "2026-08-19",
+      "sha": "a58f10d13a579e8bf2ff58cc87e3d8d6ed795d65",
       "subject": "Make normalization and netlist generation robust to casts"
     },
     {
-      "date": "2026-08-06",
-      "sha": "f285a9ba8b66083cd9f8afe7698dd075ffe1aa73",
+      "date": "2026-08-19",
+      "sha": "6e92c71c9b7557b492e8cf0fbef241bcd8ec94fb",
       "subject": "Keep all casts when translating GHC Core to Clash Core"
     },
     {
-      "date": "2026-08-06",
-      "sha": "d6cad8e3bcad091a1e1371249892b834cc2f9cdf",
+      "date": "2026-08-19",
+      "sha": "62df319a50c9de394762e1ddd692bf3373ab15f9",
       "subject": "Translate the Signal combinators to casts; make Signal opaque"
     },
     {
-      "date": "2026-08-06",
-      "sha": "da72e5f0a7efb29463116e2fda54f19c714cb494",
+      "date": "2026-08-19",
+      "sha": "2ea7550bca9adc3db91c07b9d7f8c2972ce04ee7",
       "subject": "Make BiSignalIn/BiSignalOut opaque in coreView1"
     },
     {
-      "date": "2026-08-06",
-      "sha": "a2bb1b2e774c22071df0eadc6cb3bfb3c6442149",
+      "date": "2026-08-19",
+      "sha": "b43006e844100f826dbaf66a9b27fed42163afea",
       "subject": "Make newtypes opaque in Clash's type system"
     },
     {
-      "date": "2026-08-06",
-      "sha": "f878689569f009d7e214001664828adf94be9f26",
+      "date": "2026-08-19",
+      "sha": "65a28f8681a572967338e47411d93c67d8318591",
       "subject": "Add changelog entry for Signal-as-cast and opaque newtypes"
     },
     {
-      "date": "2026-08-06",
-      "sha": "fca1b954d97857bb4a248209d347ab7218f4ced7",
+      "date": "2026-08-19",
+      "sha": "3093ddd93ab870e99605eb543b17b3db5a27c965",
       "subject": "recToLetRec: recognize self-calls under casts"
     },
     {
-      "date": "2026-08-06",
-      "sha": "a339fb4315820e7a6a41284093f9ebb2fcd4d9f2",
+      "date": "2026-08-19",
+      "sha": "a62421de0ff61f69ca61e3943ba32be3890fc589",
       "subject": "Handle casts in ANF, blackbox result names, and undefined values"
     },
     {
-      "date": "2026-08-06",
-      "sha": "a298ad3ddaedb06fb84cfa26c91cf5255dd0b4e5",
+      "date": "2026-08-19",
+      "sha": "f2cd617fefaa98f8df5d50da9932becfcf0e1f05",
       "subject": "Support top entities returning a newtype of a function type"
     },
     {
-      "date": "2026-08-06",
-      "sha": "6c6756330103a676481099e7ee0a5e328b9dcc53",
+      "date": "2026-08-19",
+      "sha": "0dcaf1497887c6168df61208a8bb6273181089ca",
       "subject": "Only inline casts that cannot cancel otherwise"
     },
     {
-      "date": "2026-08-06",
-      "sha": "3b21ee46e863c3a819af9f3796015f0a6ae0a0f7",
+      "date": "2026-08-19",
+      "sha": "71a8e460ca7fa09adcb3928028b282405333d33f",
       "subject": "Don't specialize when a term argument is applied to a type variable"
     },
     {
-      "date": "2026-08-06",
-      "sha": "738e484e8f26cae48b335f300b1caa59f5f4fa6f",
+      "date": "2026-08-19",
+      "sha": "2c9303a4d57b0de98de52a2b168b47ee214efbce",
       "subject": "argCastSpec: don't specialize on casts that are refl under the oracle"
     },
     {
-      "date": "2026-08-06",
-      "sha": "ab31ef299bca53d775e24a1436b8f2ca6c2fa601",
+      "date": "2026-08-19",
+      "sha": "8045947f63c45491b22d45114be96917993396ea",
       "subject": "Netlist: compile non-ANF single-alternative cases via projections"
     },
     {
-      "date": "2026-08-06",
-      "sha": "b29356b922551d2d548bf203f1af888e949df67a",
+      "date": "2026-08-19",
+      "sha": "ba6875366a9951bcbb2544263fd863113d49c71a",
       "subject": "Recognize newtype-of-function types as function types"
     },
     {
-      "date": "2026-08-06",
-      "sha": "c27f16f3a3e5680644305cdfe9afc95fee35f051",
+      "date": "2026-08-19",
+      "sha": "ba4a96d8819c4100fd38803f8afc514aaaa2c4bc",
       "subject": "Keep binders with newtype-of-function types as separate components"
     },
     {
-      "date": "2026-08-06",
-      "sha": "4befe7498ec25ea1dbfb0b56e7c17f4db23eaa15",
+      "date": "2026-08-19",
+      "sha": "2d406961a73a50b779bbeb4aa8bb9e522ceec37a",
       "subject": "inlineCastNonRep: only apply the inline limit to recursive binders"
     },
     {
-      "date": "2026-08-06",
-      "sha": "ee820e707da2a856215d913edf59479fa0e5208c",
+      "date": "2026-08-19",
+      "sha": "5c921211af1d7e436898f409f7c82660088cde0f",
       "subject": "Run propagation and cast transformations to a fixpoint after etaTL"
     },
     {
-      "date": "2026-08-06",
-      "sha": "a8c8f946fe2f3f8aa87d42d7c7b5051a46a3ae2b",
+      "date": "2026-08-19",
+      "sha": "29b21216b029f162ed716cec4d56f43cf6d66e5e",
       "subject": "Revert \"inlineCastNonRep: only apply the inline limit to recursive binders\""
     },
     {
-      "date": "2026-08-06",
-      "sha": "e1c95bc4bacc014738641ee3b4f75e14ce8a116d",
+      "date": "2026-08-19",
+      "sha": "25140fe452162903a15ef5b59c35234cc8c4f151",
       "subject": "Make the type-preservation check a hard error under debug-invariants"
     },
     {
-      "date": "2026-08-06",
-      "sha": "664d4acd9eb5a7dc232a3e07c8c8d2b2cb417909",
+      "date": "2026-08-19",
+      "sha": "baf2d0672e2426171c86a64327fb62bce58f2c06",
       "subject": "inlineCastNonRep: only respect newtype-of-function casts for OPAQUE binders"
     },
     {
-      "date": "2026-08-06",
-      "sha": "b1e84c04fada999a76fdc3f9167a8ca02b94112f",
+      "date": "2026-08-19",
+      "sha": "3aabefbaef944767bcc21d453dacc8df6f8c23ef",
       "subject": "splitCastWork: bring the letrec binders into scope"
     },
     {
-      "date": "2026-08-06",
-      "sha": "1384f1161a058f2952141a7cb6ce4e4f8d4ef01d",
+      "date": "2026-08-19",
+      "sha": "641e73c40d647b8ad6dfacc04e75a4eaa0e9b23f",
       "subject": "Add regression tests for the keep-all-casts fixes"
     },
     {
-      "date": "2026-08-07",
-      "sha": "301f8637aa2c320d3747937c8cb2e71ab374b754",
+      "date": "2026-08-19",
+      "sha": "f572565439f14ebef1881912914abfcd8841b2f0",
       "subject": "inlineCastNonRep: share the inlined body through a worker/wrapper split"
     },
     {
-      "date": "2026-08-07",
-      "sha": "9b7f0803caa1d900ecede1b8db8371a9cbe35655",
+      "date": "2026-08-19",
+      "sha": "b784971fe67c7b376156ab016c7e62c3ff076d8d",
       "subject": "castEqType: compare types without normalizing them first"
     },
     {
       "date": "2026-08-19",
-      "sha": "3d86f40f82dcf4e6897c50f29b14abc88811fe39",
+      "sha": "8d7610770f20718475eff887e65a0a5fc1b6cd3c",
       "subject": "GHC2Core: beta-reduce saturated Signal combinators at translation time"
     },
     {
       "date": "2026-08-19",
-      "sha": "0dcca1d6e012209ca8be65b5bc43b6880d915d27",
+      "sha": "1660a2ef2d5901d024b3597f8caeaff401225bf1",
       "subject": "GHC2Core: only beta-reduce mapSignal#, appSignal#, and signal#"
     }
   ],
   "pr": 3352,
   "ref": "martijn/keep-casts",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-19T09:51:06+00:00"
+  "updated": "2026-08-19T10:27:24+00:00"
 }
