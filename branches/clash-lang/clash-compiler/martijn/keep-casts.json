@@ -135,10 +135,15 @@
       "date": "2026-08-19",
       "sha": "3d86f40f82dcf4e6897c50f29b14abc88811fe39",
       "subject": "GHC2Core: beta-reduce saturated Signal combinators at translation time"
+    },
+    {
+      "date": "2026-08-19",
+      "sha": "0dcca1d6e012209ca8be65b5bc43b6880d915d27",
+      "subject": "GHC2Core: only beta-reduce mapSignal#, appSignal#, and signal#"
     }
   ],
   "pr": 3352,
   "ref": "martijn/keep-casts",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-19T09:01:35+00:00"
+  "updated": "2026-08-19T09:32:34+00:00"
 }
