@@ -130,10 +130,15 @@
       "date": "2026-08-07",
       "sha": "9b7f0803caa1d900ecede1b8db8371a9cbe35655",
       "subject": "castEqType: compare types without normalizing them first"
+    },
+    {
+      "date": "2026-08-19",
+      "sha": "3d86f40f82dcf4e6897c50f29b14abc88811fe39",
+      "subject": "GHC2Core: beta-reduce saturated Signal combinators at translation time"
     }
   ],
   "pr": 3352,
   "ref": "martijn/keep-casts",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-19T03:15:34+00:00"
+  "updated": "2026-08-19T08:49:31+00:00"
 }
