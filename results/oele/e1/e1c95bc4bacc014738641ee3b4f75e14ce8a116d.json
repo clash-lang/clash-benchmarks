@@ -1,0 +1,86 @@
+{
+  "clash": {
+    "commit": "e1c95bc4bacc014738641ee3b4f75e14ce8a116d",
+    "committer_date": "2026-08-06",
+    "parents": [
+      "a8c8f946fe2f3f8aa87d42d7c7b5051a46a3ae2b"
+    ],
+    "ref": "martijn/keep-casts",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Make the type-preservation check a hard error under debug-invariants"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 40454371.26213592,
+        "gc_wall_s": 2.0892791262138038e-06,
+        "mean_s": 0.012089246146165864,
+        "mut_wall_s": 0.01203842774514565,
+        "stddev_s": 0.00012505855723800524
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 858274537.6,
+        "gc_wall_s": 0.0003635622000000042,
+        "mean_s": 0.25142973849142436,
+        "mut_wall_s": 0.2519929883333338,
+        "stddev_s": 0.0031304535552860286
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 79804516.68571429,
+        "gc_wall_s": 1.1353476190476129e-05,
+        "mean_s": 0.023772334599313587,
+        "mut_wall_s": 0.023744094499999993,
+        "stddev_s": 0.00011992689582854197
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 46505520.12565445,
+        "gc_wall_s": 3.1767984293193373e-06,
+        "mean_s": 0.012428804923280207,
+        "mut_wall_s": 0.01235520022251309,
+        "stddev_s": 0.00023737507505424394
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 2692459407.2,
+        "gc_wall_s": 0.0042045114999999965,
+        "mean_s": 0.7451142670815898,
+        "mut_wall_s": 0.7403882718000002,
+        "stddev_s": 0.0018941572203438957
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 1106141105.0666666,
+        "gc_wall_s": 0.0005728763333333313,
+        "mean_s": 0.29368772719686,
+        "mut_wall_s": 0.2933489154,
+        "stddev_s": 0.0005317777860197862
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 371557816.0,
+        "gc_wall_s": 6.740583333333013e-05,
+        "mean_s": 0.12816629136790045,
+        "mut_wall_s": 0.12797568438888873,
+        "stddev_s": 0.0004465504356235849
+      }
+    },
+    "skip_reason": null,
+    "status": "ok"
+  },
+  "run": {
+    "date": "2026-08-19T02:06:06+00:00",
+    "quick": false,
+    "trigger": "schedule",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32203946189"
+  },
+  "schema_version": 4,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [],
+    "skip_reason": "wireDemo HDL generation timed out after 900s",
+    "status": "skipped"
+  }
+}
