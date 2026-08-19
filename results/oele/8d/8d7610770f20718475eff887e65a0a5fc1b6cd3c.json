@@ -1,0 +1,100 @@
+{
+  "clash": {
+    "commit": "8d7610770f20718475eff887e65a0a5fc1b6cd3c",
+    "committer_date": "2026-08-19",
+    "parents": [
+      "b784971fe67c7b376156ab016c7e62c3ff076d8d"
+    ],
+    "ref": "martijn/keep-casts",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "GHC2Core: beta-reduce saturated Signal combinators at translation time"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 40013207.533980586,
+        "gc_wall_s": 2.1577475728157485e-06,
+        "mean_s": 0.011716029545222701,
+        "mut_wall_s": 0.011665186720873796,
+        "stddev_s": 0.00014710420887000442
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 816882763.8095238,
+        "gc_wall_s": 0.00033412676190476223,
+        "mean_s": 0.22210152904315492,
+        "mut_wall_s": 0.21908633228571397,
+        "stddev_s": 0.015149651908423245
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 85532089.29523809,
+        "gc_wall_s": 7.907342857142861e-06,
+        "mean_s": 0.022798706717903273,
+        "mut_wall_s": 0.022712411576190486,
+        "stddev_s": 0.00029263175131227624
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 55395044.20795107,
+        "gc_wall_s": 4.551990825688168e-06,
+        "mean_s": 0.014292105120356976,
+        "mut_wall_s": 0.014243360143730866,
+        "stddev_s": 0.00017781572577783413
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 3674146931.2,
+        "gc_wall_s": 0.0075618944,
+        "mean_s": 1.0150500564565543,
+        "mut_wall_s": 1.0061307168,
+        "stddev_s": 0.013104499023364477
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 1336006842.1333334,
+        "gc_wall_s": 0.0008019333333333452,
+        "mean_s": 0.33343532096439354,
+        "mut_wall_s": 0.33238773493333296,
+        "stddev_s": 0.00129696118741283
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 362975727.3333333,
+        "gc_wall_s": 6.810527777777649e-05,
+        "mean_s": 0.11737061770826196,
+        "mut_wall_s": 0.11734042513888908,
+        "stddev_s": 0.00016720406371092833
+      }
+    },
+    "skip_reason": null,
+    "status": "ok"
+  },
+  "run": {
+    "date": "2026-08-19T17:09:07+00:00",
+    "quick": false,
+    "trigger": "schedule",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32276221702"
+  },
+  "schema_version": 4,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "alloc_bytes": 728475560208,
+        "gc_cpu_s": 10.39,
+        "gc_wall_s": 10.396,
+        "max_live_bytes": 618001672,
+        "mut_cpu_s": 216.343,
+        "mut_wall_s": 216.28,
+        "netlist_s": 3.017,
+        "normalization_s": 209.0,
+        "num_gcs": 3142,
+        "peak_mb": 1617,
+        "total_s": 221.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
