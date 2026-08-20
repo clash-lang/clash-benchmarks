@@ -1,0 +1,100 @@
+{
+  "clash": {
+    "commit": "678f3261cdd18553d6d015d5015e64bccd5e82c4",
+    "committer_date": "2026-08-20",
+    "parents": [
+      "a1b2d2a126f04748f37c39c5b7fb306b611a16f8"
+    ],
+    "ref": "perf/strategy-dsl",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Make the rewrite traversal combinators inlineable"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 37196721.57110609,
+        "gc_wall_s": 1.7423747178330977e-06,
+        "mean_s": 0.010907413609892105,
+        "mut_wall_s": 0.01087772013544018,
+        "stddev_s": 0.0001050783802341983
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 683050931.7142857,
+        "gc_wall_s": 0.0003034218928571455,
+        "mean_s": 0.17822433008794944,
+        "mut_wall_s": 0.17794787710714324,
+        "stddev_s": 0.0002771591825613679
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 55732775.755351685,
+        "gc_wall_s": 5.6605535168195865e-06,
+        "mean_s": 0.014620578034273777,
+        "mut_wall_s": 0.014595648373088688,
+        "stddev_s": 0.00014518866133012465
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 37142260.18003914,
+        "gc_wall_s": 2.350303326810023e-06,
+        "mean_s": 0.00941065988321241,
+        "mut_wall_s": 0.009389633021526405,
+        "stddev_s": 8.255600490114344e-05
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 1890775111.2,
+        "gc_wall_s": 0.0026917505000000007,
+        "mean_s": 0.5055705541368903,
+        "mut_wall_s": 0.5050541756000001,
+        "stddev_s": 0.006460889413274338
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 862706908.5714285,
+        "gc_wall_s": 0.00039435076190475984,
+        "mean_s": 0.2041404865748417,
+        "mut_wall_s": 0.20367047676190472,
+        "stddev_s": 0.000653145748045322
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 260636469.0909091,
+        "gc_wall_s": 4.9869454545453156e-05,
+        "mean_s": 0.08303073424705958,
+        "mut_wall_s": 0.08297093705454586,
+        "stddev_s": 0.00023635415359814593
+      }
+    },
+    "skip_reason": null,
+    "status": "ok"
+  },
+  "run": {
+    "date": "2026-08-20T16:40:54+00:00",
+    "quick": false,
+    "trigger": "schedule",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32392684338"
+  },
+  "schema_version": 4,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "alloc_bytes": 323524409312,
+        "gc_cpu_s": 7.911,
+        "gc_wall_s": 7.918,
+        "max_live_bytes": 591785624,
+        "mut_cpu_s": 91.965,
+        "mut_wall_s": 92.043,
+        "netlist_s": 2.197,
+        "normalization_s": 84.0,
+        "num_gcs": 1978,
+        "peak_mb": 1555,
+        "total_s": 94.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
