@@ -179,6 +179,17 @@ clash-compiler builds clash-lib with its `debug` flag, so
 flag off before it builds. The wireDemo leg needs no counterpart: the
 freeze file of bittide-hardware pins clash-lib without the flag.
 
+The wireDemo leg runs Clash with `+RTS -N4`: four capabilities, so a
+commit with the concurrent normalization of
+[clash-compiler#3196](https://github.com/clash-lang/clash-compiler/pull/3196)
+shows its parallelism. The clash executable of bittide-instances is
+already built with `-threaded`, and `-N` is a safe RTS flag that a
+binary without `-rtsopts` still accepts. On a commit without concurrent
+normalization the flag only enables the parallel GC, which can move the
+GC wall time a little; wireDemo results from before 2026-08-20 were
+measured with one capability. The CPU times can now exceed the wall
+times, because four threads spend CPU seconds in the same wall second.
+
 Every measurement records memory next to time, from the GHC runtime:
 total allocation, the largest live heap, the memory the process took
 from the OS (wireDemo only), and the split of the runtime into mutator

@@ -147,9 +147,13 @@ hdl_dir=$(mktemp -d)
 run_log="${out%.json}-run.log"
 echo "run_bittide.sh: running wireDemoTest (log: ${run_log})"
 # "+RTS -t" prints one line of GC statistics to stderr when the process
-# exits, into the run log that the parser below reads. Plain -t is one of
-# the safe RTS flags, so the clash executable accepts it although it is
-# built without -rtsopts.
+# exits, into the run log that the parser below reads. "-N4" gives Clash
+# four capabilities, for the concurrent normalization of
+# clash-compiler#3196; on a commit without it the flag changes nothing
+# but the parallel GC. The clash executable of bittide-instances is
+# built with -threaded but without -rtsopts; both flags are among the
+# safe RTS flags that such a binary still accepts (-N only up to the
+# processor count of the machine, see rts/RtsFlags.c in GHC).
 run_status=0
 (cd "${ws}/bittide-hardware" \
   && timeout -k 60 "${run_timeout}" \
@@ -157,7 +161,7 @@ run_status=0
          Bittide.Instances.Hitl.WireDemo.TopEntity \
          -fclash-hdldir "${hdl_dir}" -main-is wireDemoTest \
          --verilog -fclash-clear -fclash-spec-limit=100 \
-         +RTS -t -RTS) &> "${run_log}" \
+         +RTS -t -N4 -RTS) &> "${run_log}" \
   || run_status=$?
 if [[ ${run_status} -eq 124 ]]; then
   skip "wireDemo HDL generation timed out after ${run_timeout}s"
