@@ -313,6 +313,29 @@ xdg-open site/index.html
 `site/` is in `.gitignore`: the rendered page belongs on the `pages`
 branch, not on `main`.
 
+### Export a graph
+
+Every panel has an "Export" button. It hands over that panel as one
+self-contained `<svg>` element to paste into a blog post, a README on a
+site that renders HTML, or an issue that allows it. The element carries
+its own palette, its title, its legend and a link back to the view it
+came from, so it needs nothing from the page it lands on; the rules of
+its stylesheet all name the class of its root element, so it changes
+nothing on that page either.
+
+The figure shows the view as it stands: the machine, the branch, the
+metric and the date range that are on screen. The theme selector decides
+what the figure does about light and dark:
+
+- *Light and dark* carries both palettes and follows the reader's
+  setting. Right for a post that does the same.
+- *Light only* and *Dark only* pin one palette. Right for a post that is
+  one or the other, so that the figure cannot end up dark on a light
+  page.
+
+The figure draws its own background, in the surface colour of the site,
+which is why it stays legible on a page of any colour.
+
 ## Data hygiene
 
 - `bench/result_schema.py` validates a result and a branch snapshot.

@@ -30,6 +30,11 @@ shows the commits that have no result yet, as holes. A branch comes from
 its snapshot in branches/, because a branch does not stay where it is.
 See bench/result_schema.py.
 
+Each panel carries an "Export" button. It hands the reader the panel as
+one self-contained <svg> element to paste into a blog post: the palette,
+the title, the legend and a link back to the view are inside the element,
+so it needs nothing from this page. See exportFigure() in the template.
+
 The branch selector holds the branches that are the head of an open pull
 request, and no others: a branch whose pull request is closed says nothing
 about Clash today, and the list stays short enough to use.
@@ -62,6 +67,72 @@ from result_schema import now, validate_branch, validate_result  # noqa: E402
 
 UPSTREAM_REPO = "clash-lang/clash-compiler"
 UPSTREAM_URL = f"https://github.com/{UPSTREAM_REPO}.git"
+
+# Where the page lives. An exported figure links back to the view it came
+# from; a page opened from a file has no address to link to, so the link
+# goes here instead.
+SITE_URL = "https://clash-lang.github.io/clash-benchmarks/"
+
+# Colours: categorical slots 1 to 3 of the reference palette. Slot 3 is
+# the branch accent. Both modes are selected, not flipped. The palette is
+# here, and not in the stylesheet of the template, because an exported
+# figure carries a copy of it: the page writes it as CSS for itself and as
+# JSON for the exporter, and the two cannot drift apart.
+PALETTE = {
+    "light": {
+        "surface-1": "#fcfcfb",
+        "page": "#f9f9f7",
+        "ink-1": "#0b0b0b",
+        "ink-2": "#52514e",
+        "muted": "#898781",
+        "grid": "#e1e0d9",
+        "axis": "#c3c2b7",
+        "series-1": "#2a78d6",
+        "series-2": "#eb6834",
+        "branch": "#1baf7a",
+        "border": "rgba(11,11,11,0.10)",
+    },
+    "dark": {
+        "surface-1": "#1a1a19",
+        "page": "#0d0d0d",
+        "ink-1": "#ffffff",
+        "ink-2": "#c3c2b7",
+        "muted": "#898781",
+        "grid": "#2c2c2a",
+        "axis": "#383835",
+        "series-1": "#3987e5",
+        "series-2": "#d95926",
+        "branch": "#199e70",
+        "border": "rgba(255,255,255,0.10)",
+    },
+}
+
+
+def palette_css():
+    """Return the three palette blocks of the page.
+
+    Light, then dark by preference, then dark by choice: data-theme on the
+    root element wins over the preference of the reader, in both
+    directions.
+    """
+    def body(mode, indent):
+        lines = [f"{indent}color-scheme: {mode};"]
+        lines += [f"{indent}--{k}: {v};" for k, v in PALETTE[mode].items()]
+        return "\n".join(lines)
+
+    return "\n".join([
+        "  .viz-root {",
+        body("light", "    "),
+        "  }",
+        "  @media (prefers-color-scheme: dark) {",
+        '    :root:where(:not([data-theme="light"])) .viz-root {',
+        body("dark", "      "),
+        "    }",
+        "  }",
+        '  :root[data-theme="dark"] .viz-root {',
+        body("dark", "    "),
+        "  }",
+    ])
 
 # Criterion measures short benchmarks in milliseconds. This is the limit
 # in seconds below which a panel changes its unit.
@@ -324,6 +395,7 @@ def main():
     data = {
         "generated": now("minutes"),
         "upstreamRepo": UPSTREAM_REPO,
+        "siteUrl": SITE_URL,
         "msLimit": MS_LIMIT,
         "machines": machines,
         "commits": commits,
@@ -337,6 +409,8 @@ def main():
                 f"master {master[0]['sha'][:9]}..{master[-1]['sha'][:9]}")
     page = (TEMPLATE
             .replace("__DATA__", json.dumps(data, separators=(",", ":")))
+            .replace("__PALETTE_CSS__", palette_css())
+            .replace("__PALETTE__", json.dumps(PALETTE, separators=(",", ":")))
             .replace("__SUBTITLE__", html.escape(subtitle)))
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(page)
@@ -344,59 +418,18 @@ def main():
     return 0
 
 
-TEMPLATE = """<!DOCTYPE html>
+# A raw string: every backslash in here belongs to the CSS, the JavaScript
+# or the HTML, and none to Python.
+TEMPLATE = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Clash benchmark history</title>
 <style>
-  /* Colours: categorical slots 1 to 3 of the reference palette. Slot 3
-     is the branch accent. Both modes are selected, not flipped. */
-  .viz-root {
-    color-scheme: light;
-    --surface-1: #fcfcfb;
-    --page: #f9f9f7;
-    --ink-1: #0b0b0b;
-    --ink-2: #52514e;
-    --muted: #898781;
-    --grid: #e1e0d9;
-    --axis: #c3c2b7;
-    --series-1: #2a78d6;
-    --series-2: #eb6834;
-    --branch: #1baf7a;
-    --border: rgba(11,11,11,0.10);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:where(:not([data-theme="light"])) .viz-root {
-      color-scheme: dark;
-      --surface-1: #1a1a19;
-      --page: #0d0d0d;
-      --ink-1: #ffffff;
-      --ink-2: #c3c2b7;
-      --muted: #898781;
-      --grid: #2c2c2a;
-      --axis: #383835;
-      --series-1: #3987e5;
-      --series-2: #d95926;
-      --branch: #199e70;
-      --border: rgba(255,255,255,0.10);
-    }
-  }
-  :root[data-theme="dark"] .viz-root {
-    color-scheme: dark;
-    --surface-1: #1a1a19;
-    --page: #0d0d0d;
-    --ink-1: #ffffff;
-    --ink-2: #c3c2b7;
-    --muted: #898781;
-    --grid: #2c2c2a;
-    --axis: #383835;
-    --series-1: #3987e5;
-    --series-2: #d95926;
-    --branch: #199e70;
-    --border: rgba(255,255,255,0.10);
-  }
+  /* The palette comes from PALETTE in render.py, so that the page and an
+     exported figure show the same colours. */
+__PALETTE_CSS__
   body.viz-root {
     margin: 0;
     background: var(--page);
@@ -437,6 +470,17 @@ TEMPLATE = """<!DOCTYPE html>
   .filters select { min-width: 0; }
   .filters .sep { width: 1px; height: 20px; background: var(--border); }
   .card h2 { font-size: 13px; font-weight: 600; margin: 0 0 2px; color: var(--ink-1); }
+  /* The heading of a card, with the export button at its right end. */
+  .cardhead {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 10px;
+  }
+  .exportbtn {
+    font: inherit; font-size: 11px; color: var(--ink-2);
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1px 7px; cursor: pointer; flex: none;
+  }
+  .exportbtn:hover { background: var(--page); color: var(--ink-1); }
   .card .note { font-size: 11.5px; color: var(--muted); margin: 0 0 8px; }
   .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 11.5px; color: var(--ink-2); margin: 0 0 6px; }
   .legend .swatch {
@@ -496,6 +540,35 @@ TEMPLATE = """<!DOCTYPE html>
   td.where { color: var(--ink-2); }
   td.where.branch { color: var(--ink-1); font-weight: 600; }
   td.subject { max-width: 360px; overflow: hidden; text-overflow: ellipsis; }
+  /* The export dialog: the figure as it will look, and its markup. */
+  #exportbox {
+    width: min(880px, calc(100vw - 32px));
+    max-height: calc(100vh - 48px);
+    /* A short window scrolls the box; it does not cut it off. */
+    overflow: auto;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface-1);
+    color: var(--ink-1);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  #exportbox::backdrop { background: rgba(0,0,0,0.45); }
+  #exportbox .inner { padding: 16px 18px 18px; }
+  #exportbox h2 { font-size: 14px; font-weight: 650; margin: 0 0 4px; }
+  #exportbox .note {
+    font-size: 11.5px; color: var(--muted); margin: 0 0 10px; max-width: 76ch;
+  }
+  #exportbox .filters .note { margin: 0; }
+  /* A wide figure scrolls inside the dialog; the dialog does not grow. */
+  #export-preview { overflow-x: auto; margin: 12px 0; }
+  #export-code {
+    display: block; width: 100%; height: 150px; box-sizing: border-box;
+    font-family: ui-monospace, monospace; font-size: 10.5px;
+    background: var(--page); color: var(--ink-1);
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px;
+    resize: vertical; white-space: pre;
+  }
 </style>
 </head>
 <body class="viz-root">
@@ -535,9 +608,34 @@ TEMPLATE = """<!DOCTYPE html>
     <div class="tablewrap" id="table"></div>
   </details>
 </div>
+<dialog id="exportbox" aria-labelledby="export-head">
+  <div class="inner">
+    <h2 id="export-head">Export <span id="export-name"></span></h2>
+    <p class="note">One self-contained &lt;svg&gt; element, with the palette,
+    the title, the legend and a link back to this view inside it. It needs
+    nothing from this page, so it can go straight into a blog post. It shows
+    the commits of the view as it stands: this machine, this branch, this
+    metric and this date range.</p>
+    <div class="filters">
+      <label>Theme <select id="export-theme">
+        <option value="auto">Light and dark, by the reader's setting</option>
+        <option value="light">Light only</option>
+        <option value="dark">Dark only</option>
+      </select></label>
+      <span class="sep"></span>
+      <button type="button" id="export-copy">Copy HTML</button>
+      <button type="button" id="export-close">Close</button>
+      <span class="note" id="export-msg" role="status"></span>
+    </div>
+    <div id="export-preview"></div>
+    <textarea id="export-code" readonly spellcheck="false"
+      aria-label="Markup of the figure"></textarea>
+  </div>
+</dialog>
 <div id="tooltip" role="status"></div>
 <script>
 const DATA = __DATA__;
+const PALETTE = __PALETTE__;
 
 const M = { top: 14, right: 56, bottom: 26, left: 64 };
 // The right margin holds the label of the newest value, which is up to
@@ -826,6 +924,23 @@ function isBranch(i) {
   return VD.branchPoint != null && i > VD.branchPoint;
 }
 
+// The legend of one panel: the series when there is more than one, and
+// the branch when the view has one. The page draws these in HTML above a
+// card, the exporter draws the same list inside the figure.
+function legendItems(panel) {
+  const items = [];
+  if (panel.series.length > 1)
+    panel.series.forEach((name, k) => items.push([panel.colors[k], name, false]));
+  if (VD.branchPoint != null) {
+    const name = VD.ref.detached ? VD.ref.label : "branch " + VD.ref.label;
+    if (panel.series.length === 1)
+      items.push([BRANCH_COLOR, "on " + name, false]);
+    else
+      items.push([BRANCH_COLOR, "commits on " + name, true]);
+  }
+  return items;
+}
+
 // Split one run of points at the branch point. The point at the branch
 // point belongs to both parts, so the line stays connected.
 function colorParts(points) {
@@ -842,9 +957,16 @@ function colorParts(points) {
 
 // Draw one panel. Return true when the panel is too narrow for a
 // y-axis label.
-function renderPanel(container, panel, height) {
+//
+// opts.width draws at a width of its own, instead of the width of the
+// container: a figure for export has a size that the window does not
+// decide. opts.static leaves out everything that only a reader of this
+// page can use - the crosshair, the hit area and its handlers - and with
+// it the dots that are there to be highlighted and nothing else.
+function renderPanel(container, panel, height, opts) {
   container.replaceChildren();
-  const W = Math.max(280, container.clientWidth);
+  opts = opts || {};
+  const W = opts.width || Math.max(280, container.clientWidth);
   const H = height;
   const m = W < NARROW ? M_NARROW : M;
   const tight = m === M_NARROW;
@@ -968,17 +1090,19 @@ function renderPanel(container, panel, height) {
   const dotSpacing = pts.length > 1 ? iw / (pts.length - 1) : iw;
   const drawDots = dotSpacing >= 7;
   const markers = new Map();
-  for (const [i, val] of pts) {
-    const dots = [];
-    for (let s = 0; s < ns; s++) {
-      const color = isBranch(i) && ns === 1 ? BRANCH_COLOR : panel.colors[s];
-      const dot = el("circle", { cx: x(i), cy: y(val.vs[s]), r: 4,
-        fill: color, stroke: "var(--surface-1)", "stroke-width": 2 });
-      if (!drawDots) dot.setAttribute("visibility", "hidden");
-      svg.appendChild(dot);
-      dots.push(dot);
+  if (drawDots || !opts.static) {
+    for (const [i, val] of pts) {
+      const dots = [];
+      for (let s = 0; s < ns; s++) {
+        const color = isBranch(i) && ns === 1 ? BRANCH_COLOR : panel.colors[s];
+        const dot = el("circle", { cx: x(i), cy: y(val.vs[s]), r: 4,
+          fill: color, stroke: "var(--surface-1)", "stroke-width": 2 });
+        if (!drawDots) dot.setAttribute("visibility", "hidden");
+        svg.appendChild(dot);
+        dots.push(dot);
+      }
+      markers.set(i, dots);
     }
-    markers.set(i, dots);
   }
 
   // Direct labels at the newest point, one for each series. Push them
@@ -994,6 +1118,11 @@ function renderPanel(container, panel, height) {
     const end = el("text", { x: x(li) + 8, y: labelYs[s], class: "endlabel" });
     end.textContent = fmtVal(lval.vs[s]);
     svg.appendChild(end);
+  }
+
+  if (opts.static) {
+    container.appendChild(svg);
+    return tight;
   }
 
   const cross = el("line", { y1: m.top, y2: m.top + ih,
@@ -1150,6 +1279,201 @@ function renderTable() {
   box.appendChild(table);
 }
 
+// ----------------------------------------------------------------- export
+
+// One panel as a figure to paste elsewhere: a single <svg> element that
+// holds its own palette, title, legend and a link back to this view, and
+// that asks nothing of the page around it.
+//
+// An inline <svg> in HTML puts its <style> in the host document, not in a
+// scope of its own, so every rule of the figure names the class of its
+// root element: a bare "text" rule would reach the whole blog post.
+const EXPORT_CLASS = "clash-bench-figure";
+const EXPORT_W = 760;
+const EXPORT_FONT = 'system-ui, -apple-system, "Segoe UI", sans-serif';
+
+const exportBox = document.getElementById("exportbox");
+const exportCode = document.getElementById("export-code");
+const exportPreview = document.getElementById("export-preview");
+const exportTheme = document.getElementById("export-theme");
+const exportMsg = document.getElementById("export-msg");
+// The panel in the dialog, and the theme that the reader chose last: the
+// choice holds for the next figure as well.
+let exportOf = null;
+let exportMode = "auto";
+
+// The address of this view, for the link in the figure. A page opened
+// from a file has no address worth sharing; then the link goes to the
+// published site, where the same fragment names the same view.
+function permalink() {
+  const base = location.protocol === "http:" || location.protocol === "https:"
+    ? location.origin + location.pathname : DATA.siteUrl;
+  return base + location.hash;
+}
+
+function permalinkLabel() {
+  return permalink().replace(/^https?:\/\//, "").replace(/#.*$/, "")
+    .replace(/\/$/, "");
+}
+
+// The stylesheet of a figure: the palette, then the text styles that the
+// figure needs. "light" and "dark" pin the palette, for a post that is
+// one or the other; "auto" carries both.
+function exportCss(mode) {
+  const root = "." + EXPORT_CLASS;
+  const vars = (which, indent) => Object.keys(PALETTE[which])
+    .map(k => indent + "--" + k + ": " + PALETTE[which][k] + ";").join("\n");
+  let css = root + " {\n" + vars(mode === "dark" ? "dark" : "light", "  ")
+    + "\n}\n";
+  if (mode === "auto")
+    css += "@media (prefers-color-scheme: dark) {\n  " + root + " {\n"
+      + vars("dark", "    ") + "\n  }\n}\n";
+  return css
+    + root + " text { font: 10.5px " + EXPORT_FONT + "; fill: var(--muted); }\n"
+    + root + " .title { font-size: 13px; font-weight: 650; fill: var(--ink-1); }\n"
+    + root + " .sub { font-size: 10.5px; fill: var(--muted); }\n"
+    + root + " .legend { font-size: 11px; fill: var(--ink-2); }\n"
+    + root + " .endlabel { font-size: 11px; font-weight: 600; fill: var(--ink-2); }\n"
+    + root + " .branchlabel { font-size: 10.5px; font-weight: 600; fill: var(--ink-2); }\n"
+    + root + " a text { text-decoration: underline; }\n";
+}
+
+// Build the figure of one panel. The plot itself comes from renderPanel,
+// the same drawing that the page shows; this adds the header, the legend
+// and the palette around it.
+function exportFigure(panel, mode) {
+  const plotH = panel.headline ? 300 : 240;
+  const holder = document.createElement("div");
+  renderPanel(holder, panel, plotH, { width: EXPORT_W, static: true });
+  const plot = holder.firstChild;
+  if (!plot) return null;
+
+  const pad = 16;
+  const machine = DATA.machines.find(m => m.id === state.machine) || {};
+  const first = DATA.commits[VD.commits[0]].d;
+  const last = DATA.commits[VD.commits[VD.commits.length - 1]].d;
+  const lines = [];
+  let y = 20;
+  lines.push([y, "title", panel.title]);
+  if (panel.note) { y += 15; lines.push([y, "sub", panel.note]); }
+  y += 14;
+  lines.push([y, "sub", (machine.label || state.machine) + " · " + VD.ref.label
+    + (VD.ref.pr != null ? " (#" + VD.ref.pr + ")" : "")
+    + " · " + first + " to " + last]);
+  const linkY = y;
+  const items = legendItems(panel);
+  if (items.length) y += 17;
+  const legendY = y;
+  const headH = y + 8;
+  const H = headH + plotH;
+
+  const svg = el("svg", {
+    xmlns: "http://www.w3.org/2000/svg", class: EXPORT_CLASS,
+    width: EXPORT_W, height: H, viewBox: "0 0 " + EXPORT_W + " " + H,
+    // The attributes give a size to a reader that has no CSS; the style
+    // lets the figure shrink into a narrow column.
+    style: "width: 100%; max-width: " + EXPORT_W + "px; height: auto;",
+  });
+  const style = el("style", {});
+  style.textContent = "\n" + exportCss(mode);
+  svg.appendChild(style);
+  svg.appendChild(el("rect", { x: 0.5, y: 0.5, width: EXPORT_W - 1,
+    height: H - 1, rx: 8, fill: "var(--surface-1)", stroke: "var(--border)" }));
+  for (const [ly, cls, text] of lines) {
+    const node = el("text", { x: pad, y: ly, class: cls });
+    node.textContent = text;
+    svg.appendChild(node);
+  }
+
+  const link = el("a", { href: permalink(), target: "_blank" });
+  const linkText = el("text", { x: EXPORT_W - pad, y: linkY, class: "sub",
+    "text-anchor": "end" });
+  linkText.textContent = permalinkLabel();
+  link.appendChild(linkText);
+  svg.appendChild(link);
+
+  // The legend. The width of a label is an estimate: the figure is not on
+  // screen while it is built, so its text cannot be measured. The items
+  // are few and short, and the row has the whole width of the figure.
+  let lx = pad;
+  for (const [color, name, band] of items) {
+    svg.appendChild(el("rect", { x: lx, y: legendY - (band ? 9 : 5),
+      width: 14, height: band ? 10 : 3, rx: 2, fill: color,
+      opacity: band ? 0.35 : 1 }));
+    const node = el("text", { x: lx + 20, y: legendY, class: "legend" });
+    node.textContent = name;
+    svg.appendChild(node);
+    lx += 20 + name.length * 6 + 14;
+  }
+
+  const g = el("g", { transform: "translate(0 " + headH + ")" });
+  g.append(...plot.childNodes);
+  svg.appendChild(g);
+  return svg;
+}
+
+// The markup of a figure, one element to a line: a reader who opens the
+// box sees what they are about to paste. The break goes between tags
+// only, and never inside the text of a label.
+//
+// The coordinates come from a division and carry all the digits of it.
+// Two decimals are a hundredth of a pixel, which is far below what a
+// screen can show, and they take a third off the size of the markup.
+function exportMarkup(svg) {
+  return new XMLSerializer().serializeToString(svg)
+    .replace(/\d+\.\d{3,}/g, n => String(Number(Number(n).toFixed(2))))
+    .replace(/></g, ">\n<") + "\n";
+}
+
+function fillExport() {
+  const svg = exportOf && exportFigure(exportOf, exportMode);
+  const markup = svg ? exportMarkup(svg) : "";
+  exportCode.value = markup;
+  // The preview is the markup itself, parsed again: what the reader sees
+  // is what the box hands them.
+  exportPreview.innerHTML = markup;
+  exportMsg.textContent = "";
+}
+
+function openExport(panel) {
+  exportOf = panel;
+  document.getElementById("export-name").textContent = panel.title;
+  exportTheme.value = exportMode;
+  fillExport();
+  exportBox.showModal();
+}
+
+exportTheme.addEventListener("change", () => {
+  exportMode = exportTheme.value;
+  fillExport();
+});
+document.getElementById("export-copy").addEventListener("click", async () => {
+  exportCode.focus();
+  exportCode.select();
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(exportCode.value);
+    copied = true;
+  } catch (err) {
+    // No clipboard permission, or a page that is not a secure context.
+    try { copied = document.execCommand("copy"); } catch (err2) { copied = false; }
+  }
+  exportMsg.textContent = copied ? "Copied."
+    : "The markup is selected; press Ctrl+C or Cmd+C.";
+});
+document.getElementById("export-close").addEventListener("click", () => {
+  exportBox.close();
+});
+// A click on the backdrop is a click on the dialog itself.
+exportBox.addEventListener("click", e => {
+  if (e.target === exportBox) exportBox.close();
+});
+exportBox.addEventListener("close", () => {
+  exportOf = null;
+  exportPreview.replaceChildren();
+  exportCode.value = "";
+});
+
 // ----------------------------------------------------------------- render
 
 // The panels that are on screen now, for redraw().
@@ -1163,6 +1487,9 @@ function drawPanel(entry) {
 
 function renderAll() {
   DRAWN = [];
+  // The panels below are new objects. A dialog that is open holds one of
+  // the old ones, of a view that is no longer on screen.
+  if (exportBox.open) exportBox.close();
   const headline = document.getElementById("headline");
   const grid = document.getElementById("panels");
   const empty = document.getElementById("empty");
@@ -1193,24 +1520,25 @@ function renderAll() {
   for (const panel of VD.panels) {
     const card = document.createElement("div");
     card.className = "card";
+    const head = document.createElement("div");
+    head.className = "cardhead";
     const h = document.createElement("h2");
-    card.appendChild(h);
+    head.appendChild(h);
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "exportbtn";
+    button.textContent = "Export";
+    button.title = "Copy this graph as HTML";
+    button.addEventListener("click", () => openExport(panel));
+    head.appendChild(button);
+    card.appendChild(head);
     if (panel.note) {
       const note = document.createElement("p");
       note.className = "note";
       note.textContent = panel.note;
       card.appendChild(note);
     }
-    const items = [];
-    if (panel.series.length > 1)
-      panel.series.forEach((name, k) => items.push([panel.colors[k], name, false]));
-    if (VD.branchPoint != null) {
-      const name = VD.ref.detached ? VD.ref.label : "branch " + VD.ref.label;
-      if (panel.series.length === 1)
-        items.push([BRANCH_COLOR, "on " + name, false]);
-      else
-        items.push([BRANCH_COLOR, "commits on " + name, true]);
-    }
+    const items = legendItems(panel);
     if (items.length) {
       const leg = document.createElement("div");
       leg.className = "legend";
