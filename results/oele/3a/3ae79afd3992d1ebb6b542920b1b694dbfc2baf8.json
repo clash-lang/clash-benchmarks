@@ -1,0 +1,100 @@
+{
+  "clash": {
+    "commit": "3ae79afd3992d1ebb6b542920b1b694dbfc2baf8",
+    "committer_date": "2026-08-24",
+    "parents": [
+      "8ec94352e20bb7a10f2d19812f85ede0a0e80622"
+    ],
+    "ref": "martijn/concurrent-normalization",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Make netlist naming concurrency proof"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 44601448.65536723,
+        "gc_wall_s": 1.912745762711807e-06,
+        "mean_s": 0.013689017892107127,
+        "mut_wall_s": 0.013627322539548016,
+        "stddev_s": 0.00047731245657855255
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 793603353.9047619,
+        "gc_wall_s": 0.001762044523809522,
+        "mean_s": 0.2124667888872662,
+        "mut_wall_s": 0.21091363228571408,
+        "stddev_s": 0.0005422913578718499
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 78598670.2192691,
+        "gc_wall_s": 9.644710963455103e-06,
+        "mean_s": 0.016857660136468305,
+        "mut_wall_s": 0.016559347275747514,
+        "stddev_s": 0.001250722991079835
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 52522617.96677741,
+        "gc_wall_s": 4.668023255814064e-06,
+        "mean_s": 0.016223546927678884,
+        "mut_wall_s": 0.016232811671096324,
+        "stddev_s": 0.0028838023488167363
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 3105468623.2,
+        "gc_wall_s": 0.005397390100000005,
+        "mean_s": 0.8099900495969147,
+        "mut_wall_s": 0.8051886797000002,
+        "stddev_s": 0.0034012892683638065
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 1280826799.4666667,
+        "gc_wall_s": 0.0006287829333333272,
+        "mean_s": 0.2789935592600765,
+        "mut_wall_s": 0.27829227413333324,
+        "stddev_s": 0.0018645131022248596
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 309238731.37777776,
+        "gc_wall_s": 6.347953333333144e-05,
+        "mean_s": 0.09987067992797855,
+        "mut_wall_s": 0.09985994835555563,
+        "stddev_s": 0.0008845898483270032
+      }
+    },
+    "skip_reason": null,
+    "status": "ok"
+  },
+  "run": {
+    "date": "2026-08-24T09:57:03+00:00",
+    "quick": false,
+    "trigger": "dispatch",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32712476890"
+  },
+  "schema_version": 4,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "alloc_bytes": 386503297976,
+        "gc_cpu_s": 19.154,
+        "gc_wall_s": 11.93,
+        "max_live_bytes": 959699760,
+        "mut_cpu_s": 119.639,
+        "mut_wall_s": 87.693,
+        "netlist_s": 2.334,
+        "normalization_s": 85.0,
+        "num_gcs": 5835,
+        "peak_mb": 2338,
+        "total_s": 94.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
