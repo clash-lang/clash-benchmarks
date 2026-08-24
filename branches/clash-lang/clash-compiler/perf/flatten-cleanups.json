@@ -1,0 +1,39 @@
+{
+  "base": "aa6cab33f1bc1da3c1fb62f3694e8ccb3d5f26de",
+  "commits": [
+    {
+      "date": "2026-08-24",
+      "sha": "58fe349ef1f2e349e60721175b9ece6e3dd1c7e6",
+      "subject": "Make the rewrite traversal combinators inlineable"
+    },
+    {
+      "date": "2026-08-24",
+      "sha": "b2b46ca3c2bcac54eb9e2fe96a517ce7f0979e31",
+      "subject": "Move `topdownSucR` and `innerMost` to `Clash.Rewrite.Combinators`"
+    },
+    {
+      "date": "2026-08-24",
+      "sha": "c1ed738875906a937fe1b82218b89aaf96c5591e",
+      "subject": "Give normalization transformations top-level workers"
+    },
+    {
+      "date": "2026-08-24",
+      "sha": "1272a6fe4f5006e79aa91731c6d6203fc0fb0265",
+      "subject": "Add strategy DSL / generate code with Template Haskell"
+    },
+    {
+      "date": "2026-08-24",
+      "sha": "f7e9f1177f3dbec2910addc89353236f28f76460",
+      "subject": "Skip the `flattenCheap` rewrite when nothing was inlined"
+    },
+    {
+      "date": "2026-08-24",
+      "sha": "9f1eeeb33c10309a82d8d7d3ea95eb82d3a4714e",
+      "subject": "Preserve sharing when inlining globals in `flattenCallTree`"
+    }
+  ],
+  "pr": null,
+  "ref": "perf/flatten-cleanups",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-08-24T18:33:40+00:00"
+}
