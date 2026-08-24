@@ -41,15 +41,35 @@ about Clash today, and the list stays short enough to use.
 bench/prune_branches.py keeps the "pr" field of the snapshots up to date.
 Use --all-branches to see the rest as well, on your own machine.
 
-The page names its view in the URL by commit, not by branch: the fragment
-is #machine=<id>&head=<sha>, plus &metric=<m> when the metric is not the
-default. A commit does not move, so such a link stays
-good after the branch advances, loses its pull request, or goes away. The
-page looks for a branch that carries the commit; without one it shows the
-commit and its ancestors as "detached -- <sha>". For that fallback, every
-commit record carries its first parent, taken from the snapshots and from
-the results themselves - so the chain of a measured commit survives the
-pruning of its branch.
+The page names its view in the query string: ?machine=<id> with either
+&branch=<key> or &commit=<sha>, plus &metric=<m> when the metric is not
+the default. A branch link follows the branch as it advances, which is
+what a reader wants while the pull request is open. The "Pin to commit"
+button, or the "y" key, turns it into a commit link: a commit does not
+move, so that link stays good after the branch advances, loses its pull
+request, or goes away. A hand-written &branch= may also give the name of
+the branch alone, when only one repository has a branch of that name; the
+page writes the whole key back.
+
+For a commit link the page looks for a branch that carries the commit;
+without one it shows the commit and its ancestors as "detached -- <sha>".
+For that fallback, every commit record carries its first parent, taken
+from the snapshots and from the results themselves - so the chain of a
+measured commit survives the pruning of its branch. Older links name the
+view in the fragment, as #machine=<id>&head=<sha>; those still work.
+
+A branch link outlives the branch as far as the data allows. A branch
+that leaves the selector, because its pull request closed, keeps its
+snapshot, and the link lands on the newest commit of that snapshot as a
+detached view. Once prune_branches.py removes the snapshot, because the
+branch itself is gone, the page no longer knows what the name meant and
+the link falls back to master; a commit link to a measured commit of that
+branch keeps working, because a result carries its own commit. A link
+that has to stay good for a long time is a commit link.
+
+"Commit details" under the selectors shows what the link names: the
+commit and its subject, the branch that carries it, its pull request, and
+the run of this machine, if there is one.
 """
 
 import argparse
@@ -312,6 +332,11 @@ def main():
         "branchPoint": None,
     }]
 
+    # The branches that are out of the selector, with the newest commit
+    # that their snapshot saw. A link that names such a branch lands on
+    # that commit; see readUrl() in the template.
+    pruned = []
+
     for snapshot in snapshots:
         # The snapshot is a first-parent chain from the base, so the chain
         # itself gives the parent of each commit.
@@ -320,6 +345,12 @@ def main():
             add_commit(commit, parent)
             parent = commit["sha"]
         if not snapshot["shown"]:
+            if snapshot["commits"]:
+                pruned.append({
+                    "key": f"{snapshot['repo']}@{snapshot['ref']}",
+                    "ref": snapshot["ref"],
+                    "head": snapshot["commits"][-1]["sha"],
+                })
             continue
         base = snapshot["base"]
         if base in master_index:
@@ -400,6 +431,7 @@ def main():
         "machines": machines,
         "commits": commits,
         "refs": refs,
+        "pruned": pruned,
         "results": packed,
         "benchmarks": sorted(benchmarks),
     }
@@ -469,6 +501,19 @@ __PALETTE_CSS__
      would push the page wider than a phone; let it shrink instead. */
   .filters select { min-width: 0; }
   .filters .sep { width: 1px; height: 20px; background: var(--border); }
+  /* The commit that the link names, under the selectors. */
+  .commitbox { margin: 10px 0 0; }
+  .commitbox summary { font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+  .commitbox summary .head { color: var(--muted); font-weight: 400; }
+  .kv {
+    display: grid; grid-template-columns: max-content minmax(0, 1fr);
+    gap: 3px 14px; margin: 8px 0 0; font-size: 12.5px;
+  }
+  .kv dt { color: var(--muted); }
+  .kv dd { margin: 0; color: var(--ink-1); overflow-wrap: anywhere; }
+  .kv .mono { font-family: ui-monospace, monospace; font-size: 12px; }
+  .kv a { color: var(--series-1); text-decoration: none; }
+  .kv a:hover { text-decoration: underline; }
   .card h2 { font-size: 13px; font-weight: 600; margin: 0 0 2px; color: var(--ink-1); }
   /* The heading of a card, with the export button at its right end. */
   .cardhead {
@@ -591,6 +636,7 @@ __PALETTE_CSS__
     </div>
     <div class="filters">
       <label>Branch <select id="f-ref"></select></label>
+      <button type="button" id="f-pin" aria-pressed="false">Pin to commit</button>
       <span class="sep"></span>
       <label>Metric <select id="f-metric">
         <option value="time">Time</option>
@@ -599,6 +645,10 @@ __PALETTE_CSS__
         <option value="gc">MUT/GC split</option>
       </select></label>
     </div>
+    <details class="commitbox" id="commitbox">
+      <summary>Commit details <span class="head" id="commit-head"></span></summary>
+      <div id="commitinfo"></div>
+    </details>
   </div>
   <div id="headline"></div>
   <div class="grid" id="panels"></div>
@@ -1279,6 +1329,80 @@ function renderTable() {
   box.appendChild(table);
 }
 
+// --------------------------------------------------------- commit details
+
+const commitHead = document.getElementById("commit-head");
+const commitInfo = document.getElementById("commitinfo");
+
+// One row of the definition list. The value is a string or a node.
+function kv(list, label, value) {
+  const dt = document.createElement("dt");
+  dt.textContent = label;
+  list.appendChild(dt);
+  const dd = document.createElement("dd");
+  if (typeof value === "string") dd.textContent = value;
+  else dd.appendChild(value);
+  list.appendChild(dd);
+  return dd;
+}
+
+function anchor(href, text, mono) {
+  const a = document.createElement("a");
+  a.href = href;
+  a.target = "_blank";
+  a.rel = "noopener";
+  a.textContent = text;
+  if (mono) a.className = "mono";
+  return a;
+}
+
+// The commit that the link names: the head of the branch, or the commit
+// that the reader pinned. Nine characters of a sha say little on their
+// own, so this shows what the commit is and where it sits, and hands the
+// reader the commit itself, its pull request and its run.
+function renderCommitDetails() {
+  const sha = VD.head;
+  const commit = sha ? DATA.commits[sha] : null;
+  const onBranch = !!sha && VD.ref.branchPoint != null
+    && VD.ref.commits.indexOf(sha) > VD.ref.branchPoint;
+  commitHead.textContent = sha
+    ? "· " + sha.slice(0, 9) + " · "
+      + (onBranch ? VD.ref.label : "master")
+    : "";
+  commitInfo.replaceChildren();
+  const list = document.createElement("dl");
+  list.className = "kv";
+  commitInfo.appendChild(list);
+  if (!commit) {
+    // A commit link to a commit that this page does not hold: the sha of
+    // a branch that was pruned before the branch had a result.
+    kv(list, "Commit", sha ? sha + " — not on this page" : "none");
+    return;
+  }
+  const repo = onBranch ? VD.ref.repo : DATA.upstreamRepo;
+  kv(list, "Commit",
+     anchor("https://github.com/" + repo + "/commit/" + sha, sha, true));
+  kv(list, "Date", commit.d);
+  kv(list, "Where", onBranch
+    ? (VD.ref.detached ? VD.ref.label : VD.ref.repo + " @ " + VD.ref.ref)
+    : DATA.upstreamRepo + " @ master");
+  kv(list, "Subject", commit.s);
+  if (commit.pr != null)
+    kv(list, "Pull request",
+       anchor("https://github.com/" + DATA.upstreamRepo + "/pull/" + commit.pr,
+              "#" + commit.pr + " ↗"));
+  const machine = DATA.machines.find(m => m.id === state.machine) || {};
+  const name = machine.label || state.machine;
+  const result = (DATA.results[state.machine] || {})[sha];
+  const cell = kv(list, "Result", !result ? "no run on " + name
+    : (result.quick ? "partial run (one file, no wireDemo)" : "full run")
+      + " on " + name);
+  if (result && result.url) {
+    cell.appendChild(document.createTextNode(" · "));
+    cell.appendChild(anchor(result.url, "workflow run ↗"));
+  }
+}
+
 // ----------------------------------------------------------------- export
 
 // One panel as a figure to paste elsewhere: a single <svg> element that
@@ -1304,15 +1428,19 @@ let exportMode = "auto";
 
 // The address of this view, for the link in the figure. A page opened
 // from a file has no address worth sharing; then the link goes to the
-// published site, where the same fragment names the same view.
+// published site, where the same query names the same view.
+//
+// The query comes from the state, not from the address bar: a page opened
+// from a file cannot rewrite its address, so what is up there may be
+// behind. See writeUrl().
 function permalink() {
   const base = location.protocol === "http:" || location.protocol === "https:"
     ? location.origin + location.pathname : DATA.siteUrl;
-  return base + location.hash;
+  return base + "?" + viewQuery();
 }
 
 function permalinkLabel() {
-  return permalink().replace(/^https?:\/\//, "").replace(/#.*$/, "")
+  return permalink().replace(/^https?:\/\//, "").replace(/\?.*$/, "")
     .replace(/\/$/, "");
 }
 
@@ -1568,18 +1696,23 @@ function renderAll() {
 
 const machineSelect = document.getElementById("f-machine");
 const refSelect = document.getElementById("f-ref");
+const pinButton = document.getElementById("f-pin");
 const metricSelect = document.getElementById("f-metric");
 const fromInput = document.getElementById("f-from");
 const toInput = document.getElementById("f-to");
 
-// The selection is either a branch from the selector or a commit from
-// the URL. A commit keeps its sha here even when a branch carries it:
-// the sha is what makes the link permanent, so writeHash() must not
-// replace it with the name of the branch that carries it today.
+// The selection is either a branch of the selector or one commit. A
+// pinned commit keeps its sha here even when a branch carries it: the sha
+// is what makes the link permanent, so writeUrl() must not replace it
+// with the name of the branch that carries it today.
 const state = { machine: DATA.machines[0].id,
-                sel: { type: "ref", key: "master" }, metric: "time",
+                sel: { type: "branch", key: "master" }, metric: "time",
                 from: null, to: null };
-let VD = { commits: [], panels: [], ref: DATA.refs[0], branchPoint: null };
+// "head" is the commit that the link names: the pinned commit, or the
+// newest commit of the branch. It comes from the whole branch and not
+// from the date range, so that narrowing the range leaves the link alone.
+let VD = { commits: [], panels: [], ref: DATA.refs[0], branchPoint: null,
+           head: null };
 
 const MASTER = DATA.refs[0];
 const MASTER_INDEX = new Map(MASTER.commits.map((sha, i) => [sha, i]));
@@ -1656,29 +1789,80 @@ function resolveView(rawSha) {
   return detachedRef(sha || rawSha);
 }
 
-function readHash() {
-  const params = new URLSearchParams(location.hash.slice(1));
-  const machine = params.get("machine");
-  const head = params.get("head");
-  const ref = params.get("ref");
+// A branch of the URL: the key of the selector, "owner/repo@name", or the
+// name of the branch on its own when only one repository has a branch of
+// that name. A link written by hand says ?branch=my-work.
+function findRef(name) {
+  if (!name) return null;
+  const key = DATA.refs.find(r => r.key === name);
+  if (key) return key;
+  const named = DATA.refs.filter(r => r.ref === name);
+  return named.length === 1 ? named[0] : null;
+}
+
+// The same, over the branches that are out of the selector: the ones
+// whose pull request is closed. They keep the newest commit that their
+// snapshot saw.
+function findPruned(name) {
+  if (!name) return null;
+  const key = DATA.pruned.find(p => p.key === name);
+  if (key) return key;
+  const named = DATA.pruned.filter(p => p.ref === name);
+  return named.length === 1 ? named[0] : null;
+}
+
+// The view comes from the query string: ?machine=<id> with &branch=<key>,
+// or &commit=<sha> once the reader pins one, plus &metric=<m>.
+//
+// Older links put the same names in the fragment, and always named a
+// commit, as "head". Those still work: a link in an issue or a message
+// must not rot.
+function readUrl() {
+  const search = new URLSearchParams(location.search);
+  const hash = new URLSearchParams(location.hash.slice(1));
+  const get = name => search.get(name) || hash.get(name);
+  const machine = get("machine");
   if (machine && DATA.machines.some(m => m.id === machine)) state.machine = machine;
-  if (head) state.sel = { type: "head", sha: head.toLowerCase() };
-  // Old links name the branch. The branch moves and can go away, which is
-  // why new links name a commit instead; see writeHash().
-  else if (ref && DATA.refs.some(r => r.key === ref)) state.sel = { type: "ref", key: ref };
-  // A link without a metric means the default, not "keep what is there":
-  // the URL names the whole view.
-  const metric = params.get("metric");
+  const commit = get("commit") || get("head");
+  const name = get("branch") || get("ref");
+  const ref = findRef(name);
+  // A branch that is out of the selector: its pull request closed, or the
+  // branch went away and took its snapshot with it. As long as the page
+  // still holds the snapshot, the link lands on the newest commit that
+  // the snapshot saw, as a detached view of the branch. That is worth
+  // more than a silent jump to master.
+  const gone = ref ? null : findPruned(name);
+  // A link that names nothing means the default view, not "keep what is
+  // there": the URL names the whole view. So does a missing metric.
+  state.sel = commit ? { type: "commit", sha: commit.toLowerCase() }
+    : gone ? { type: "commit", sha: gone.head }
+    : { type: "branch", key: ref ? ref.key : "master" };
+  const metric = get("metric");
   state.metric = ["memory", "alloc", "gc"].includes(metric) ? metric : "time";
 }
 
-function writeHash() {
+// The query of this view, as it goes into the address bar and into the
+// link of an exported figure.
+function viewQuery() {
   const params = new URLSearchParams();
   params.set("machine", state.machine);
-  params.set("head", state.sel.type === "head" ? state.sel.sha
-    : VD.ref.commits[VD.ref.commits.length - 1] || "");
+  if (state.sel.type === "commit") params.set("commit", state.sel.sha);
+  else params.set("branch", state.sel.key);
   if (state.metric !== "time") params.set("metric", state.metric);
-  history.replaceState(null, "", "#" + params.toString());
+  // A query may hold "/" and "@" as they are, and the key of a branch is
+  // full of both: owner/repo@name reads better than its escaped form.
+  return params.toString().replace(/%2F/g, "/").replace(/%40/g, "@");
+}
+
+function writeUrl() {
+  try {
+    history.replaceState(null, "", location.pathname + "?" + viewQuery());
+  } catch (err) {
+    // A page opened from a file has an opaque origin, and a browser
+    // refuses to rewrite the address of such a page. Only the address bar
+    // stays behind; the page itself works, and permalink() reads the
+    // state rather than the address.
+  }
 }
 
 // Show the view in the branch selector. A detached view is not a branch,
@@ -1700,11 +1884,43 @@ function syncRefSelect(ref) {
   refSelect.value = "detached";
 }
 
+// The button that turns a branch link into a commit link, and back. A
+// commit link that no branch carries has nothing to go back to, so there
+// the button is out of use.
+function syncPin() {
+  const pinned = state.sel.type === "commit";
+  const stuck = pinned && VD.ref.detached;
+  pinButton.setAttribute("aria-pressed", pinned ? "true" : "false");
+  pinButton.textContent = pinned ? "Pinned to commit" : "Pin to commit";
+  pinButton.disabled = stuck;
+  pinButton.title = stuck
+    ? "No branch of the selector carries this commit, so the link names the "
+      + "commit"
+    : pinned
+    ? "The link names this commit. Press again, or \"y\", to name the branch"
+    : "Name this commit in the link instead of the branch, so that the link "
+      + "keeps this view after the branch moves (shortcut: \"y\")";
+}
+
+function togglePin() {
+  if (state.sel.type === "commit") {
+    if (VD.ref.detached) return;
+    state.sel = { type: "branch", key: VD.ref.key };
+  } else {
+    if (!VD.head) return;
+    state.sel = { type: "commit", sha: VD.head };
+  }
+  apply();
+}
+
 // Rebuild the view from the state: pick the branch, build the panels,
 // then cut everything to the date range.
 function apply() {
-  const ref = state.sel.type === "head" ? resolveView(state.sel.sha)
+  const ref = state.sel.type === "commit" ? resolveView(state.sel.sha)
     : DATA.refs.find(r => r.key === state.sel.key) || DATA.refs[0];
+  const head = state.sel.type === "commit"
+    ? (findCommit(state.sel.sha) || state.sel.sha)
+    : ref.commits[ref.commits.length - 1] || null;
   const panels = buildPanels(state.machine, ref, state.metric);
   const dates = ref.commits.map(sha => DATA.commits[sha].d);
   const first = dates[0] || "", last = dates[dates.length - 1] || "";
@@ -1724,7 +1940,7 @@ function apply() {
     }
   });
   if (s == null) {
-    VD = { commits: [], panels: [], ref, branchPoint: null };
+    VD = { commits: [], panels: [], ref, branchPoint: null, head };
   } else {
     let bp = ref.branchPoint;
     if (bp != null) bp = Math.max(-1, bp - s);
@@ -1735,12 +1951,15 @@ function apply() {
         .filter(p => p.values.some(Boolean)),
       ref,
       branchPoint: bp,
+      head,
     };
   }
   machineSelect.value = state.machine;
   metricSelect.value = state.metric;
   syncRefSelect(ref);
-  writeHash();
+  syncPin();
+  writeUrl();
+  renderCommitDetails();
   renderAll();
 }
 
@@ -1750,11 +1969,23 @@ machineSelect.addEventListener("change", () => {
 });
 refSelect.addEventListener("change", () => {
   if (refSelect.value === "detached") return;
-  state.sel = { type: "ref", key: refSelect.value };
+  // Picking a branch names the branch again, whatever was pinned before.
+  state.sel = { type: "branch", key: refSelect.value };
   // The branches cover different date ranges. Start from the whole range.
   state.from = state.to = null;
   markPreset(document.querySelector('.filters button[data-days="0"]'));
   apply();
+});
+pinButton.addEventListener("click", togglePin);
+// "y" pins and unpins, the key that GitHub uses for the same move. Not
+// while a field or the export dialog has the key.
+addEventListener("keydown", e => {
+  if (e.key !== "y" && e.key !== "Y") return;
+  if (e.metaKey || e.ctrlKey || e.altKey || exportBox.open) return;
+  const tag = e.target && e.target.tagName;
+  if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA") return;
+  e.preventDefault();
+  togglePin();
 });
 metricSelect.addEventListener("change", () => {
   state.metric = metricSelect.value;
@@ -1762,11 +1993,13 @@ metricSelect.addEventListener("change", () => {
   apply();
 });
 
+// The date presets, and only those: the other buttons of a filter row
+// carry a state of their own.
 function markPreset(button) {
-  for (const b of document.querySelectorAll(".filters button"))
+  for (const b of document.querySelectorAll(".filters button[data-days]"))
     b.setAttribute("aria-pressed", b === button ? "true" : "false");
 }
-for (const b of document.querySelectorAll(".filters button")) {
+for (const b of document.querySelectorAll(".filters button[data-days]")) {
   b.addEventListener("click", () => {
     // The presets count back from the newest commit, not from today.
     const days = Number(b.dataset.days);
@@ -1792,7 +2025,10 @@ for (const input of [fromInput, toInput]) {
     apply();
   });
 }
-addEventListener("hashchange", () => { readHash(); apply(); });
+// The address can change under the page: the back button after a link
+// within the page, or a fragment that a reader edits by hand.
+addEventListener("popstate", () => { readUrl(); apply(); });
+addEventListener("hashchange", () => { readUrl(); apply(); });
 
 function redraw() {
   DRAWN.forEach(drawPanel);
@@ -1818,7 +2054,7 @@ new ResizeObserver(entries => {
   redrawTimer = setTimeout(redraw, 120);
 }).observe(document.getElementById("panels"));
 
-readHash();
+readUrl();
 apply();
 </script>
 </body>
