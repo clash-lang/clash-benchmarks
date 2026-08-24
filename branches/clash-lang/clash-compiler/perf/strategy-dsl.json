@@ -1,34 +1,34 @@
 {
-  "base": "36e785ddf829ff048b9f5cf742ae04a131a66347",
+  "base": "aa6cab33f1bc1da3c1fb62f3694e8ccb3d5f26de",
   "commits": [
     {
       "date": "2026-08-24",
-      "sha": "fce482a37f5b54583ae5380b052690e9553ce4a7",
+      "sha": "58fe349ef1f2e349e60721175b9ece6e3dd1c7e6",
       "subject": "Make the rewrite traversal combinators inlineable"
     },
     {
       "date": "2026-08-24",
-      "sha": "c461fc78037c185d0bcb0862f9dc1c72fe6fd5dd",
+      "sha": "b2b46ca3c2bcac54eb9e2fe96a517ce7f0979e31",
       "subject": "Move `topdownSucR` and `innerMost` to `Clash.Rewrite.Combinators`"
     },
     {
       "date": "2026-08-24",
-      "sha": "8733035909a6a7c8cbf371b9f1323b3af3c5337c",
+      "sha": "c1ed738875906a937fe1b82218b89aaf96c5591e",
       "subject": "Give normalization transformations top-level workers"
     },
     {
       "date": "2026-08-24",
-      "sha": "0555aee0dde82d00537ace6aaf0db1d2fd18d5c2",
+      "sha": "128b466a71acb18f7a3b5f3805a197a3d147ac6f",
       "subject": "Add strategy DSL"
     },
     {
       "date": "2026-08-24",
-      "sha": "b586ccbf7716cd87fc874d2161c2c0b48acb8d03",
+      "sha": "0f296a1004246506a23049f6202255283bbdc397",
       "subject": "Generate the strategy dispatch code with Template Haskell"
     }
   ],
   "pr": 3328,
   "ref": "perf/strategy-dsl",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-24T10:53:54+00:00"
+  "updated": "2026-08-24T11:33:03+00:00"
 }
