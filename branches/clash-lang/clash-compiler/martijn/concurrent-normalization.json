@@ -1,19 +1,19 @@
 {
-  "base": "36e785ddf829ff048b9f5cf742ae04a131a66347",
+  "base": "aa6cab33f1bc1da3c1fb62f3694e8ccb3d5f26de",
   "commits": [
     {
       "date": "2026-08-24",
-      "sha": "8ec94352e20bb7a10f2d19812f85ede0a0e80622",
+      "sha": "027da3d792cea5c67955642abe9700651c59a45f",
       "subject": "Add concurrent normalization"
     },
     {
       "date": "2026-08-24",
-      "sha": "3ae79afd3992d1ebb6b542920b1b694dbfc2baf8",
+      "sha": "799c7cb174160f7045620a7091b514c147500647",
       "subject": "Make netlist naming concurrency proof"
     }
   ],
   "pr": 3196,
   "ref": "martijn/concurrent-normalization",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-24T10:03:59+00:00"
+  "updated": "2026-08-24T11:46:49+00:00"
 }
