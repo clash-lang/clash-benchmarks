@@ -18,17 +18,12 @@
     },
     {
       "date": "2026-08-24",
-      "sha": "128b466a71acb18f7a3b5f3805a197a3d147ac6f",
-      "subject": "Add strategy DSL"
-    },
-    {
-      "date": "2026-08-24",
-      "sha": "0f296a1004246506a23049f6202255283bbdc397",
-      "subject": "Generate the strategy dispatch code with Template Haskell"
+      "sha": "2f043065489dc954ecbabdaf0a9a149241671190",
+      "subject": "Add strategy DSL / generate code with Template Haskell"
     }
   ],
   "pr": 3328,
   "ref": "perf/strategy-dsl",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-24T13:13:39+00:00"
+  "updated": "2026-08-24T13:15:06+00:00"
 }
