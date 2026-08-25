@@ -1,0 +1,24 @@
+{
+  "base": "aa6cab33f1bc1da3c1fb62f3694e8ccb3d5f26de",
+  "commits": [
+    {
+      "date": "2026-08-25",
+      "sha": "ded5580eecfbf61b96d1f7daabace2312bb0ec30",
+      "subject": "Emit each HDL include file once"
+    },
+    {
+      "date": "2026-08-25",
+      "sha": "2a91b3c15f9574c943ccc2ab4e243cb65146df98",
+      "subject": "Add `hashTerm` and friends to `Clash.Core.Subst`"
+    },
+    {
+      "date": "2026-08-25",
+      "sha": "e5223c05bd229c50b181ce905e65607e708d0c33",
+      "subject": "Derive the manifest's call-graph hash with `hashTerm`"
+    }
+  ],
+  "pr": null,
+  "ref": "martijn/perf/hdl-gen",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-08-25T07:25:07+00:00"
+}
