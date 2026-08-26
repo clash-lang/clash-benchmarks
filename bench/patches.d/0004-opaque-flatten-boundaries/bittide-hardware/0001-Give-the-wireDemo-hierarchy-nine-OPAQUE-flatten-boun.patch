@@ -1,0 +1,126 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: clash-benchmark-bot
+ <41898282+github-actions[bot]@users.noreply.github.com>
+Date: Wed, 26 Aug 2026 20:19:23 +0200
+Subject: [PATCH] Give the wireDemo hierarchy nine OPAQUE flatten boundaries
+
+Clash's cleanupGraph inlines every non-OPAQUE binder into its caller and
+re-runs the flatten strategy on the result, so a call chain rewrites the
+same expression once per level: core (68k terms) -> bringUp (114k) ->
+demoTest_mkUserCore1 (114k) -> wireDemoTest (113k). Those four nodes were
+8.2s of the 18.5s that flattening took. An OPAQUE binder is a boundary
+that flattenNode does not cross.
+
+The nine pragmas cut flattening from 18.4s to 9.7s and wireDemoTest from
+1m06s to 59.3s, at eight capabilities on a machine where the run-to-run
+spread is about 2s.
+
+The HDL is re-partitioned, not changed: 70 modules become 79, the
+top-level port list is byte-identical, and the design keeps its 2834 reg
+declarations, 2043 always blocks and 196 blackbox instantiations.
+---
+ .../src/Bittide/Instances/Hitl/GenericDemo/Core.hs              | 1 +
+ bittide/src/Bittide/BootPe.hs                                   | 1 +
+ bittide/src/Bittide/CaptureUgn.hs                               | 1 +
+ bittide/src/Bittide/ClockControl/CallistoSw.hs                  | 1 +
+ bittide/src/Bittide/ClockControl/Freeze.hs                      | 2 ++
+ bittide/src/Bittide/ClockControl/Registers.hs                   | 1 +
+ bittide/src/Bittide/Counter.hs                                  | 1 +
+ bittide/src/Bittide/Handshake.hs                                | 1 +
+ bittide/src/Bittide/Transceiver/Wishbone.hs                     | 1 +
+ 9 files changed, 10 insertions(+)
+
+diff --git a/bittide-instances/src/Bittide/Instances/Hitl/GenericDemo/Core.hs b/bittide-instances/src/Bittide/Instances/Hitl/GenericDemo/Core.hs
+index 96dfffa6..676969fd 100644
+--- a/bittide-instances/src/Bittide/Instances/Hitl/GenericDemo/Core.hs
++++ b/bittide-instances/src/Bittide/Instances/Hitl/GenericDemo/Core.hs
+@@ -393,6 +393,7 @@ core bufferDepth mkUserCore (refClk, refRst) (bitClk, bitRst, bitEna) rxClocks r
+ 
+   withBittideClockReset :: forall r. ((HiddenClock Bittide, HiddenReset Bittide) => r) -> r
+   withBittideClockReset r = withClock bitClk $ withReset bitRst r
++{-# OPAQUE core #-}
+ 
+ uncurry4 ::
+   (a -> b -> c -> d -> e) ->
+diff --git a/bittide/src/Bittide/BootPe.hs b/bittide/src/Bittide/BootPe.hs
+index d6f33c9a..473344e9 100644
+--- a/bittide/src/Bittide/BootPe.hs
++++ b/bittide/src/Bittide/BootPe.hs
+@@ -52,3 +52,4 @@ bootPe peConfig = circuit $ \(mm, jtag) -> do
+   -- XXX: Should the transceiver just be part of the PE? This would add a whooole
+   --      bunch of constraints to it.
+   idC -< (uartOut, spiDone, spiOut, transceiverBus)
++{-# OPAQUE bootPe #-}
+diff --git a/bittide/src/Bittide/CaptureUgn.hs b/bittide/src/Bittide/CaptureUgn.hs
+index 2d4d43bd..13c82536 100644
+--- a/bittide/src/Bittide/CaptureUgn.hs
++++ b/bittide/src/Bittide/CaptureUgn.hs
+@@ -116,6 +116,7 @@ captureUgns localCounter (C.dflipflop -> linkIns) = circuit $ \bus -> do
+   goCapture HasCaptured _ = (HasCaptured, (False, True))
+   goCapture _ Nothing = (HasNotCaptured, (False, False))
+   goCapture _ (Just _) = (HasCaptured, (True, False))
++{-# OPAQUE captureUgns #-}
+ 
+ {- | Outputs the local counter when the link is *not* sampling and the very first
+ cycle that it is. Otherwise, outputs the switch data. In effect, this makes sure
+diff --git a/bittide/src/Bittide/ClockControl/CallistoSw.hs b/bittide/src/Bittide/ClockControl/CallistoSw.hs
+index 22381e9d..6a7cde4c 100644
+--- a/bittide/src/Bittide/ClockControl/CallistoSw.hs
++++ b/bittide/src/Bittide/ClockControl/CallistoSw.hs
+@@ -142,3 +142,4 @@ callistoSwClockControlC freeClk freeRst rxClocks rxResets dumpVcd peConfig =
+     let diffCounters = fst <<$>> domainDiffs
+ 
+     idC -< (sync, speedChange, wbRest)
++{-# OPAQUE callistoSwClockControlC #-}
+diff --git a/bittide/src/Bittide/ClockControl/Freeze.hs b/bittide/src/Bittide/ClockControl/Freeze.hs
+index 38ab2dbc..095194ba 100644
+--- a/bittide/src/Bittide/ClockControl/Freeze.hs
++++ b/bittide/src/Bittide/ClockControl/Freeze.hs
+@@ -123,6 +123,8 @@ freeze clk rst =
+ 
+   noWrite = pure Nothing
+ 
++{-# OPAQUE freeze #-}
++
+ -- | Simple counter
+ counter ::
+   forall a dom.
+diff --git a/bittide/src/Bittide/ClockControl/Registers.hs b/bittide/src/Bittide/ClockControl/Registers.hs
+index 0d419a2f..9a615494 100644
+--- a/bittide/src/Bittide/ClockControl/Registers.hs
++++ b/bittide/src/Bittide/ClockControl/Registers.hs
+@@ -168,3 +168,4 @@ clockControlWb linkMask linksOk (bundle -> counters) = circuit $ \wb -> do
+ 
+   maskedCounters :: Signal dom (Vec nLinks (RelDataCount m))
+   maskedCounters = applyMask 0 linkMask counters
++{-# OPAQUE clockControlWb #-}
+diff --git a/bittide/src/Bittide/Counter.hs b/bittide/src/Bittide/Counter.hs
+index 12bb0162..f25939ce 100644
+--- a/bittide/src/Bittide/Counter.hs
++++ b/bittide/src/Bittide/Counter.hs
+@@ -162,6 +162,7 @@ domainDiffCountersWbC srcClocks srcResets clk rst = Cdc.withVendor ?vendorName $
+ 
+   enableConfig =
+     (registerConfig "enable" "Counters enabled? Counter is cleared when disabled.")
++{-# OPAQUE domainDiffCountersWbC #-}
+ 
+ {- | A counter that counts /up/, synchronized from the domain @src@ to domain @dst@. To
+ reset this component, the reset should be asserted for at least one cycle in the
+diff --git a/bittide/src/Bittide/Handshake.hs b/bittide/src/Bittide/Handshake.hs
+index 9ef7782a..9d93d5e4 100644
+--- a/bittide/src/Bittide/Handshake.hs
++++ b/bittide/src/Bittide/Handshake.hs
+@@ -460,3 +460,4 @@ handshakesWb = circuit $ \(bus, Fwd inputs) -> do
+     )
+       { access = ReadOnly
+       }
++{-# OPAQUE handshakesWb #-}
+diff --git a/bittide/src/Bittide/Transceiver/Wishbone.hs b/bittide/src/Bittide/Transceiver/Wishbone.hs
+index dd982fcd..c5fd4ac0 100644
+--- a/bittide/src/Bittide/Transceiver/Wishbone.hs
++++ b/bittide/src/Bittide/Transceiver/Wishbone.hs
+@@ -112,3 +112,4 @@ transceiverPrbsNWb clk rst config = circuit $ \(wb, gths, Fwd txDatas) -> do
+     (registerConfig "statistics" "Various statistics from the transceiver reset manager.")
+       { access = ReadOnly
+       }
++{-# OPAQUE transceiverPrbsNWb #-}

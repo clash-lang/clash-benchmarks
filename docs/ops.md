@@ -259,20 +259,38 @@ gh workflow run benchmark.yml -R clash-lang/clash-benchmarks -f sha=<sha>
 
 ## Patch overlays
 
-An old clash commit can predate an API change that the pinned
-bittide-hardware needs. Each directory `bench/patches.d/<name>/` repairs
-one such break:
+An overlay is an extra patch series for a range of clash commits. Each
+directory `bench/patches.d/<name>/` holds one bound and the series:
 
     bench/patches.d/<name>/applies-before   one clash-compiler sha B
+    bench/patches.d/<name>/applies-from     one clash-compiler sha A
     bench/patches.d/<name>/<repo>/*.patch   an extra git am series
 
-`run_bittide.sh` applies the overlay when the checkout under test does not
-contain B. The names of the applied overlays go into the result
-(`wire_demo.overlays`) and into the tooltip.
+An overlay carries exactly one of the two bounds. `run_bittide.sh` applies
+an `applies-before` overlay to the checkouts that do not contain B, and an
+`applies-from` overlay to the checkouts that do contain A. The names of the
+applied overlays go into the result (`wire_demo.overlays`) and into the
+tooltip.
 
-Keep an overlay minimal: bound relaxations and shims only. wireDemo numbers
-are compared across overlays, so an overlay must not change what Clash
-compiles.
+`applies-before` **repairs** a build: an old clash commit predates an API
+change that the pinned bittide-hardware needs. Keep such an overlay
+minimal, bound relaxations and shims only. It must not change what Clash
+compiles, because it is what makes old commits comparable to new ones.
+
+`applies-from` **changes the design** from a chosen commit on, when the
+benchmark should measure a bittide-hardware that upstream does not have
+yet. It puts a step in the graph at that commit, so give it a bound that no
+measured commit is a descendant of, and read numbers on the two sides of
+the step as two series.
+
+Overlays in this repository:
+
+| overlay | bound | what it does |
+| --- | --- | --- |
+| `0001-quickcheck-bound` | before `63ae08a7` | relaxes a QuickCheck bound |
+| `0002-termtodata-hash` | before `48bcc4fd` | shims `termToData` for old clash-lib |
+| `0003-rom-unsigned-address` | before `0d32dde3` | gives `rom` an `Unsigned` address |
+| `0004-opaque-flatten-boundaries` | from `aa6cab33f` | nine `OPAQUE` pragmas in the wireDemo hierarchy, which cut the sequential flatten phase roughly in half |
 
 ## Bump the bittide-hardware pins
 
