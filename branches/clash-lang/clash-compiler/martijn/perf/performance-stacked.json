@@ -25,10 +25,15 @@
       "date": "2026-08-25",
       "sha": "a0a082778b96dbd8483e4e530776054a732a3742",
       "subject": "Add concurrent normalization"
+    },
+    {
+      "date": "2026-08-25",
+      "sha": "dcb497978eef94c208336d774d378a94936d6a85",
+      "subject": "Make netlist naming concurrency proof"
     }
   ],
   "pr": null,
   "ref": "martijn/perf/performance-stacked",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-26T19:00:44+00:00"
+  "updated": "2026-08-26T19:07:27+00:00"
 }
