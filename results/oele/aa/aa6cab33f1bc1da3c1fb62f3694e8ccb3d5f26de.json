@@ -15,62 +15,62 @@
     "benchmarks": {
       "benchmark/tests/BundleMapRepeat.hs": {
         "alloc_bytes": 39365115.281553395,
-        "gc_wall_s": 1.7889174757279472e-06,
-        "mean_s": 0.011558541069799632,
-        "mut_wall_s": 0.011509499786407744,
-        "stddev_s": 0.00016639266024653688
+        "gc_wall_s": 1.756009708737731e-06,
+        "mean_s": 0.011517816115249623,
+        "mut_wall_s": 0.01146182159223301,
+        "stddev_s": 0.0001836882877206732
       },
       "benchmark/tests/PipelinesViaFolds.hs": {
-        "alloc_bytes": 686363366.4761904,
-        "gc_wall_s": 0.0002663942857142834,
-        "mean_s": 0.18380751659957847,
-        "mut_wall_s": 0.18359009157142886,
-        "stddev_s": 0.0003161978216248092
+        "alloc_bytes": 686363750.8571428,
+        "gc_wall_s": 0.00026492485714285375,
+        "mean_s": 0.18472807474253286,
+        "mut_wall_s": 0.18477685680952355,
+        "stddev_s": 0.0010632787395741395
       },
       "examples/FIR.hs": {
-        "alloc_bytes": 69841735.68379447,
-        "gc_wall_s": 7.572517786561258e-06,
-        "mean_s": 0.018587162123365537,
-        "mut_wall_s": 0.018543620217391303,
-        "stddev_s": 0.00019188958399682957
+        "alloc_bytes": 69841752.03162055,
+        "gc_wall_s": 7.71863241106721e-06,
+        "mean_s": 0.01841826442026143,
+        "mut_wall_s": 0.018356277707509878,
+        "stddev_s": 0.0001658170024120344
       },
       "examples/Queens.hs": {
-        "alloc_bytes": 46939815.581151836,
-        "gc_wall_s": 2.727955497382275e-06,
-        "mean_s": 0.012207105244597272,
-        "mut_wall_s": 0.012134719787958156,
-        "stddev_s": 0.0002283110686230482
+        "alloc_bytes": 46939800.34951457,
+        "gc_wall_s": 3.2177014563108546e-06,
+        "mean_s": 0.012065161670274573,
+        "mut_wall_s": 0.012030299531553407,
+        "stddev_s": 0.00015480414670365723
       },
       "examples/Reducer.hs": {
         "alloc_bytes": 2777128389.6,
-        "gc_wall_s": 0.006316544500000007,
-        "mean_s": 0.7879507427011655,
-        "mut_wall_s": 0.7816117778999997,
-        "stddev_s": 0.0038071901627801923
+        "gc_wall_s": 0.0062967889,
+        "mean_s": 0.772075389206293,
+        "mut_wall_s": 0.7659285941000002,
+        "stddev_s": 0.0025561413167978137
       },
       "tests/shouldwork/Basic/AES.hs": {
-        "alloc_bytes": 1090284298.1333334,
-        "gc_wall_s": 0.0006847742000000008,
-        "mean_s": 0.28141085226709645,
-        "mut_wall_s": 0.2812179934000004,
-        "stddev_s": 0.002312518140120139
+        "alloc_bytes": 1090284314.1333334,
+        "gc_wall_s": 0.000580351066666666,
+        "mean_s": 0.27025660697797627,
+        "mut_wall_s": 0.2696647305333343,
+        "stddev_s": 0.00031215184777586355
       },
       "tests/shouldwork/Basic/T1354B.hs": {
         "alloc_bytes": 269832652.94545454,
-        "gc_wall_s": 4.608980000000227e-05,
-        "mean_s": 0.08518795453518305,
-        "mut_wall_s": 0.08513217443636359,
-        "stddev_s": 0.00024191932192021978
+        "gc_wall_s": 4.675772727272921e-05,
+        "mean_s": 0.08495241291636678,
+        "mut_wall_s": 0.08482786234545472,
+        "stddev_s": 0.00036290971381899
       }
     },
     "skip_reason": null,
     "status": "ok"
   },
   "run": {
-    "date": "2026-08-26T18:36:51+00:00",
+    "date": "2026-08-24T11:32:28+00:00",
     "quick": false,
-    "trigger": "dispatch",
-    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32999978496"
+    "trigger": "schedule",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/32721906342"
   },
   "schema_version": 4,
   "toolchain": {
@@ -79,22 +79,20 @@
   },
   "wire_demo": {
     "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
-    "overlays": [
-      "0004-opaque-flatten-boundaries"
-    ],
+    "overlays": [],
     "runs": [
       {
-        "alloc_bytes": 322379079416,
-        "gc_cpu_s": 10.388,
-        "gc_wall_s": 7.163,
-        "max_live_bytes": 634794016,
-        "mut_cpu_s": 92.125,
-        "mut_wall_s": 90.827,
-        "netlist_s": 2.454,
-        "normalization_s": 84.0,
-        "num_gcs": 6946,
-        "peak_mb": 1600,
-        "total_s": 92.0
+        "alloc_bytes": 348206098552,
+        "gc_cpu_s": 13.473,
+        "gc_wall_s": 9.66,
+        "max_live_bytes": 631278056,
+        "mut_cpu_s": 98.421,
+        "mut_wall_s": 97.122,
+        "netlist_s": 2.492,
+        "normalization_s": 93.0,
+        "num_gcs": 7475,
+        "peak_mb": 1726,
+        "total_s": 101.0
       }
     ],
     "skip_reason": null,

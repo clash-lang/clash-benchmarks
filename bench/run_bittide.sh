@@ -20,17 +20,13 @@
 # terminate, for example). A timeout is a skip with its own reason: the
 # stored result keeps the commit from being picked up again.
 #
-# Patch overlays: each directory bench/patches.d/<name>/ holds one
-# clash-compiler sha that bounds the range of commits it covers, plus one
+# Patch overlays: each directory bench/patches.d/<name>/ holds a
+# file "applies-before" with one clash-compiler sha B, plus one
 # directory per target repository (bittide-hardware, clash-cores or
-# clash-vexriscv) with an extra git am series. The sha sits in
-# "applies-before", and the overlay applies to the checkouts that do not
-# contain it, or in "applies-from", and it applies to the checkouts that
-# do. The first repairs builds against clash commits that predate an API
-# change, and must not change what Clash compiles. The second changes the
-# design on purpose from a chosen commit on, and puts a step in the
-# graph. Either way the names of the applied overlays land in the result,
-# so compare wireDemo numbers only within one set.
+# clash-vexriscv) with an extra git am series. The overlay applies when
+# the checkout under test does not contain B. This repairs builds
+# against clash commits that predate an API change. Keep overlays
+# minimal: wireDemo results are compared across overlays.
 #
 # Environment:
 #   BENCH_QUICK=1   do not build; write a skipped result
@@ -105,33 +101,20 @@ apply_patches() {
 
 apply_patches bittide-hardware "${script_dir}"/patches/*.patch
 
-# Apply the overlays whose range of clash commits holds this checkout.
+# Apply the overlays whose API-change commit is not in this checkout.
 overlays=""
 for overlay in "${script_dir}"/patches.d/*/; do
   [[ -d "${overlay}" ]] || continue
   name=$(basename "${overlay}")
-  if [[ -f "${overlay}/applies-before" ]]; then
-    bound=$(cat "${overlay}/applies-before")
-    if git merge-base --is-ancestor "${bound}" HEAD; then
-      continue
-    fi
-    why="predates ${bound:0:7}"
-  elif [[ -f "${overlay}/applies-from" ]]; then
-    bound=$(cat "${overlay}/applies-from")
-    if ! git merge-base --is-ancestor "${bound}" HEAD; then
-      continue
-    fi
-    why="contains ${bound:0:7}"
-  else
-    echo "run_bittide.sh: overlay ${name} has no applies-before or applies-from" >&2
-    exit 1
+  before=$(cat "${overlay}/applies-before")
+  if ! git merge-base --is-ancestor "${before}" HEAD; then
+    echo "run_bittide.sh: applying overlay ${name} (checkout predates ${before:0:7})"
+    for repo_dir in "${overlay}"*/; do
+      [[ -d "${repo_dir}" ]] || continue
+      apply_patches "$(basename "${repo_dir}")" "${repo_dir}"*.patch
+    done
+    overlays="${overlays} ${name}"
   fi
-  echo "run_bittide.sh: applying overlay ${name} (checkout ${why})"
-  for repo_dir in "${overlay}"*/; do
-    [[ -d "${repo_dir}" ]] || continue
-    apply_patches "$(basename "${repo_dir}")" "${repo_dir}"*.patch
-  done
-  overlays="${overlays} ${name}"
 done
 
 # A commit under test can make the build or the HDL generation hang,
