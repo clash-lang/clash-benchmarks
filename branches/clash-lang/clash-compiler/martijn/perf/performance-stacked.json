@@ -1,0 +1,49 @@
+{
+  "base": "aa6cab33f1bc1da3c1fb62f3694e8ccb3d5f26de",
+  "commits": [
+    {
+      "date": "2026-08-24",
+      "sha": "58fe349ef1f2e349e60721175b9ece6e3dd1c7e6",
+      "subject": "Make the rewrite traversal combinators inlineable"
+    },
+    {
+      "date": "2026-08-24",
+      "sha": "b2b46ca3c2bcac54eb9e2fe96a517ce7f0979e31",
+      "subject": "Move `topdownSucR` and `innerMost` to `Clash.Rewrite.Combinators`"
+    },
+    {
+      "date": "2026-08-24",
+      "sha": "c1ed738875906a937fe1b82218b89aaf96c5591e",
+      "subject": "Give normalization transformations top-level workers"
+    },
+    {
+      "date": "2026-08-24",
+      "sha": "1272a6fe4f5006e79aa91731c6d6203fc0fb0265",
+      "subject": "Add strategy DSL / generate code with Template Haskell"
+    },
+    {
+      "date": "2026-08-25",
+      "sha": "a0a082778b96dbd8483e4e530776054a732a3742",
+      "subject": "Add concurrent normalization"
+    },
+    {
+      "date": "2026-08-25",
+      "sha": "dcb497978eef94c208336d774d378a94936d6a85",
+      "subject": "Make netlist naming concurrency proof"
+    },
+    {
+      "date": "2026-08-26",
+      "sha": "fe93e8fe994548ad1673673e4a353cc9f7f24d49",
+      "subject": "Read normalization state without taking a lock"
+    },
+    {
+      "date": "2026-08-26",
+      "sha": "81ecd808dc3294316c39a717b3c91a12f5ac3228",
+      "subject": "Don't normalize concurrently on a single capability"
+    }
+  ],
+  "pr": null,
+  "ref": "martijn/perf/performance-stacked",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-08-26T18:52:55+00:00"
+}
