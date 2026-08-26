@@ -25,25 +25,10 @@
       "date": "2026-08-25",
       "sha": "a0a082778b96dbd8483e4e530776054a732a3742",
       "subject": "Add concurrent normalization"
-    },
-    {
-      "date": "2026-08-25",
-      "sha": "dcb497978eef94c208336d774d378a94936d6a85",
-      "subject": "Make netlist naming concurrency proof"
-    },
-    {
-      "date": "2026-08-26",
-      "sha": "fe93e8fe994548ad1673673e4a353cc9f7f24d49",
-      "subject": "Read normalization state without taking a lock"
-    },
-    {
-      "date": "2026-08-26",
-      "sha": "81ecd808dc3294316c39a717b3c91a12f5ac3228",
-      "subject": "Don't normalize concurrently on a single capability"
     }
   ],
   "pr": null,
   "ref": "martijn/perf/performance-stacked",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-26T18:52:55+00:00"
+  "updated": "2026-08-26T19:00:44+00:00"
 }
