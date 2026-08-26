@@ -10,10 +10,25 @@
       "date": "2026-08-24",
       "sha": "799c7cb174160f7045620a7091b514c147500647",
       "subject": "Make netlist naming concurrency proof"
+    },
+    {
+      "date": "2026-08-26",
+      "sha": "a6c2c77db1d45ed3b9c3b6f3f557e6f796500324",
+      "subject": "Read normalization state without taking a lock"
+    },
+    {
+      "date": "2026-08-26",
+      "sha": "2a342baffc6e2ddffa54127dc86ca420a2d11c94",
+      "subject": "Don't normalize concurrently with only one capability"
+    },
+    {
+      "date": "2026-08-26",
+      "sha": "44bf0689715028d07896b758d171101c30e14891",
+      "subject": "Add `-N` to `clash`/`clashi`"
     }
   ],
   "pr": 3196,
   "ref": "martijn/concurrent-normalization",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-24T12:53:30+00:00"
+  "updated": "2026-08-26T19:15:23+00:00"
 }
