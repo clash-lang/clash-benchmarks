@@ -30,10 +30,15 @@
       "date": "2026-08-25",
       "sha": "dcb497978eef94c208336d774d378a94936d6a85",
       "subject": "Make netlist naming concurrency proof"
+    },
+    {
+      "date": "2026-08-26",
+      "sha": "fe93e8fe994548ad1673673e4a353cc9f7f24d49",
+      "subject": "Read normalization state without taking a lock"
     }
   ],
   "pr": null,
   "ref": "martijn/perf/performance-stacked",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-26T19:07:27+00:00"
+  "updated": "2026-08-26T19:14:48+00:00"
 }
