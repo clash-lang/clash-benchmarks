@@ -100,10 +100,15 @@
       "date": "2026-05-09",
       "sha": "4d7158f88946bc451b3a9e2135f35c5e28cc1697",
       "subject": "Use more TH quotes instead of hardcoded names in Normalize (#3261) (#3264)"
+    },
+    {
+      "date": "2026-05-09",
+      "sha": "f21d4c3eab9b4ea52d840d5bef41b60149a9b379",
+      "subject": "Compare KnownNat by TH name in deriveAutoReg (#3256) (#3267)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T12:28:13+00:00"
+  "updated": "2026-08-29T12:42:45+00:00"
 }
