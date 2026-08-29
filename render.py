@@ -677,12 +677,35 @@ __PALETTE_CSS__
     display: flex; align-items: baseline; justify-content: space-between;
     gap: 10px;
   }
-  .exportbtn {
+  .cardbtns { display: flex; gap: 6px; flex: none; }
+  .cardbtn {
     font: inherit; font-size: 11px; color: var(--ink-2);
     background: var(--surface-1); border: 1px solid var(--border);
     border-radius: 6px; padding: 1px 7px; cursor: pointer; flex: none;
   }
-  .exportbtn:hover { background: var(--page); color: var(--ink-1); }
+  .cardbtn:hover { background: var(--page); color: var(--ink-1); }
+  /* One panel over the whole page. A card is 280 pixels tall at most,
+     which is not much for a few hundred commits; this is the same
+     drawing with the window to draw in. */
+  #bigbox {
+    width: calc(100vw - 24px); height: calc(100vh - 24px);
+    max-width: none; max-height: none;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface-1);
+    color: var(--ink-1);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  #bigbox::backdrop { background: rgba(0,0,0,0.45); }
+  #bigbox .inner {
+    padding: 14px 16px 16px; height: 100%; box-sizing: border-box;
+    display: flex; flex-direction: column;
+  }
+  #bigbox h2 { font-size: 14px; font-weight: 650; margin: 0 0 2px; }
+  /* The plot takes what the header leaves. min-height lets it shrink:
+     a flex item does not go below its content without it. */
+  #big-plot { flex: 1; min-height: 0; }
   .card .note { font-size: 11.5px; color: var(--muted); margin: 0 0 8px; }
   .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 11.5px; color: var(--ink-2); margin: 0 0 6px; }
   .legend .swatch {
@@ -816,6 +839,17 @@ __PALETTE_CSS__
     <div class="tablewrap" id="table"></div>
   </details>
 </div>
+<dialog id="bigbox" aria-labelledby="big-head">
+  <div class="inner">
+    <div class="cardhead">
+      <h2 id="big-head"></h2>
+      <button type="button" id="big-close" class="cardbtn">Close</button>
+    </div>
+    <p class="note" id="big-note"></p>
+    <div class="legend" id="big-legend"></div>
+    <div id="big-plot"></div>
+  </div>
+</dialog>
 <dialog id="exportbox" aria-labelledby="export-head">
   <div class="inner">
     <h2 id="export-head">Export <span id="export-name"></span></h2>
@@ -1150,6 +1184,23 @@ function legendItems(panel) {
       items.push([BRANCH_COLOR, "commits on " + name, true]);
   }
   return items;
+}
+
+// The legend of a panel as a row of swatches. The card and the full page
+// draw the same one.
+function fillLegend(box, panel) {
+  box.replaceChildren();
+  const items = legendItems(panel);
+  for (const [color, name, band] of items) {
+    const item = document.createElement("span");
+    const sw = document.createElement("span");
+    sw.className = band ? "swatch band" : "swatch";
+    sw.style.background = color;
+    item.appendChild(sw);
+    item.appendChild(document.createTextNode(name));
+    box.appendChild(item);
+  }
+  box.style.display = items.length ? "" : "none";
 }
 
 // Split one run of points at the branch point. The point at the branch
@@ -1624,6 +1675,68 @@ function renderCommitDetails() {
   }
 }
 
+// -------------------------------------------------------------- full page
+
+// One panel with the window to draw in. The plot is the drawing that the
+// card shows, at the size of the box: nothing about the view changes, so
+// the crosshair, the tooltip and the link to a commit all work here too.
+const bigBox = document.getElementById("bigbox");
+const bigPlot = document.getElementById("big-plot");
+const bigNote = document.getElementById("big-note");
+const bigLegend = document.getElementById("big-legend");
+const bigHead = document.getElementById("big-head");
+let bigOf = null;
+
+function drawBig() {
+  if (!bigOf) return;
+  const tight = renderPanel(bigPlot, bigOf, bigPlot.clientHeight);
+  bigHead.textContent = bigOf.title + (tight ? " (" + bigOf.unit + ")" : "");
+}
+
+function openBig(panel) {
+  bigOf = panel;
+  bigNote.textContent = panel.note || "";
+  bigNote.style.display = panel.note ? "" : "none";
+  fillLegend(bigLegend, panel);
+  // A modal dialog goes in the top layer, over everything else in the
+  // page. The tooltip sits at the end of the body, so it would come out
+  // behind the box; move it in for as long as the box is open.
+  bigBox.appendChild(tooltip);
+  // Draw after the box is up: a holder that is not on screen has no
+  // width, and renderPanel takes the width from the holder.
+  bigBox.showModal();
+  drawBig();
+}
+
+document.getElementById("big-close").addEventListener("click", () => {
+  bigBox.close();
+});
+// A click on the backdrop is a click on the dialog itself.
+bigBox.addEventListener("click", e => {
+  if (e.target === bigBox) bigBox.close();
+});
+bigBox.addEventListener("close", () => {
+  bigOf = null;
+  bigSize = "";
+  bigPlot.replaceChildren();
+  document.body.appendChild(tooltip);
+  hideTooltip();
+});
+
+// The box is as big as the window, so a resize moves both of its edges.
+// The observer of the grid behind it watches width alone, because that
+// is all a card has; this one watches the holder itself. Redrawing does
+// not change the size of the holder, so this cannot chase itself.
+let bigSize = "";
+new ResizeObserver(entries => {
+  if (!bigBox.open) return;
+  const r = entries[0].contentRect;
+  const size = Math.round(r.width) + "x" + Math.round(r.height);
+  if (size === bigSize) return;
+  bigSize = size;
+  drawBig();
+}).observe(bigPlot);
+
 // ----------------------------------------------------------------- export
 
 // One panel as a figure to paste elsewhere: a single <svg> element that
@@ -1876,6 +1989,7 @@ function renderAll() {
   // The panels below are new objects. A dialog that is open holds one of
   // the old ones, of a view that is no longer on screen.
   if (exportBox.open) exportBox.close();
+  if (bigBox.open) bigBox.close();
   const headline = document.getElementById("headline");
   const grid = document.getElementById("panels");
   const empty = document.getElementById("empty");
@@ -1911,13 +2025,23 @@ function renderAll() {
     head.className = "cardhead";
     const h = document.createElement("h2");
     head.appendChild(h);
+    const buttons = document.createElement("div");
+    buttons.className = "cardbtns";
+    const big = document.createElement("button");
+    big.type = "button";
+    big.className = "cardbtn";
+    big.textContent = "Full page";
+    big.title = "Show this graph over the whole page";
+    big.addEventListener("click", () => openBig(panel));
+    buttons.appendChild(big);
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "exportbtn";
+    button.className = "cardbtn";
     button.textContent = "Export";
     button.title = "Copy this graph as HTML";
     button.addEventListener("click", () => openExport(panel));
-    head.appendChild(button);
+    buttons.appendChild(button);
+    head.appendChild(buttons);
     card.appendChild(head);
     if (panel.note) {
       const note = document.createElement("p");
@@ -1925,21 +2049,10 @@ function renderAll() {
       note.textContent = panel.note;
       card.appendChild(note);
     }
-    const items = legendItems(panel);
-    if (items.length) {
-      const leg = document.createElement("div");
-      leg.className = "legend";
-      for (const [color, name, band] of items) {
-        const item = document.createElement("span");
-        const sw = document.createElement("span");
-        sw.className = band ? "swatch band" : "swatch";
-        sw.style.background = color;
-        item.appendChild(sw);
-        item.appendChild(document.createTextNode(name));
-        leg.appendChild(item);
-      }
-      card.appendChild(leg);
-    }
+    const leg = document.createElement("div");
+    leg.className = "legend";
+    fillLegend(leg, panel);
+    card.appendChild(leg);
     const holder = document.createElement("div");
     card.appendChild(holder);
     const entry = { panel, holder, heading: h,
@@ -2294,6 +2407,7 @@ addEventListener("hashchange", () => { readUrl(); apply(); });
 
 function redraw() {
   DRAWN.forEach(drawPanel);
+  drawBig();
 }
 
 // A plot gets the width of its card at the moment that it is drawn. Two
