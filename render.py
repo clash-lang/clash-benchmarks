@@ -384,7 +384,15 @@ def main():
                         default=Path.home() / ".cache" / "clash-benchmarks")
     parser.add_argument("--out", type=Path, default=here / "site" / "index.html")
     parser.add_argument("--all-branches", action="store_true")
+    parser.add_argument("--release-branches", action="store_true",
+                        help="print the release branches, one per line, and "
+                             "exit. A caller that prepares the clone needs "
+                             "them; see .github/workflows/publish.yml")
     args = parser.parse_args()
+
+    if args.release_branches:
+        print("\n".join(RELEASE_BRANCHES))
+        return
 
     results = load_results(args.data)
     machines = load_machines(args.data, results)
@@ -401,7 +409,9 @@ def main():
         chain = release_chain(clone, args.clash_ref, name)
         if chain is None:
             print(f"render.py: the clone has no release branch {name}; "
-                  f"leaving it out of the selector", file=sys.stderr)
+                  f"leaving it out of the selector. A clone of one branch "
+                  f"does not carry the others: fetch it, or drop it from "
+                  f"RELEASE_BRANCHES", file=sys.stderr)
             continue
         releases.append((name, chain))
     branch_offs = {chain[0]["sha"]: name for name, chain in releases}

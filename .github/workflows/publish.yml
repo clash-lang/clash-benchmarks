@@ -56,6 +56,15 @@ jobs:
         run: |
           git clone --filter=tree:0 --no-checkout --single-branch --branch master \
             https://github.com/clash-lang/clash-compiler.git clash-compiler
+          # The release branches, and the tags that mark their releases.
+          # A release branch left master before the release, so neither is
+          # reachable from master and the clone above brings along
+          # neither. render.py names them, so that adding one stays a
+          # change to RELEASE_BRANCHES and nothing else.
+          for branch in $(./render.py --release-branches); do
+            git -C clash-compiler fetch --filter=tree:0 --tags origin \
+              "+refs/heads/${branch}:refs/remotes/origin/${branch}"
+          done
 
       - name: Render
         run: ./render.py --clash-repo clash-compiler --out site/index.html
