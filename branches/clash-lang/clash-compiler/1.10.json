@@ -130,10 +130,15 @@
       "date": "2026-05-28",
       "sha": "3df8daf03f3fffc0a9873c3a85ca928e8d919354",
       "subject": "Merge pull request #3279 from clash-lang/mergify/copy/1.10/pr-3176"
+    },
+    {
+      "date": "2026-06-01",
+      "sha": "f3f00d52130891fb9eb131d4ac080d9912af96a9",
+      "subject": "Run Nix CI for all pushes (#3285) (#3287)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T13:53:26+00:00"
+  "updated": "2026-08-29T14:04:53+00:00"
 }
