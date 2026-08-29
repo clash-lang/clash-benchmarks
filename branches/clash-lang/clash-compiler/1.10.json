@@ -160,10 +160,15 @@
       "date": "2026-06-12",
       "sha": "8e35c04ed41e34d5b6995599b2755a4d84f89074",
       "subject": "Add `extra-substitutors` to `flake.nix` (#3301) (#3302)"
+    },
+    {
+      "date": "2026-07-07",
+      "sha": "7b015c28fb60bcf2610efc80f7d02082cdbf1b23",
+      "subject": "Account for class constraints in `recToLetRec`'s `eqDat` (#3312) (#3316)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T15:04:38+00:00"
+  "updated": "2026-08-29T15:17:22+00:00"
 }
