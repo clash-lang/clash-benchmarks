@@ -65,10 +65,15 @@
       "date": "2026-05-01",
       "sha": "665b7acaff21c1c42a482d8d7ab2c644a0b40da4",
       "subject": "Run `bindConstantVar` after `flattenLet` in `flatten` (#3223) (#3242)"
+    },
+    {
+      "date": "2026-05-01",
+      "sha": "1145e89979ce2211e425601c34a241134bed86b5",
+      "subject": "Account for errors in many more places in the evaluator (#3235) (#3243)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T10:49:41+00:00"
+  "updated": "2026-08-29T11:03:43+00:00"
 }
