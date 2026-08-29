@@ -9,9 +9,19 @@ not on any release or tag. Replace the source-repository-package
 stanzas for clash-compiler, clash-cores and clash-vexriscv with
 relative package paths. The benchmark workspace puts these checkouts
 next to bittide-hardware.
+
+Drop the frozen versions of the clash packages as well. A frozen
+version picks one candidate out of the several that hackage offers,
+and there is no choice left to make once the package is a local
+directory: the checkout under test is the only clash-prelude in the
+plan, whatever version it calls itself. The pin can only reject it,
+which is what happens on the 1.10 branch, where the checkout calls
+itself 1.10.x and the freeze file asks for the 1.11.0 of master. The
+flag assignments stay: those hold for every version.
 ---
- cabal.project | 32 +++++++-------------------------
- 1 file changed, 7 insertions(+), 25 deletions(-)
+ cabal.project        | 32 +++++++-------------------------
+ cabal.project.freeze |  5 -----
+ 2 files changed, 7 insertions(+), 30 deletions(-)
 
 diff --git a/cabal.project b/cabal.project
 index 7b5fe2ce..27d195cb 100644
@@ -70,3 +80,22 @@ index 7b5fe2ce..27d195cb 100644
  -- Allow us to load multiple packages into a REPL session at once. For example:
  --
  --   cabal repl bittide bittide:unittests
+diff --git a/cabal.project.freeze b/cabal.project.freeze
+index 2202afec..d55152e7 100644
+--- a/cabal.project.freeze
++++ b/cabal.project.freeze
+@@ -67,14 +67,9 @@ constraints: any.Cabal ==3.16.1.0,
+              any.clash-bitpackc ==0.1,
+              any.clash-cores ==0.1.0,
+              clash-cores -clash-18 +doctests +unit-tests,
+-             any.clash-ghc ==1.11.0,
+              clash-ghc -dynamic -use-ghc-paths -workaround-ghc-mmap-crash,
+-             any.clash-lib ==1.11.0,
+              clash-lib -debug +doctests +unittests -workaround-ghc-mmap-crash,
+-             any.clash-lib-hedgehog ==1.11.0,
+-             any.clash-prelude ==1.11.0,
+              clash-prelude +benchmarks +doctests -large-tuples -strict-mapsignal -super-strict +unittests -workaround-ghc-mmap-crash,
+-             any.clash-prelude-hedgehog ==1.11.0,
+              any.clash-protocols ==0.1.1,
+              clash-protocols -large-tuples,
+              any.clash-protocols-base ==0.1.1,
