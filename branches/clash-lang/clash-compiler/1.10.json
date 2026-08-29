@@ -85,10 +85,15 @@
       "date": "2026-05-09",
       "sha": "c7e6f11e0cee28606c00fac006fa9b3ca5a715ad",
       "subject": "Bump dependency bounds hedgehog, QuickCheck (#3262) (#3263)"
+    },
+    {
+      "date": "2026-05-09",
+      "sha": "9893c0a265f07a00bfe9b7ff11da8df9f9e5072b",
+      "subject": "Canonicalize data file candidates before checking for ambiguity (#3259) (#3265)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T11:45:41+00:00"
+  "updated": "2026-08-29T11:59:39+00:00"
 }
