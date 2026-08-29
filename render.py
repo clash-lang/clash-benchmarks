@@ -1325,17 +1325,22 @@ function renderPanel(container, panel, height, opts) {
     svg.appendChild(lab);
   }
 
+  // A dot for each commit, while the commits are far enough apart to
+  // tell one from the next. Closer than that they merge into a bar, so
+  // the line carries the shape on its own and the reader gets a dot only
+  // under the pointer. See "spare" below: a chain of a few thousand
+  // commits used to make a hidden circle for every one of them, which is
+  // tens of thousands of nodes that nobody ever sees.
   const dotSpacing = pts.length > 1 ? iw / (pts.length - 1) : iw;
   const drawDots = dotSpacing >= 7;
   const markers = new Map();
-  if (drawDots || !opts.static) {
+  if (drawDots) {
     for (const [i, val] of pts) {
       const dots = [];
       for (let s = 0; s < ns; s++) {
         const color = isBranch(i) && ns === 1 ? BRANCH_COLOR : panel.colors[s];
         const dot = el("circle", { cx: x(i), cy: y(val.vs[s]), r: 4,
           fill: color, stroke: "var(--surface-1)", "stroke-width": 2 });
-        if (!drawDots) dot.setAttribute("visibility", "hidden");
         svg.appendChild(dot);
         dots.push(dot);
       }
@@ -1367,17 +1372,37 @@ function renderPanel(container, panel, height, opts) {
     stroke: "var(--axis)", "stroke-width": 1, visibility: "hidden" });
   svg.appendChild(cross);
 
+  // The dot under the pointer, when the panel draws no dots of its own:
+  // one circle for each series, moved to the commit that the reader is
+  // on. One circle serves a chain of any length.
+  const spare = drawDots ? null : panel.series.map(() => {
+    const dot = el("circle", { r: 4, stroke: "var(--surface-1)",
+      "stroke-width": 2, visibility: "hidden" });
+    svg.appendChild(dot);
+    return dot;
+  });
+
   const hit = el("rect", { x: m.left, y: m.top, width: iw, height: ih,
     fill: "transparent", class: "plot-hit", tabindex: 0 });
   svg.appendChild(hit);
 
   let active = null;
-  function setDots(i, r, forceShow) {
-    for (const dot of markers.get(i) || []) {
-      dot.setAttribute("r", r);
-      if (forceShow) dot.setAttribute("visibility", "visible");
-      else if (!drawDots) dot.setAttribute("visibility", "hidden");
+  function setDots(i, r, show) {
+    if (spare) {
+      const val = panel.values[i];
+      for (let s = 0; s < ns; s++) {
+        const dot = spare[s];
+        if (!show || !val) { dot.setAttribute("visibility", "hidden"); continue; }
+        dot.setAttribute("cx", x(i));
+        dot.setAttribute("cy", y(val.vs[s]));
+        dot.setAttribute("r", r);
+        dot.setAttribute("fill",
+          isBranch(i) && ns === 1 ? BRANCH_COLOR : panel.colors[s]);
+        dot.setAttribute("visibility", "visible");
+      }
+      return;
     }
+    for (const dot of markers.get(i) || []) dot.setAttribute("r", r);
   }
   function highlight(i, clientX, clientY) {
     if (active != null) setDots(active, 4, false);
@@ -1819,6 +1844,19 @@ exportBox.addEventListener("close", () => {
 // The panels that are on screen now, for redraw().
 let DRAWN = [];
 
+// The table is a row for each commit with a cell for each panel, and its
+// box starts closed. On a chain of a few thousand commits that is tens
+// of thousands of cells that nobody asked to see, so build them when the
+// reader opens the box, and on a redraw only while it is open.
+const tableBox = document.getElementById("tablebox");
+let tableDrawn = false;
+tableBox.addEventListener("toggle", () => {
+  if (tableBox.open && !tableDrawn) {
+    renderTable();
+    tableDrawn = true;
+  }
+});
+
 function drawPanel(entry) {
   const tight = renderPanel(entry.holder, entry.panel, entry.height);
   entry.heading.textContent =
@@ -1836,6 +1874,8 @@ function renderAll() {
   headline.replaceChildren();
   grid.replaceChildren();
   empty.replaceChildren();
+  document.getElementById("table").replaceChildren();
+  tableDrawn = false;
 
   const machine = DATA.machines.find(m => m.id === state.machine) || {};
   const results = VD.commits.filter(
@@ -1846,8 +1886,7 @@ function renderAll() {
     + ` · ${VD.ref.label}` + (VD.ref.pr != null ? ` (#${VD.ref.pr})` : "")
     + ` · rendered ${DATA.generated}`;
 
-  document.getElementById("tablebox").style.display =
-    VD.panels.length ? "" : "none";
+  tableBox.style.display = VD.panels.length ? "" : "none";
   if (!VD.panels.length) {
     const p = document.createElement("p");
     p.className = "empty";
@@ -1901,7 +1940,10 @@ function renderAll() {
     drawPanel(entry);
     DRAWN.push(entry);
   }
-  renderTable();
+  if (tableBox.open) {
+    renderTable();
+    tableDrawn = true;
+  }
 }
 
 // ------------------------------------------------------------------ state
