@@ -5,10 +5,15 @@
       "date": "2026-04-22",
       "sha": "36320d65794fb1f79875db10da2e4b03c60c3989",
       "subject": "Merge pull request #3211 from clash-lang/release_v1.10.0"
+    },
+    {
+      "date": "2026-04-23",
+      "sha": "2371b8708bd4474e6ac0e5988fd7e68b17bf1f69",
+      "subject": "Add highlight to 1.10.0 changelog (#3214)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T07:57:13+00:00"
+  "updated": "2026-08-29T08:11:18+00:00"
 }
