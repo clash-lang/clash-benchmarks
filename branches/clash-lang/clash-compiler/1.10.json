@@ -185,10 +185,15 @@
       "date": "2026-07-16",
       "sha": "d82df98204a42cb0bfafbabb9989afcf1adab9c1",
       "subject": "Merge pull request #3324 from clash-lang/mergify/copy/1.10/pr-3297"
+    },
+    {
+      "date": "2026-08-05",
+      "sha": "81b1b37794676b99897c287aba123c455502feac",
+      "subject": "Set default timeout for `clash-testsuite` to 5min (#3346) (#3347)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T16:06:42+00:00"
+  "updated": "2026-08-29T16:17:53+00:00"
 }
