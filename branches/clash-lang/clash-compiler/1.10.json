@@ -30,10 +30,15 @@
       "date": "2026-04-28",
       "sha": "de8349a119f523db28fc0faad0d0ac6a9eaf6a42",
       "subject": "README.md: add 1.10 to compatibility matrix and fix error (#3230) (#3231)"
+    },
+    {
+      "date": "2026-04-30",
+      "sha": "1c201d8cef205782d75fc2705de11b08bb451dd9",
+      "subject": "Account for unary product types in `makeTopEntity` (#3220) (#3236)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T09:07:09+00:00"
+  "updated": "2026-08-29T09:22:19+00:00"
 }
