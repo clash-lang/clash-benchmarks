@@ -125,10 +125,15 @@
       "date": "2026-05-28",
       "sha": "ba6b9eeae4a4466fb57a213beae224bb7321ae05",
       "subject": "Add `__debug_hash` to Clash manifest files (#3280) (#3281)"
+    },
+    {
+      "date": "2026-05-28",
+      "sha": "3df8daf03f3fffc0a9873c3a85ca928e8d919354",
+      "subject": "Merge pull request #3279 from clash-lang/mergify/copy/1.10/pr-3176"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T13:38:29+00:00"
+  "updated": "2026-08-29T13:53:26+00:00"
 }
