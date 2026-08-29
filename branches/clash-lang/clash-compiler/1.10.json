@@ -20,10 +20,15 @@
       "date": "2026-04-27",
       "sha": "ad02bf792c36486b444e4b3f8a21cf4e3475ba68",
       "subject": "Add support for `ghdl-{gcc,mcode}` in `clash-testsuite` (#3219) (#3226)"
+    },
+    {
+      "date": "2026-04-27",
+      "sha": "f314d2a086b8faccfe083136d278fa0e0608ae62",
+      "subject": "Add SaturatingNum instances for Clash.Num types (#3193) (#3228)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T08:38:31+00:00"
+  "updated": "2026-08-29T08:53:47+00:00"
 }
