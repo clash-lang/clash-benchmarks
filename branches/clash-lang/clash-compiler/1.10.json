@@ -110,10 +110,15 @@
       "date": "2026-05-10",
       "sha": "c493cbd07e140517c0c226b059f1e1237a45382f",
       "subject": "GitLab CI: Move nearly everything to local runners (#3268) (#3269)"
+    },
+    {
+      "date": "2026-05-15",
+      "sha": "4eb2c146b436c94af309a16e10e129be871d1e8c",
+      "subject": "Drop `data-binary-ieee754` in favor of `GHC.Float` (#3270) (#3271)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T12:55:21+00:00"
+  "updated": "2026-08-29T13:11:16+00:00"
 }
