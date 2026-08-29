@@ -32,8 +32,8 @@ See bench/result_schema.py.
 
 Each panel carries an "Export" button. It hands the reader the panel as
 one self-contained <svg> element to paste into a blog post: the palette,
-the title, the legend and a link back to the view are inside the element,
-so it needs nothing from this page. See exportFigure() in the template.
+the title and a link back to the view are inside the element, so it needs
+nothing from this page. See exportFigure() in the template.
 
 The branch selector holds the branches that are the head of an open pull
 request, and no others: a branch whose pull request is closed says nothing
@@ -662,13 +662,13 @@ __PALETTE_CSS__
   <div class="inner">
     <h2 id="export-head">Export <span id="export-name"></span></h2>
     <p class="note">One self-contained &lt;svg&gt; element, with the palette,
-    the title, the legend and a link back to this view inside it. It needs
-    nothing from this page, so it can go straight into a blog post. It shows
-    the commits of the view as it stands: this machine, this branch, this
-    metric and this date range.</p>
+    the title and a link back to this view inside it. It needs nothing from
+    this page, so it can go straight into a blog post. It shows the commits
+    of the view as it stands: this machine, this branch, this metric and this
+    date range.</p>
     <div class="filters">
       <label>Theme <select id="export-theme">
-        <option value="auto">Light and dark, by the reader's setting</option>
+        <option value="auto">Light and dark, by the theme of the page</option>
         <option value="light">Light only</option>
         <option value="dark">Dark only</option>
       </select></label>
@@ -1067,8 +1067,12 @@ function renderPanel(container, panel, height, opts) {
     y1: m.top + ih, y2: m.top + ih, stroke: "var(--axis)", "stroke-width": 1 }));
 
   if (!tight) {
+    // The label turns about (12, cy), so its baseline runs up the figure
+    // and its letters stand to the left of that line. Put the baseline a
+    // line-height right of the pivot, and the letters land beside the
+    // left edge rather than over it.
     const cy = m.top + ih / 2;
-    const ylab = el("text", { x: 12, y: cy, "text-anchor": "middle",
+    const ylab = el("text", { x: 12, y: cy + 10, "text-anchor": "middle",
       transform: `rotate(-90 12 ${cy})` });
     ylab.textContent = panel.dim + " (" + panel.unit + ")";
     svg.appendChild(ylab);
@@ -1447,6 +1451,12 @@ function permalinkLabel() {
 // The stylesheet of a figure: the palette, then the text styles that the
 // figure needs. "light" and "dark" pin the palette, for a post that is
 // one or the other; "auto" carries both.
+//
+// "auto" keys the dark palette to data-theme, and not to the preference of
+// the reader: a page with a theme switch sets that attribute, and a figure
+// that followed the operating system instead would stay light on a page
+// the reader has just turned dark. palette_css() in render.py reads the
+// same attribute.
 function exportCss(mode) {
   const root = "." + EXPORT_CLASS;
   const vars = (which, indent) => Object.keys(PALETTE[which])
@@ -1454,8 +1464,8 @@ function exportCss(mode) {
   let css = root + " {\n" + vars(mode === "dark" ? "dark" : "light", "  ")
     + "\n}\n";
   if (mode === "auto")
-    css += "@media (prefers-color-scheme: dark) {\n  " + root + " {\n"
-      + vars("dark", "    ") + "\n  }\n}\n";
+    css += '[data-theme="dark"] ' + root + " {\n" + vars("dark", "  ")
+      + "\n}\n";
   return css
     + root + " text { font: 10.5px " + EXPORT_FONT + "; fill: var(--muted); }\n"
     + root + " .title { font-size: 13px; font-weight: 650; fill: var(--ink-1); }\n"
@@ -1467,8 +1477,14 @@ function exportCss(mode) {
 }
 
 // Build the figure of one panel. The plot itself comes from renderPanel,
-// the same drawing that the page shows; this adds the header, the legend
-// and the palette around it.
+// the same drawing that the page shows; this adds the header and the
+// palette around it.
+//
+// The header is one line: the title of the panel, and the address of the
+// view it came from. What is not in it - the note of the panel, the
+// machine, the branch, the dates, the legend - belongs to the text of the
+// post around the figure, where a writer says it in their own words, and
+// the link carries all of it for a reader who wants the numbers.
 function exportFigure(panel, mode) {
   const plotH = panel.headline ? 300 : 240;
   const holder = document.createElement("div");
@@ -1477,22 +1493,8 @@ function exportFigure(panel, mode) {
   if (!plot) return null;
 
   const pad = 16;
-  const machine = DATA.machines.find(m => m.id === state.machine) || {};
-  const first = DATA.commits[VD.commits[0]].d;
-  const last = DATA.commits[VD.commits[VD.commits.length - 1]].d;
-  const lines = [];
-  let y = 20;
-  lines.push([y, "title", panel.title]);
-  if (panel.note) { y += 15; lines.push([y, "sub", panel.note]); }
-  y += 14;
-  lines.push([y, "sub", (machine.label || state.machine) + " · " + VD.ref.label
-    + (VD.ref.pr != null ? " (#" + VD.ref.pr + ")" : "")
-    + " · " + first + " to " + last]);
-  const linkY = y;
-  const items = legendItems(panel);
-  if (items.length) y += 17;
-  const legendY = y;
-  const headH = y + 8;
+  const titleY = 30;
+  const headH = 44;
   const H = headH + plotH;
 
   const svg = el("svg", {
@@ -1505,34 +1507,20 @@ function exportFigure(panel, mode) {
   const style = el("style", {});
   style.textContent = "\n" + exportCss(mode);
   svg.appendChild(style);
+  // A square frame: a figure sits in the column of a post, among
+  // paragraphs whose corners are square too.
   svg.appendChild(el("rect", { x: 0.5, y: 0.5, width: EXPORT_W - 1,
-    height: H - 1, rx: 8, fill: "var(--surface-1)", stroke: "var(--border)" }));
-  for (const [ly, cls, text] of lines) {
-    const node = el("text", { x: pad, y: ly, class: cls });
-    node.textContent = text;
-    svg.appendChild(node);
-  }
+    height: H - 1, rx: 0, fill: "var(--surface-1)", stroke: "var(--border)" }));
+  const title = el("text", { x: pad, y: titleY, class: "title" });
+  title.textContent = panel.title;
+  svg.appendChild(title);
 
   const link = el("a", { href: permalink(), target: "_blank" });
-  const linkText = el("text", { x: EXPORT_W - pad, y: linkY, class: "sub",
+  const linkText = el("text", { x: EXPORT_W - pad, y: titleY, class: "sub",
     "text-anchor": "end" });
   linkText.textContent = permalinkLabel();
   link.appendChild(linkText);
   svg.appendChild(link);
-
-  // The legend. The width of a label is an estimate: the figure is not on
-  // screen while it is built, so its text cannot be measured. The items
-  // are few and short, and the row has the whole width of the figure.
-  let lx = pad;
-  for (const [color, name, band] of items) {
-    svg.appendChild(el("rect", { x: lx, y: legendY - (band ? 9 : 5),
-      width: 14, height: band ? 10 : 3, rx: 2, fill: color,
-      opacity: band ? 0.35 : 1 }));
-    const node = el("text", { x: lx + 20, y: legendY, class: "legend" });
-    node.textContent = name;
-    svg.appendChild(node);
-    lx += 20 + name.length * 6 + 14;
-  }
 
   const g = el("g", { transform: "translate(0 " + headH + ")" });
   g.append(...plot.childNodes);
