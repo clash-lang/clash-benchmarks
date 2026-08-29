@@ -1212,11 +1212,10 @@ function renderPanel(container, panel, height, opts) {
   // It is there to tell the commits of the branch from the commits of
   // master before it. A view that is a branch all the way across - a
   // release branch, or a detached commit whose branch point is not on
-  // master any more - has nothing to tell apart, and a tint over the
-  // whole plot only asks the reader to decode a colour. That view says
-  // it in a word instead; see the label further down.
+  // master any more - has nothing to tell apart: no band, and no rule at
+  // the branch point either, because there is nothing on the other side
+  // of it. The selector and the subtitle already name the branch.
   const bp = VD.branchPoint;
-  const allBranch = bp != null && bp <= 0;
   if (bp != null && bp > 0 && bp < n - 1) {
     svg.appendChild(el("rect", { x: x(bp), y: m.top,
       width: m.left + iw - x(bp), height: ih,
@@ -1295,30 +1294,23 @@ function renderPanel(container, panel, height, opts) {
     }
   }
 
-  // The rule at the branch point, with a label on the big panel.
-  if (bp != null && bp >= 0 && bp < n - 1) {
+  // The rule at the branch point, with a label on the big panel. Only
+  // where there are master commits before it; see the band above.
+  if (bp != null && bp > 0 && bp < n - 1) {
     svg.appendChild(el("line", { x1: x(bp), x2: x(bp), y1: m.top, y2: m.top + ih,
       stroke: BRANCH_COLOR, "stroke-width": 1.5, "stroke-dasharray": "4 3" }));
     if (panel.headline) {
-      // Keep the label inside the plot: put it left of the rule when the
-      // branch point sits near the right edge.
+      // The sha alone: a dashed rule with the band starting at it says
+      // what it is. Keep the label inside the plot by putting it left of
+      // the rule when the branch point sits near the right edge.
       const late = x(bp) > m.left + iw * 0.6;
       const lab = el("text", { x: x(bp) + (late ? -6 : 6), y: m.top + 11,
         "text-anchor": late ? "end" : "start", class: "branchlabel" });
-      lab.textContent = "branch point " + VD.commits[bp].slice(0, 9);
+      lab.textContent = VD.commits[bp].slice(0, 9);
       svg.appendChild(lab);
     }
   }
 
-  // The word that stands in for the band. It goes against the right
-  // edge, opposite the branch point at the left.
-  if (allBranch && panel.headline) {
-    const lab = el("text", { x: m.left + iw, y: m.top + 11,
-      "text-anchor": "end", class: "branchlabel", fill: BRANCH_COLOR });
-    lab.textContent = VD.ref.detached ? VD.ref.label
-      : "branch " + VD.ref.label;
-    svg.appendChild(lab);
-  }
 
   // The marked commits of this view: the releases of a release branch,
   // or, on master, the commits where the release branches left. Neither
