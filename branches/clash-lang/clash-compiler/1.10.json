@@ -95,10 +95,15 @@
       "date": "2026-05-09",
       "sha": "8fb298145fe181d77a1f962068d503f40b66b11e",
       "subject": "Don't emit a trailing empty line when reflowing paragraphs (#3257) (#3266)"
+    },
+    {
+      "date": "2026-05-09",
+      "sha": "4d7158f88946bc451b3a9e2135f35c5e28cc1697",
+      "subject": "Use more TH quotes instead of hardcoded names in Normalize (#3261) (#3264)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T12:14:23+00:00"
+  "updated": "2026-08-29T12:28:13+00:00"
 }
