@@ -25,10 +25,15 @@
       "date": "2026-04-27",
       "sha": "f314d2a086b8faccfe083136d278fa0e0608ae62",
       "subject": "Add SaturatingNum instances for Clash.Num types (#3193) (#3228)"
+    },
+    {
+      "date": "2026-04-28",
+      "sha": "de8349a119f523db28fc0faad0d0ac6a9eaf6a42",
+      "subject": "README.md: add 1.10 to compatibility matrix and fix error (#3230) (#3231)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T08:53:47+00:00"
+  "updated": "2026-08-29T09:07:09+00:00"
 }
