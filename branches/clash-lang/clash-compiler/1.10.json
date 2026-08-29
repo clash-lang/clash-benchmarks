@@ -70,10 +70,15 @@
       "date": "2026-05-01",
       "sha": "1145e89979ce2211e425601c34a241134bed86b5",
       "subject": "Account for errors in many more places in the evaluator (#3235) (#3243)"
+    },
+    {
+      "date": "2026-05-05",
+      "sha": "434716e0bfae589341dd5818e776e75cc3d4403b",
+      "subject": "Merge pull request #3248 from clash-lang/mergify/copy/1.10/pr-3245"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T11:03:43+00:00"
+  "updated": "2026-08-29T11:17:56+00:00"
 }
