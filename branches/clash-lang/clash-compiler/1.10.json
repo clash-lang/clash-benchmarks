@@ -10,10 +10,15 @@
       "date": "2026-04-23",
       "sha": "2371b8708bd4474e6ac0e5988fd7e68b17bf1f69",
       "subject": "Add highlight to 1.10.0 changelog (#3214)"
+    },
+    {
+      "date": "2026-04-26",
+      "sha": "9422c096c579bd1f0df0a67a9945a503fdce63fc",
+      "subject": "Remove GHC mmap crash workaround from Nix (#3212) (#3216)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T08:11:18+00:00"
+  "updated": "2026-08-29T08:24:58+00:00"
 }
