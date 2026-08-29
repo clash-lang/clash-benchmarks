@@ -135,10 +135,15 @@
       "date": "2026-06-01",
       "sha": "f3f00d52130891fb9eb131d4ac080d9912af96a9",
       "subject": "Run Nix CI for all pushes (#3285) (#3287)"
+    },
+    {
+      "date": "2026-06-08",
+      "sha": "44f216adc2ccd1166b779d1e3be352890effb03a",
+      "subject": "Fix `reduceTraverse` crash on zero-length vectors (#3292) (#3293)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T14:04:53+00:00"
+  "updated": "2026-08-29T14:17:43+00:00"
 }

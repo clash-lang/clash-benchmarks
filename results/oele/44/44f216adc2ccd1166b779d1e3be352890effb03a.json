@@ -1,0 +1,104 @@
+{
+  "clash": {
+    "commit": "44f216adc2ccd1166b779d1e3be352890effb03a",
+    "committer_date": "2026-06-08",
+    "parents": [
+      "f3f00d52130891fb9eb131d4ac080d9912af96a9"
+    ],
+    "ref": "1.10",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Fix `reduceTraverse` crash on zero-length vectors (#3292) (#3293)"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 57476953.16943522,
+        "gc_wall_s": 5.55638538205992e-06,
+        "mean_s": 0.01551287470048032,
+        "mut_wall_s": 0.015453965558139555,
+        "stddev_s": 0.00017801363697223953
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 1022407371.7333333,
+        "gc_wall_s": 0.0001541798000000094,
+        "mean_s": 0.26213748552914085,
+        "mut_wall_s": 0.26203936613333334,
+        "stddev_s": 0.0003967191964319174
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 104452521.40350877,
+        "gc_wall_s": 1.1293590643274888e-05,
+        "mean_s": 0.026963119452646702,
+        "mut_wall_s": 0.02693975185964913,
+        "stddev_s": 0.00014678525073599875
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 58890992.41590214,
+        "gc_wall_s": 5.217501529052169e-06,
+        "mean_s": 0.015008050051730656,
+        "mut_wall_s": 0.014987858345565729,
+        "stddev_s": 0.0001908262874059299
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 4415238283.2,
+        "gc_wall_s": 0.008408376699999994,
+        "mean_s": 1.0644637026974426,
+        "mut_wall_s": 1.0594735114000005,
+        "stddev_s": 0.01054351457103708
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 1415376219.2,
+        "gc_wall_s": 0.0006511400666666667,
+        "mean_s": 0.3261601385726438,
+        "mut_wall_s": 0.3253947274666667,
+        "stddev_s": 0.0004819622809291135
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 540513030.0,
+        "gc_wall_s": 0.00010113128571428194,
+        "mean_s": 0.16770713194479317,
+        "mut_wall_s": 0.16757149007142885,
+        "stddev_s": 0.00036263081349886995
+      }
+    },
+    "skip_reason": null,
+    "status": "ok"
+  },
+  "run": {
+    "date": "2026-08-29T14:17:43+00:00",
+    "quick": false,
+    "trigger": "dispatch",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/33241431618"
+  },
+  "schema_version": 4,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0001-quickcheck-bound",
+      "0002-termtodata-hash",
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "alloc_bytes": 1620767406856,
+        "gc_cpu_s": 46.506,
+        "gc_wall_s": 38.196,
+        "max_live_bytes": 948716400,
+        "mut_cpu_s": 392.263,
+        "mut_wall_s": 392.109,
+        "netlist_s": 2.456,
+        "normalization_s": 401.0,
+        "num_gcs": 36585,
+        "peak_mb": 2452,
+        "total_s": 424.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
