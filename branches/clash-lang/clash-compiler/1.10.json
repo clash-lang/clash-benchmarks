@@ -155,10 +155,15 @@
       "date": "2026-06-12",
       "sha": "c88b6866e41cff3aba62525a044dfa222abc4fda",
       "subject": "Limit Clash invocations to 1G of RAM (#3296) (#3300)"
+    },
+    {
+      "date": "2026-06-12",
+      "sha": "8e35c04ed41e34d5b6995599b2755a4d84f89074",
+      "subject": "Add `extra-substitutors` to `flake.nix` (#3301) (#3302)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T14:53:13+00:00"
+  "updated": "2026-08-29T15:04:38+00:00"
 }
