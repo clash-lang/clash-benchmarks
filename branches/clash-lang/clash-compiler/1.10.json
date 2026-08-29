@@ -50,10 +50,15 @@
       "date": "2026-04-30",
       "sha": "bfa7d6a477f851d6fdf59676f55aa627f51395fc",
       "subject": "Account for custom bit representations in `dataToTag` (#3221) (#3237)"
+    },
+    {
+      "date": "2026-04-30",
+      "sha": "8c1f0f48b62628f409c102b5e1270e2b2c91bff0",
+      "subject": "Do not duplicate synthesis attributes in `mkUniqueNormalized` (#3225) (#3240)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T10:04:50+00:00"
+  "updated": "2026-08-29T10:20:28+00:00"
 }
