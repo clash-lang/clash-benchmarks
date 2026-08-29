@@ -55,10 +55,15 @@
       "date": "2026-04-30",
       "sha": "8c1f0f48b62628f409c102b5e1270e2b2c91bff0",
       "subject": "Do not duplicate synthesis attributes in `mkUniqueNormalized` (#3225) (#3240)"
+    },
+    {
+      "date": "2026-04-30",
+      "sha": "695be51dc7658c2ba8aced7a3aa53784e2c86f32",
+      "subject": "Prevent duplicate `attribute`s in VHDL backend (#3222) (#3241)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T10:20:28+00:00"
+  "updated": "2026-08-29T10:35:05+00:00"
 }
