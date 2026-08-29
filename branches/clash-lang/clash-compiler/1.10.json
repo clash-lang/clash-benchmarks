@@ -35,10 +35,15 @@
       "date": "2026-04-30",
       "sha": "1c201d8cef205782d75fc2705de11b08bb451dd9",
       "subject": "Account for unary product types in `makeTopEntity` (#3220) (#3236)"
+    },
+    {
+      "date": "2026-04-30",
+      "sha": "4dfdc42abb85ad96290be3fa1ef80279595fa2ce",
+      "subject": "Merge pull request #3239 from clash-lang/mergify/copy/1.10/pr-3233"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T09:22:19+00:00"
+  "updated": "2026-08-29T09:36:58+00:00"
 }
