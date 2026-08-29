@@ -1118,7 +1118,9 @@ function legendItems(panel) {
     const name = VD.ref.detached ? VD.ref.label : "branch " + VD.ref.label;
     if (panel.series.length === 1)
       items.push([BRANCH_COLOR, "on " + name, false]);
-    else
+    else if (VD.branchPoint > 0)
+      // The band. A view that is a branch all the way across draws none;
+      // see renderPanel().
       items.push([BRANCH_COLOR, "commits on " + name, true]);
   }
   return items;
@@ -1180,11 +1182,19 @@ function renderPanel(container, panel, height, opts) {
 
   // The band behind the commits of the branch. It carries the branch,
   // together with the rule at the branch point and the legend.
+  //
+  // It is there to tell the commits of the branch from the commits of
+  // master before it. A view that is a branch all the way across - a
+  // release branch, or a detached commit whose branch point is not on
+  // master any more - has nothing to tell apart, and a tint over the
+  // whole plot only asks the reader to decode a colour. That view says
+  // it in a word instead; see the label further down.
   const bp = VD.branchPoint;
-  if (bp != null && bp < n - 1) {
-    const x0 = bp < 0 ? m.left : x(bp);
-    svg.appendChild(el("rect", { x: x0, y: m.top, width: m.left + iw - x0,
-      height: ih, fill: BRANCH_COLOR, opacity: 0.07 }));
+  const allBranch = bp != null && bp <= 0;
+  if (bp != null && bp > 0 && bp < n - 1) {
+    svg.appendChild(el("rect", { x: x(bp), y: m.top,
+      width: m.left + iw - x(bp), height: ih,
+      fill: BRANCH_COLOR, opacity: 0.07 }));
   }
 
   const { ticks, step } = niceTicks(lo, hi, Math.max(3, Math.floor(ih / 45)));
@@ -1272,6 +1282,16 @@ function renderPanel(container, panel, height, opts) {
       lab.textContent = "branch point " + VD.commits[bp].slice(0, 9);
       svg.appendChild(lab);
     }
+  }
+
+  // The word that stands in for the band. It goes against the right
+  // edge, opposite the branch point at the left.
+  if (allBranch && panel.headline) {
+    const lab = el("text", { x: m.left + iw, y: m.top + 11,
+      "text-anchor": "end", class: "branchlabel", fill: BRANCH_COLOR });
+    lab.textContent = VD.ref.detached ? VD.ref.label
+      : "branch " + VD.ref.label;
+    svg.appendChild(lab);
   }
 
   // The marked commits of this view: the releases of a release branch,
