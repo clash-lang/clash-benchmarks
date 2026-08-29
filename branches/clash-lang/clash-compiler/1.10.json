@@ -105,10 +105,15 @@
       "date": "2026-05-09",
       "sha": "f21d4c3eab9b4ea52d840d5bef41b60149a9b379",
       "subject": "Compare KnownNat by TH name in deriveAutoReg (#3256) (#3267)"
+    },
+    {
+      "date": "2026-05-10",
+      "sha": "c493cbd07e140517c0c226b059f1e1237a45382f",
+      "subject": "GitLab CI: Move nearly everything to local runners (#3268) (#3269)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T12:42:45+00:00"
+  "updated": "2026-08-29T12:55:21+00:00"
 }
