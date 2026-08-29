@@ -115,10 +115,15 @@
       "date": "2026-05-15",
       "sha": "4eb2c146b436c94af309a16e10e129be871d1e8c",
       "subject": "Drop `data-binary-ieee754` in favor of `GHC.Float` (#3270) (#3271)"
+    },
+    {
+      "date": "2026-05-15",
+      "sha": "3c04c921ee941eae7da34d41493067e4408bb64d",
+      "subject": "Merge pull request #3272 from clash-lang/mergify/copy/1.10/pr-3250"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T13:11:16+00:00"
+  "updated": "2026-08-29T13:24:29+00:00"
 }
