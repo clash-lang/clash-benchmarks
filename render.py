@@ -1452,11 +1452,17 @@ function permalinkLabel() {
 // figure needs. "light" and "dark" pin the palette, for a post that is
 // one or the other; "auto" carries both.
 //
-// "auto" keys the dark palette to data-theme, and not to the preference of
-// the reader: a page with a theme switch sets that attribute, and a figure
-// that followed the operating system instead would stay light on a page
-// the reader has just turned dark. palette_css() in render.py reads the
-// same attribute.
+// "auto" asks twice, the way palette_css() does for the page: the
+// preference of the reader, and then data-theme, which a post with a
+// theme switch of its own sets and which wins in both directions. A
+// figure that only followed the operating system would stay light on a
+// page the reader has just turned dark; one that only followed the
+// attribute would stay light on a page that has no switch at all.
+//
+// Both rules look for the attribute on any ancestor, and not on the root
+// element the way palette_css() does: this figure is a guest in a page
+// whose shape it does not know, and a post may well put its theme on a
+// wrapper rather than on <html>.
 function exportCss(mode) {
   const root = "." + EXPORT_CLASS;
   const vars = (which, indent) => Object.keys(PALETTE[which])
@@ -1464,7 +1470,10 @@ function exportCss(mode) {
   let css = root + " {\n" + vars(mode === "dark" ? "dark" : "light", "  ")
     + "\n}\n";
   if (mode === "auto")
-    css += '[data-theme="dark"] ' + root + " {\n" + vars("dark", "  ")
+    css += "@media (prefers-color-scheme: dark) {\n  " + root
+      + ':not([data-theme="light"] *) {\n'
+      + vars("dark", "    ") + "\n  }\n}\n"
+      + '[data-theme="dark"] ' + root + " {\n" + vars("dark", "  ")
       + "\n}\n";
   return css
     + root + " text { font: 10.5px " + EXPORT_FONT + "; fill: var(--muted); }\n"
