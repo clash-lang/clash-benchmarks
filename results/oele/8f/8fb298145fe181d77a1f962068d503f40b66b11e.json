@@ -1,0 +1,104 @@
+{
+  "clash": {
+    "commit": "8fb298145fe181d77a1f962068d503f40b66b11e",
+    "committer_date": "2026-05-09",
+    "parents": [
+      "9893c0a265f07a00bfe9b7ff11da8df9f9e5072b"
+    ],
+    "ref": "1.10",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Don't emit a trailing empty line when reflowing paragraphs (#3257) (#3266)"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 57094318.05980066,
+        "gc_wall_s": 4.354053156146031e-06,
+        "mean_s": 0.015454353096959528,
+        "mut_wall_s": 0.015380677358803984,
+        "stddev_s": 0.000199015111752896
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 1018335236.8,
+        "gc_wall_s": 0.00016660893333333426,
+        "mean_s": 0.2590972144211022,
+        "mut_wall_s": 0.25893300533333324,
+        "stddev_s": 0.00030847437859093994
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 103673082.85380118,
+        "gc_wall_s": 1.4516701754386237e-05,
+        "mean_s": 0.026396610843520293,
+        "mut_wall_s": 0.026332613888888887,
+        "stddev_s": 0.00025473267750921065
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 59029049.6146789,
+        "gc_wall_s": 5.151948012232641e-06,
+        "mean_s": 0.014921759963229956,
+        "mut_wall_s": 0.014889278681957191,
+        "stddev_s": 0.0001051977375838901
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 4265364868.8,
+        "gc_wall_s": 0.009014048800000004,
+        "mean_s": 1.0179812941884545,
+        "mut_wall_s": 1.0096265156999997,
+        "stddev_s": 0.0038924221037141197
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 1399143397.8666666,
+        "gc_wall_s": 0.0005870593333333322,
+        "mean_s": 0.32266133809345776,
+        "mut_wall_s": 0.3225541013999991,
+        "stddev_s": 0.0033989862120958276
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 393901923.1111111,
+        "gc_wall_s": 7.058991666666594e-05,
+        "mean_s": 0.11861052904936341,
+        "mut_wall_s": 0.11853041408333355,
+        "stddev_s": 0.00023132735693185926
+      }
+    },
+    "skip_reason": null,
+    "status": "ok"
+  },
+  "run": {
+    "date": "2026-08-29T12:14:23+00:00",
+    "quick": false,
+    "trigger": "dispatch",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/33241410612"
+  },
+  "schema_version": 4,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0001-quickcheck-bound",
+      "0002-termtodata-hash",
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "alloc_bytes": 2133961068344,
+        "gc_cpu_s": 91.407,
+        "gc_wall_s": 73.099,
+        "max_live_bytes": 884426344,
+        "mut_cpu_s": 419.819,
+        "mut_wall_s": 419.441,
+        "netlist_s": 2.22,
+        "normalization_s": 463.0,
+        "num_gcs": 54230,
+        "peak_mb": 2386,
+        "total_s": 487.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

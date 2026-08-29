@@ -90,10 +90,15 @@
       "date": "2026-05-09",
       "sha": "9893c0a265f07a00bfe9b7ff11da8df9f9e5072b",
       "subject": "Canonicalize data file candidates before checking for ambiguity (#3259) (#3265)"
+    },
+    {
+      "date": "2026-05-09",
+      "sha": "8fb298145fe181d77a1f962068d503f40b66b11e",
+      "subject": "Don't emit a trailing empty line when reflowing paragraphs (#3257) (#3266)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T11:59:39+00:00"
+  "updated": "2026-08-29T12:14:23+00:00"
 }
