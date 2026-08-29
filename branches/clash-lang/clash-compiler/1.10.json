@@ -15,10 +15,15 @@
       "date": "2026-04-26",
       "sha": "9422c096c579bd1f0df0a67a9945a503fdce63fc",
       "subject": "Remove GHC mmap crash workaround from Nix (#3212) (#3216)"
+    },
+    {
+      "date": "2026-04-27",
+      "sha": "ad02bf792c36486b444e4b3f8a21cf4e3475ba68",
+      "subject": "Add support for `ghdl-{gcc,mcode}` in `clash-testsuite` (#3219) (#3226)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T08:24:58+00:00"
+  "updated": "2026-08-29T08:38:31+00:00"
 }
