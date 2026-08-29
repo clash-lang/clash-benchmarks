@@ -76,6 +76,7 @@ the run of this machine, if there is one.
 import argparse
 import html
 import json
+import math
 import os
 import re
 import subprocess
@@ -164,6 +165,21 @@ def palette_css():
 # Criterion measures short benchmarks in milliseconds. This is the limit
 # in seconds below which a panel changes its unit.
 MS_LIMIT = 5.0
+
+# How many significant figures of a measurement reach the page. Criterion
+# and the GHC runtime hand over full doubles, so a mean of eleven
+# milliseconds arrives as 0.011517816115249623: twenty digits for a
+# number whose last stable one is the third. The digits are most of the
+# size of the page - six figures halve it, gzipped - and none of them is
+# a number the page ever shows. The result files keep every digit.
+SIG_FIGS = 6
+
+
+def sig(value):
+    """Round a measurement to SIG_FIGS significant figures."""
+    if not value:
+        return value
+    return round(value, SIG_FIGS - 1 - math.floor(math.log10(abs(value))))
 
 RECORD = "\x1f"
 
@@ -536,9 +552,9 @@ def main():
                 # The page reads these by position: mean, stddev,
                 # allocation, mutator wall, gc wall. The allocation is a
                 # per-run mean; whole bytes are enough.
-                "norm": {name: [v["mean_s"], v["stddev_s"],
+                "norm": {name: [sig(v["mean_s"]), sig(v["stddev_s"]),
                                 round(v["alloc_bytes"]),
-                                v["mut_wall_s"], v["gc_wall_s"]]
+                                sig(v["mut_wall_s"]), sig(v["gc_wall_s"])]
                          for name, v in norm["benchmarks"].items()},
                 "wire": {"status": wd["status"]},
                 "quick": result["run"]["quick"],
@@ -550,14 +566,14 @@ def main():
             if wd["status"] == "ok" and wd["runs"]:
                 run = wd["runs"][0]
                 entry["wire"].update({
-                    "norm_s": run["normalization_s"],
-                    "netlist_s": run["netlist_s"],
-                    "total_s": run["total_s"],
+                    "norm_s": sig(run["normalization_s"]),
+                    "netlist_s": sig(run["netlist_s"]),
+                    "total_s": sig(run["total_s"]),
                     "alloc_bytes": run["alloc_bytes"],
                     "max_live_bytes": run["max_live_bytes"],
                     "peak_mb": run["peak_mb"],
-                    "mut_wall_s": run["mut_wall_s"],
-                    "gc_wall_s": run["gc_wall_s"],
+                    "mut_wall_s": sig(run["mut_wall_s"]),
+                    "gc_wall_s": sig(run["gc_wall_s"]),
                     "overlays": wd["overlays"],
                 })
             else:
