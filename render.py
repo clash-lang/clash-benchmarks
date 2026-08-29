@@ -2143,11 +2143,11 @@ function renderAll() {
     const buttons = document.createElement("div");
     buttons.className = "cardbtns";
     buttons.appendChild(iconButton(
-      "expand", "Show this graph over the whole page",
-      () => openBig(panel)));
-    buttons.appendChild(iconButton(
       "share", "Export this graph as HTML",
       () => openExport(panel)));
+    buttons.appendChild(iconButton(
+      "expand", "Show this graph over the whole page",
+      () => openBig(panel)));
     head.appendChild(buttons);
     card.appendChild(head);
     if (panel.note) {
