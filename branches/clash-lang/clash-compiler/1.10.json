@@ -195,10 +195,15 @@
       "date": "2026-08-20",
       "sha": "409cb6779642bb86945de6569554eb9771e90617",
       "subject": "Bump bounds of `time` and `string-interpolate` (#3364) (#3365)"
+    },
+    {
+      "date": "2026-08-21",
+      "sha": "1de808bf9ed19978f4bc77654096356a2958ba80",
+      "subject": "Properly support new string-interpolate (#3366) (#3367)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T16:32:37+00:00"
+  "updated": "2026-08-29T16:45:40+00:00"
 }
