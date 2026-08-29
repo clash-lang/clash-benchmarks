@@ -145,10 +145,15 @@
       "date": "2026-06-08",
       "sha": "285b82ac101fded96b370119d9bcc0a181d95578",
       "subject": "Clear stack in `reduceWHNF'` (#3294) (#3295)"
+    },
+    {
+      "date": "2026-06-12",
+      "sha": "2dde74e58ad6874d71030bf9dadb51f9a47a1446",
+      "subject": "Update Github action versions (#3286) (#3288)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T14:30:11+00:00"
+  "updated": "2026-08-29T14:41:45+00:00"
 }
