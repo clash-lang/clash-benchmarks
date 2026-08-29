@@ -140,10 +140,15 @@
       "date": "2026-06-08",
       "sha": "44f216adc2ccd1166b779d1e3be352890effb03a",
       "subject": "Fix `reduceTraverse` crash on zero-length vectors (#3292) (#3293)"
+    },
+    {
+      "date": "2026-06-08",
+      "sha": "285b82ac101fded96b370119d9bcc0a181d95578",
+      "subject": "Clear stack in `reduceWHNF'` (#3294) (#3295)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T14:17:43+00:00"
+  "updated": "2026-08-29T14:30:11+00:00"
 }
