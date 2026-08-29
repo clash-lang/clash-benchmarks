@@ -60,10 +60,15 @@
       "date": "2026-04-30",
       "sha": "695be51dc7658c2ba8aced7a3aa53784e2c86f32",
       "subject": "Prevent duplicate `attribute`s in VHDL backend (#3222) (#3241)"
+    },
+    {
+      "date": "2026-05-01",
+      "sha": "665b7acaff21c1c42a482d8d7ab2c644a0b40da4",
+      "subject": "Run `bindConstantVar` after `flattenLet` in `flatten` (#3223) (#3242)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T10:35:05+00:00"
+  "updated": "2026-08-29T10:49:41+00:00"
 }
