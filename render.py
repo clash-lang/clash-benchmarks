@@ -31,9 +31,10 @@ its snapshot in branches/, because a branch does not stay where it is.
 See bench/result_schema.py.
 
 Each panel carries an "Export" button. It hands the reader the panel as
-one self-contained <svg> element to paste into a blog post: the palette,
-the title and a link back to the view are inside the element, so it needs
-nothing from this page. See exportFigure() in the template.
+one self-contained <svg> element to paste into a blog post, or to save
+as a file: the palette, the title and a link back to the view are inside
+the element, so it needs nothing from this page. See exportFigure() in
+the template.
 
 The branch selector holds the branches that are the head of an open pull
 request, and no others: a branch whose pull request is closed says nothing
@@ -674,6 +675,7 @@ __PALETTE_CSS__
       </select></label>
       <span class="sep"></span>
       <button type="button" id="export-copy">Copy HTML</button>
+      <button type="button" id="export-save">Save SVG</button>
       <button type="button" id="export-close">Close</button>
       <span class="note" id="export-msg" role="status"></span>
     </div>
@@ -1585,6 +1587,36 @@ document.getElementById("export-copy").addEventListener("click", async () => {
   }
   exportMsg.textContent = copied ? "Copied."
     : "The markup is selected; press Ctrl+C or Cmd+C.";
+});
+// The name of a saved figure: what it shows, where it ran, on which
+// branch, and the day of its newest commit. A directory of figures then
+// says what each one is without opening any of them.
+function exportFilename() {
+  const slug = text => String(text).toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  const last = DATA.commits[VD.commits[VD.commits.length - 1]].d;
+  return ["clash-bench", slug(exportOf.id), slug(state.machine),
+          slug(VD.ref.label), last].filter(Boolean).join("-") + ".svg";
+}
+document.getElementById("export-save").addEventListener("click", () => {
+  if (!exportCode.value) return;
+  // The markup is a whole SVG document as well as an element to paste:
+  // it names its own namespace and carries its own size, so a file of it
+  // opens on its own.
+  const blob = new Blob([exportCode.value], { type: "image/svg+xml" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = exportFilename();
+  // In the document, and out of it again: a browser that wants the anchor
+  // to be in the page before it follows a download gets its way.
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  // The download reads the blob after the click, so let the URL live long
+  // enough for it, rather than revoking it here.
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  exportMsg.textContent = "Saved " + link.download + ".";
 });
 document.getElementById("export-close").addEventListener("click", () => {
   exportBox.close();
