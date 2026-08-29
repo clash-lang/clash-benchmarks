@@ -144,10 +144,13 @@ against, and the clone carries its tags as well.
 Its view runs from the commit that the branch shares with master to the
 head of the branch; before that commit the graph would only repeat
 master. The releases on it are marked with a rule and the name of the
-tag, `v1.10.0` and `v1.10.1`. The master graph marks the commit where
-the branch left in the same way, with the name of the branch, and the
-master chain therefore reaches back to the oldest such commit — which
-can be older than the oldest commit that has a result.
+tag, `v1.10.0` and `v1.10.1`, behind a tag icon and linked to the
+release page on GitHub. That page exists for a tag with no release notes
+of its own as well, so the link works either way. The master graph marks
+the commit where the branch left in the same way, with the name of the
+branch and no link, and the master chain therefore reaches back to the
+oldest such commit — which can be older than the oldest commit that has
+a result.
 
 A benchmark run of a release branch writes a snapshot under `branches/`
 like any other branch. `render.py` leaves that snapshot out of the

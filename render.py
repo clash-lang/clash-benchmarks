@@ -275,11 +275,15 @@ def release_chain(repo, master_ref, name):
 
 
 def tags_on(repo, shas):
-    """Return the name of the tag on each of shas that has one.
+    """Return the mark of each commit in shas that carries a tag.
 
     An annotated tag points at a tag object, which "*objectname" peels to
     the commit; a lightweight tag has the commit in "objectname" already.
     Two tags on one commit is rare enough that the newest simply wins.
+
+    The link goes to the release page of the tag. GitHub serves that page
+    for a tag that has no release of its own as well, so the link works
+    whether or not anybody wrote release notes.
     """
     wanted = set(shas)
     tags = {}
@@ -289,7 +293,11 @@ def tags_on(repo, shas):
         name, obj, peeled = line.split(RECORD)
         sha = peeled or obj
         if sha in wanted:
-            tags[sha] = name
+            tags[sha] = {
+                "text": name,
+                "kind": "tag",
+                "url": f"https://github.com/{UPSTREAM_REPO}/releases/tag/{name}",
+            }
     return tags
 
 
@@ -461,7 +469,8 @@ def main():
         "commits": [c["sha"] for c in master],
         "branchPoint": None,
         # Where a release branch left master. See "marks" below.
-        "marks": {sha: name for sha, name in branch_offs.items()
+        "marks": {sha: {"text": name, "kind": "branch"}
+                  for sha, name in branch_offs.items()
                   if sha in master_index},
     }]
 
@@ -471,7 +480,9 @@ def main():
     #
     # "marks" are the commits of a chain that are worth a rule and a name
     # on the graph. On a release branch those are its releases; on master
-    # they are the commits where the release branches left.
+    # they are the commits where the release branches left. Each one has
+    # its text and its kind, and a release also has the address of its
+    # page on GitHub.
     for name, chain in releases:
         for i, commit in enumerate(chain):
             add_commit(commit, chain[i - 1]["sha"] if i else None)
@@ -683,7 +694,14 @@ __PALETTE_CSS__
     background: var(--surface-1); border: 1px solid var(--border);
     border-radius: 6px; padding: 1px 7px; cursor: pointer; flex: none;
   }
+  /* An icon button is square around its icon, and the icon takes the
+     colour of the button, so both light up together. */
+  .cardbtn.icon { padding: 3px; display: inline-flex; line-height: 0; }
   .cardbtn:hover { background: var(--page); color: var(--ink-1); }
+  /* A link inside a plot: the name of a release. */
+  svg a { cursor: pointer; }
+  svg a text { text-decoration: none; }
+  svg a:hover text { text-decoration: underline; }
   /* One panel over the whole page. A card is 280 pixels tall at most,
      which is not much for a few hundred commits; this is the same
      drawing with the window to draw in. */
@@ -897,6 +915,73 @@ function el(name, attrs) {
   for (const k in attrs) node.setAttribute(k, attrs[k]);
   return node;
 }
+
+// The icons, as stroked paths on a 24 by 24 grid. They are drawn here
+// rather than fetched, because an exported figure has to carry the ones
+// it uses: a figure that asks a page for an icon is a figure with a
+// hole in it. "M7 7h.01" with a round cap is a dot.
+const ICONS = {
+  // Four arrows into the corners: the full page view.
+  expand: [
+    { d: "M3 9V3h6" }, { d: "M3 3l7 7" },
+    { d: "M21 9V3h-6" }, { d: "M21 3l-7 7" },
+    { d: "M3 15v6h6" }, { d: "M3 21l7-7" },
+    { d: "M21 15v6h-6" }, { d: "M21 21l-7-7" },
+  ],
+  // A box with an arrow leaving it: the export.
+  share: [
+    { d: "M4 13v5a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-5" },
+    { d: "M12 3v13" },
+    { d: "M7.5 7.5L12 3l4.5 4.5" },
+  ],
+  // A luggage tag with its hole: a release.
+  tag: [
+    { d: "M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z" },
+    { d: "M7 7h.01", "stroke-width": 3 },
+  ],
+};
+
+// One icon as an <svg> of its own. Nested in a plot it takes x and y;
+// in a button it is laid out like any other inline element. The stroke
+// follows the colour of the text around it unless told otherwise, so a
+// button that lights up on hover lights up its icon with it.
+function icon(name, size, color) {
+  const node = el("svg", {
+    viewBox: "0 0 24 24", width: size, height: size,
+    fill: "none", stroke: color || "currentColor", "stroke-width": 2,
+    "stroke-linecap": "round", "stroke-linejoin": "round",
+    "aria-hidden": "true", focusable: "false" });
+  for (const attrs of ICONS[name]) node.appendChild(el("path", attrs));
+  return node;
+}
+
+// A button that is an icon and nothing else. An icon on its own says
+// nothing to a reader who cannot see it, so the label goes in both the
+// tooltip and the accessible name.
+function iconButton(name, label, onClick) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "cardbtn icon";
+  button.title = label;
+  button.setAttribute("aria-label", label);
+  button.appendChild(icon(name, 14));
+  button.addEventListener("click", onClick);
+  return button;
+}
+
+// The width that text will have when the browser draws it. An SVG that
+// is not on screen cannot be measured - an exported figure is built off
+// screen - so measure it the way a canvas would draw it instead.
+const MEASURE = document.createElement("canvas").getContext("2d");
+function textWidth(text, font) {
+  MEASURE.font = font;
+  return MEASURE.measureText(text).width;
+}
+
+// The font of a mark label, as CSS shorthand for the measurement above.
+// It has to say what "svg text" and ".marklabel" together say; both the
+// page and an exported figure set the same two.
+const MARK_FONT = '600 10.5px system-ui, -apple-system, "Segoe UI", sans-serif';
 
 function niceTicks(lo, hi, n) {
   const span = hi - lo || 1;
@@ -1368,7 +1453,15 @@ function renderPanel(container, panel, height, opts) {
   // moves, so both mark a point of the graph that a reader can come back
   // to and compare against. The label sits at the foot of the plot,
   // which is where the branch point label is not.
+  //
+  // A release carries a tag icon and links to its page on GitHub. The
+  // labels go on last, after the hit area, or the hit area would take
+  // the clicks that belong to those links; markLabels holds them until
+  // then.
   const marks = VD.ref.marks || {};
+  const markLabels = [];
+  const ICON = 11;
+  const GAP = 3;
   for (let i = 0; i < n; i++) {
     const mark = marks[VD.commits[i]];
     if (!mark) continue;
@@ -1376,13 +1469,33 @@ function renderPanel(container, panel, height, opts) {
       stroke: "var(--axis)", "stroke-width": 1, "stroke-dasharray": "2 3" }));
     if (!panel.headline) continue;
     // Keep the label inside the plot: a release is often the newest
-    // commit of the branch, hard against the right edge.
+    // commit of the branch, hard against the right edge. The icon and
+    // the text move together, so the whole of it is placed at once.
+    const tag = mark.kind === "tag";
+    const lead = tag ? ICON + GAP : 0;
+    const width = lead + textWidth(mark.text, MARK_FONT);
     const late = x(i) > m.left + iw * 0.6;
-    const lab = el("text", { x: x(i) + (late ? -5 : 5), y: m.top + ih - 6,
-      "text-anchor": late ? "end" : "start", class: "marklabel" });
-    lab.textContent = mark;
-    svg.appendChild(lab);
+    const left = late ? x(i) - 5 - width : x(i) + 5;
+    const base = m.top + ih - 6;
+
+    let host = svg;
+    if (mark.url) {
+      host = el("a", { href: mark.url, target: "_blank", rel: "noopener" });
+      markLabels.push(host);
+    }
+    if (tag) {
+      const glyph = icon("tag", ICON, "var(--ink-2)");
+      glyph.setAttribute("x", left);
+      glyph.setAttribute("y", base - ICON + 2);
+      host.appendChild(glyph);
+    }
+    const lab = el("text", { x: left + lead, y: base, class: "marklabel" });
+    lab.textContent = mark.text;
+    host.appendChild(lab);
+    if (host === svg) markLabels.push(lab);
   }
+  // See markLabels above: last, so that nothing covers a link.
+  const addMarkLabels = () => markLabels.forEach(node => svg.appendChild(node));
 
   // A dot for each commit, while the commits are far enough apart to
   // tell one from the next. Closer than that they merge into a bar, so
@@ -1423,6 +1536,7 @@ function renderPanel(container, panel, height, opts) {
   }
 
   if (opts.static) {
+    addMarkLabels();
     container.appendChild(svg);
     return tight;
   }
@@ -1541,6 +1655,7 @@ function renderPanel(container, panel, height, opts) {
     highlight(i, rect.left + x(i), rect.top + y(panel.values[i].vs[0]));
   });
 
+  addMarkLabels();
   container.appendChild(svg);
   return tight;
 }
@@ -2027,20 +2142,12 @@ function renderAll() {
     head.appendChild(h);
     const buttons = document.createElement("div");
     buttons.className = "cardbtns";
-    const big = document.createElement("button");
-    big.type = "button";
-    big.className = "cardbtn";
-    big.textContent = "Full page";
-    big.title = "Show this graph over the whole page";
-    big.addEventListener("click", () => openBig(panel));
-    buttons.appendChild(big);
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "cardbtn";
-    button.textContent = "Export";
-    button.title = "Copy this graph as HTML";
-    button.addEventListener("click", () => openExport(panel));
-    buttons.appendChild(button);
+    buttons.appendChild(iconButton(
+      "expand", "Show this graph over the whole page",
+      () => openBig(panel)));
+    buttons.appendChild(iconButton(
+      "share", "Export this graph as HTML",
+      () => openExport(panel)));
     head.appendChild(buttons);
     card.appendChild(head);
     if (panel.note) {
