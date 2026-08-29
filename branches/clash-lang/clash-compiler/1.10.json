@@ -75,10 +75,15 @@
       "date": "2026-05-05",
       "sha": "434716e0bfae589341dd5818e776e75cc3d4403b",
       "subject": "Merge pull request #3248 from clash-lang/mergify/copy/1.10/pr-3245"
+    },
+    {
+      "date": "2026-05-07",
+      "sha": "92c36cf6540b9f0b9f4097cab57dab424251d0a8",
+      "subject": "use GHC-style RTS defaults through executable (#3244) (#3255)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T11:17:56+00:00"
+  "updated": "2026-08-29T11:31:50+00:00"
 }
