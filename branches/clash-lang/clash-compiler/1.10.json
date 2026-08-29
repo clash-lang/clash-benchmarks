@@ -1,0 +1,14 @@
+{
+  "base": "8c6ae9538db1d402bbe8584121796191e245262a",
+  "commits": [
+    {
+      "date": "2026-04-22",
+      "sha": "36320d65794fb1f79875db10da2e4b03c60c3989",
+      "subject": "Merge pull request #3211 from clash-lang/release_v1.10.0"
+    }
+  ],
+  "pr": null,
+  "ref": "1.10",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-08-29T07:57:13+00:00"
+}
