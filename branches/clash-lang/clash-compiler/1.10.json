@@ -200,10 +200,15 @@
       "date": "2026-08-21",
       "sha": "1de808bf9ed19978f4bc77654096356a2958ba80",
       "subject": "Properly support new string-interpolate (#3366) (#3367)"
+    },
+    {
+      "date": "2026-08-27",
+      "sha": "0373fc4920a1d46ebaaf1d66b36bd7d3a3060de3",
+      "subject": "Merge pull request #3368 from clash-lang/release_v1.10.1"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T16:45:40+00:00"
+  "updated": "2026-08-29T17:01:35+00:00"
 }
