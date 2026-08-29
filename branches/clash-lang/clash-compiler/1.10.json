@@ -45,10 +45,15 @@
       "date": "2026-04-30",
       "sha": "45e71435ae2a65ddc648da64067af0c533b25f28",
       "subject": "Merge pull request #3238 from clash-lang/mergify/copy/1.10/pr-3227"
+    },
+    {
+      "date": "2026-04-30",
+      "sha": "bfa7d6a477f851d6fdf59676f55aa627f51395fc",
+      "subject": "Account for custom bit representations in `dataToTag` (#3221) (#3237)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T09:50:11+00:00"
+  "updated": "2026-08-29T10:04:50+00:00"
 }
