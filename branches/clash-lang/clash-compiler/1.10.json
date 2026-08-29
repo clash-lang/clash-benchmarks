@@ -170,10 +170,15 @@
       "date": "2026-07-07",
       "sha": "17d14ea79947c4e6f3d75529a763a14671bebf72",
       "subject": "Check `Synthesize` annotation issues before normalization (#3307) (#3318)"
+    },
+    {
+      "date": "2026-07-07",
+      "sha": "603fcff5b5f6582ee7b9b475866385ef57b2451c",
+      "subject": "Fix vhdl prims integerToNaturalThrow and integerToNaturalClamp (#3315) (#3319)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T15:30:51+00:00"
+  "updated": "2026-08-29T15:42:21+00:00"
 }
