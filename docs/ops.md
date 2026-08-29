@@ -133,6 +133,39 @@ A dispatch of a branch that has no pull request therefore measures the
 commits but does not put the branch on the site. Open a pull request for
 it, or look at it locally with `./render.py --all-branches`.
 
+### Release branches
+
+`RELEASE_BRANCHES` in `render.py` names the release branches of
+clash-compiler. It holds `1.10`. A release branch comes from the clone,
+the way master does, and not from a snapshot in `branches/`: a release
+branch is durable, so there is nothing for a snapshot to protect
+against, and the clone carries its tags as well.
+
+Its view runs from the commit that the branch shares with master to the
+head of the branch; before that commit the graph would only repeat
+master. The releases on it are marked with a rule and the name of the
+tag, `v1.10.0` and `v1.10.1`. The master graph marks the commit where
+the branch left in the same way, with the name of the branch, and the
+master chain therefore reaches back to the oldest such commit — which
+can be older than the oldest commit that has a result.
+
+A benchmark run of a release branch writes a snapshot under `branches/`
+like any other branch. `render.py` leaves that snapshot out of the
+selector, so the branch has one entry there and not two.
+
+To benchmark one, name the branch and the commit in a dispatch:
+
+```console
+gh workflow run benchmark.yml -R clash-lang/clash-benchmarks \
+  -f ref=1.10 -f sha=<sha>
+```
+
+A release branch has no pull request, so `ref` matters: without it the
+run records the commit as one of master.
+
+Adding a release branch is one entry in `RELEASE_BRANCHES`. Nothing else
+knows about them.
+
 ## The runner
 
 The jobs want a self-hosted runner with the labels `self-hosted` and
@@ -318,17 +351,25 @@ branch, not on `main`.
 Every panel has an "Export" button. It hands over that panel as one
 self-contained `<svg>` element to paste into a blog post, a README on a
 site that renders HTML, or an issue that allows it. The element carries
-its own palette, its title, its legend and a link back to the view it
-came from, so it needs nothing from the page it lands on; the rules of
-its stylesheet all name the class of its root element, so it changes
-nothing on that page either.
+its own palette, its title and a link back to the view it came from, so
+it needs nothing from the page it lands on; the rules of its stylesheet
+all name the class of its root element, so it changes nothing on that
+page either. "Save SVG" writes the same markup to a file.
+
+The header is one line, the title and the address of the view. The note
+of the panel, the machine, the branch, the dates and the legend are not
+in the figure: those belong to the text of the post around it, where a
+writer says them in their own words, and the link carries all of them
+for a reader who wants the numbers.
 
 The figure shows the view as it stands: the machine, the branch, the
 metric and the date range that are on screen. The theme selector decides
 what the figure does about light and dark:
 
-- *Light and dark* carries both palettes and follows the reader's
-  setting. Right for a post that does the same.
+- *Light and dark* carries both palettes. It follows the reader's
+  setting, and then `data-theme` on any element around the figure, which
+  wins over that setting in both directions. Right for a post that
+  follows the reader, with or without a theme switch of its own.
 - *Light only* and *Dark only* pin one palette. Right for a post that is
   one or the other, so that the figure cannot end up dark on a light
   page.

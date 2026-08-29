@@ -89,6 +89,12 @@ from result_schema import now, validate_branch, validate_result  # noqa: E402
 UPSTREAM_REPO = "clash-lang/clash-compiler"
 UPSTREAM_URL = f"https://github.com/{UPSTREAM_REPO}.git"
 
+# The release branches of clash-compiler, by name. A release branch comes
+# from the clone, the way master does, and not from a snapshot in
+# branches/: it is durable, so there is nothing for a snapshot to protect
+# against, and the clone carries the tags that mark its releases as well.
+RELEASE_BRANCHES = ["1.10"]
+
 # Where the page lives. An exported figure links back to the view it came
 # from; a page opened from a file has no address to link to, so the link
 # goes here instead.
@@ -200,7 +206,75 @@ def clash_clone(args):
         )
     else:
         git(path, "fetch", "--no-tags", "origin", "master")
+    # A release branch moves while a release is being prepared, and a
+    # release adds a tag. Neither comes along with the fetch of master.
+    for name in RELEASE_BRANCHES:
+        try:
+            git(path, "fetch", "--tags", "origin",
+                f"+refs/heads/{name}:refs/remotes/origin/{name}")
+        except subprocess.CalledProcessError:
+            print(f"render.py: could not fetch the release branch {name}; "
+                  f"using what the clone has", file=sys.stderr)
     return path
+
+
+def release_chain(repo, master_ref, name):
+    """Return the first-parent commits of a release branch, oldest first.
+
+    The chain starts at the commit that the branch shares with master.
+    That commit is where the release branch left master, and it is the
+    last point at which the two lines mean the same thing; before it the
+    graph of the branch would only repeat master. It ends at the head of
+    the branch, so the graph also shows the commits that have no result
+    yet, as holes.
+
+    Return None when the clone does not have the branch.
+    """
+    head = ""
+    for candidate in (f"refs/remotes/origin/{name}", name):
+        try:
+            head = git(repo, "rev-parse", "--verify", "--quiet",
+                       f"{candidate}^{{commit}}").strip()
+        except subprocess.CalledProcessError:
+            continue
+        if head:
+            break
+    if not head:
+        return None
+
+    fmt = f"--format=%H{RECORD}%s{RECORD}%cs"
+
+    def record(line):
+        sha, subject, date = line.split(RECORD)
+        return {"sha": sha, "subject": subject, "date": date}
+
+    base = git(repo, "merge-base", master_ref, head).strip()
+    # The base and the commits after it, in two calls: "base^.." would
+    # name the parent of the base, which a root commit does not have.
+    chain = [record(git(repo, "log", "-1", fmt, base).strip())]
+    chain += [record(line) for line in
+              git(repo, "log", "--first-parent", "--reverse", fmt,
+                  f"{base}..{head}").splitlines()]
+    return chain
+
+
+def tags_on(repo, shas):
+    """Return the name of the tag on each of shas that has one.
+
+    An annotated tag points at a tag object, which "*objectname" peels to
+    the commit; a lightweight tag has the commit in "objectname" already.
+    Two tags on one commit is rare enough that the newest simply wins.
+    """
+    wanted = set(shas)
+    tags = {}
+    fmt = (f"%(refname:short){RECORD}%(objectname){RECORD}%(*objectname)")
+    for line in git(repo, "for-each-ref", "--sort=creatordate",
+                    f"--format={fmt}", "refs/tags").splitlines():
+        name, obj, peeled = line.split(RECORD)
+        sha = peeled or obj
+        if sha in wanted:
+            tags[sha] = name
+    return tags
 
 
 def load_results(root):
@@ -253,6 +327,12 @@ def load_branches(root, all_branches):
             for problem in problems:
                 print(f"{path}: {problem}", file=sys.stderr)
             sys.exit("render.py: bad branch snapshot")
+        # A release branch comes from the clone. A benchmark run of one
+        # writes a snapshot all the same, and that snapshot would be a
+        # second entry for the same branch. See RELEASE_BRANCHES.
+        if (snapshot["repo"] == UPSTREAM_REPO
+                and snapshot["ref"] in RELEASE_BRANCHES):
+            continue
         snapshot["shown"] = all_branches or snapshot["pr"] is not None
         hidden += not snapshot["shown"]
         snapshots.append(snapshot)
@@ -262,12 +342,16 @@ def load_branches(root, all_branches):
     return snapshots
 
 
-def master_chain(repo, ref, known):
+def master_chain(repo, ref, known, anchors=()):
     """Return the first-parent commits of master, oldest first.
 
     The chain starts at the oldest commit that has a result: older
     commits say nothing. It ends at the head of master, so the graph also
     shows the newest commits that have no result yet.
+
+    A commit in anchors is a start as well, with or without a result: the
+    master graph marks the commits where the release branches left, and a
+    mark beyond the left edge of the graph marks nothing.
     """
     lines = git(repo, "log", "--first-parent", f"--format=%H{RECORD}%s{RECORD}%cs",
                 ref).splitlines()
@@ -281,6 +365,10 @@ def master_chain(repo, ref, known):
             oldest = i
     if oldest is None:
         sys.exit(f"render.py: no result for any commit of {ref}")
+    anchors = set(anchors)
+    for i, commit in enumerate(commits):
+        if commit["sha"] in anchors:
+            oldest = max(oldest, i)
     return list(reversed(commits[: oldest + 1]))
 
 
@@ -303,7 +391,22 @@ def main():
     snapshots = load_branches(args.data, args.all_branches)
 
     known = {sha for own in results.values() for sha in own}
-    master = master_chain(clash_clone(args), args.clash_ref, known)
+    clone = clash_clone(args)
+
+    # The release branches come first: the master chain reaches back to
+    # the commit where the oldest of them left, so that the mark of that
+    # branch lands on the graph instead of beyond its left edge.
+    releases = []
+    for name in RELEASE_BRANCHES:
+        chain = release_chain(clone, args.clash_ref, name)
+        if chain is None:
+            print(f"render.py: the clone has no release branch {name}; "
+                  f"leaving it out of the selector", file=sys.stderr)
+            continue
+        releases.append((name, chain))
+    branch_offs = {chain[0]["sha"]: name for name, chain in releases}
+
+    master = master_chain(clone, args.clash_ref, known, branch_offs)
     master_index = {c["sha"]: i for i, c in enumerate(master)}
 
     # One metadata record for each commit, for the tooltips and the table.
@@ -331,7 +434,34 @@ def main():
         "pr": None,
         "commits": [c["sha"] for c in master],
         "branchPoint": None,
+        # Where a release branch left master. See "marks" below.
+        "marks": {sha: name for sha, name in branch_offs.items()
+                  if sha in master_index},
     }]
+
+    # The release branches, right after master in the selector: like
+    # master they are always there, and unlike a pull request they do not
+    # come and go.
+    #
+    # "marks" are the commits of a chain that are worth a rule and a name
+    # on the graph. On a release branch those are its releases; on master
+    # they are the commits where the release branches left.
+    for name, chain in releases:
+        for i, commit in enumerate(chain):
+            add_commit(commit, chain[i - 1]["sha"] if i else None)
+        shas = [c["sha"] for c in chain]
+        refs.append({
+            "key": f"{UPSTREAM_REPO}@{name}",
+            "label": name,
+            "repo": UPSTREAM_REPO,
+            "ref": name,
+            "pr": None,
+            "commits": shas,
+            # The shared commit is the first of the chain, so everything
+            # after index 0 is on the branch.
+            "branchPoint": 0,
+            "marks": tags_on(clone, shas),
+        })
 
     # The branches that are out of the selector, with the newest commit
     # that their snapshot saw. A link that names such a branch lands on
@@ -544,6 +674,7 @@ __PALETTE_CSS__
   svg text { font: 10.5px system-ui, -apple-system, "Segoe UI", sans-serif; fill: var(--muted); }
   svg .endlabel { font-size: 11px; font-weight: 600; fill: var(--ink-2); }
   svg .branchlabel { font-size: 10.5px; font-weight: 600; fill: var(--ink-2); }
+  svg .marklabel { font-size: 10.5px; font-weight: 600; fill: var(--ink-2); }
   svg .plot-hit {
     cursor: pointer;
     outline: none;
@@ -1143,6 +1274,27 @@ function renderPanel(container, panel, height, opts) {
     }
   }
 
+  // The marked commits of this view: the releases of a release branch,
+  // or, on master, the commits where the release branches left. Neither
+  // moves, so both mark a point of the graph that a reader can come back
+  // to and compare against. The label sits at the foot of the plot,
+  // which is where the branch point label is not.
+  const marks = VD.ref.marks || {};
+  for (let i = 0; i < n; i++) {
+    const mark = marks[VD.commits[i]];
+    if (!mark) continue;
+    svg.appendChild(el("line", { x1: x(i), x2: x(i), y1: m.top, y2: m.top + ih,
+      stroke: "var(--axis)", "stroke-width": 1, "stroke-dasharray": "2 3" }));
+    if (!panel.headline) continue;
+    // Keep the label inside the plot: a release is often the newest
+    // commit of the branch, hard against the right edge.
+    const late = x(i) > m.left + iw * 0.6;
+    const lab = el("text", { x: x(i) + (late ? -5 : 5), y: m.top + ih - 6,
+      "text-anchor": late ? "end" : "start", class: "marklabel" });
+    lab.textContent = mark;
+    svg.appendChild(lab);
+  }
+
   const dotSpacing = pts.length > 1 ? iw / (pts.length - 1) : iw;
   const drawDots = dotSpacing >= 7;
   const markers = new Map();
@@ -1484,6 +1636,7 @@ function exportCss(mode) {
     + root + " .legend { font-size: 11px; fill: var(--ink-2); }\n"
     + root + " .endlabel { font-size: 11px; font-weight: 600; fill: var(--ink-2); }\n"
     + root + " .branchlabel { font-size: 10.5px; font-weight: 600; fill: var(--ink-2); }\n"
+    + root + " .marklabel { font-size: 10.5px; font-weight: 600; fill: var(--ink-2); }\n"
     + root + " a text { text-decoration: underline; }\n";
 }
 
