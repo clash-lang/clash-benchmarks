@@ -280,10 +280,15 @@
       "date": "2026-08-29",
       "sha": "81e6672779c29dd6d1aa65aa82f1ad6e151aecef",
       "subject": "Account for zero-length/under-applied primitives (backport #3349) (#3383)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "ba1ad22a171227f8fd6d37bfd16acf87e02c78ad",
+      "subject": "Merge pull request #3384 from clash-lang/martijn/1.10-backport-3338"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T19:14:13+00:00"
+  "updated": "2026-08-30T19:22:50+00:00"
 }
