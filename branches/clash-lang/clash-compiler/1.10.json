@@ -270,10 +270,15 @@
       "date": "2026-08-29",
       "sha": "b32467f76ed4f89a291951a4b79303ccd7156bd2",
       "subject": "Memoize GHC-to-Clash type conversion on the GHC type (backport #3340) (#3381)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "e2757d9a87a794b69747d44770bbe9ab70ef56c5",
+      "subject": "Read family instance interfaces for precompiled modules (backport #3343) (#3382)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T18:57:05+00:00"
+  "updated": "2026-08-30T19:05:05+00:00"
 }
