@@ -285,10 +285,15 @@
       "date": "2026-08-29",
       "sha": "ba1ad22a171227f8fd6d37bfd16acf87e02c78ad",
       "subject": "Merge pull request #3384 from clash-lang/martijn/1.10-backport-3338"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "742223156d301abd94fe12eeb3fcd6bbb2c0b77d",
+      "subject": "Do not add `-dynamic-too` when already dynamic (backport #3358) (#3385)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T19:22:50+00:00"
+  "updated": "2026-08-30T19:29:28+00:00"
 }
