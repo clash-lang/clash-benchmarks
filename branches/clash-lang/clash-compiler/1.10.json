@@ -255,10 +255,15 @@
       "date": "2026-08-29",
       "sha": "c7bf77b02b1201c7faf55a7f0b5c7261d6b00fee",
       "subject": "Compile primitives in a single shared hint session (backport #3337) (#3378)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "436580196370cf020b50d5908323d84caf050117",
+      "subject": "Merge pull request #3379 from clash-lang/martijn/1.10-backport-3339"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T18:29:48+00:00"
+  "updated": "2026-08-30T18:39:51+00:00"
 }
