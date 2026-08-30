@@ -300,10 +300,15 @@
       "date": "2026-08-29",
       "sha": "3524c0bb82d87b376d6c7500467500520539cf49",
       "subject": "Compare type variables structurally, not just by unique (backport #3362) (#3387)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "9ccfc25a2cfe630b401e07c66bfb47aea860734f",
+      "subject": "Fix performance regressions on `master` (backport #3357) (#3388)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T19:45:43+00:00"
+  "updated": "2026-08-30T19:53:12+00:00"
 }
