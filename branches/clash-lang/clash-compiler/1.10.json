@@ -220,10 +220,15 @@
       "date": "2026-08-29",
       "sha": "258b2e85599376e8b07b6b0fe1a08209520f9687",
       "subject": "Remove obsolete nix flake patches (backport #3284) (#3371)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "b6e2dcc7b9203b5426df8fcebcc59934f90c4ff6",
+      "subject": "Skip type traversal in identifier-only free-variable folds (backport #3327) (#3372)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T17:18:09+00:00"
+  "updated": "2026-08-30T17:30:48+00:00"
 }
