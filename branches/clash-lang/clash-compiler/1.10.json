@@ -210,10 +210,15 @@
       "date": "2026-08-29",
       "sha": "267e32750e18191375d27904e3daaabe42d9d6fc",
       "subject": "Fix clash-testsuite nix packaging (backport #3202) (#3369)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "2af5ca99ca7bcca5e5c827ee269059d2ac75a95b",
+      "subject": "Merge pull request #3370 from clash-lang/martijn/1.10-backport-3282"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T16:55:41+00:00"
+  "updated": "2026-08-30T17:07:03+00:00"
 }
