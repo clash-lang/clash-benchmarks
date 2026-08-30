@@ -265,10 +265,15 @@
       "date": "2026-08-29",
       "sha": "fb8c29a15ced4202570617c49fcd9010a2dd95b5",
       "subject": "Add `DefaultPat` in DEC when necessary (backport #3344) (#3380)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "b32467f76ed4f89a291951a4b79303ccd7156bd2",
+      "subject": "Memoize GHC-to-Clash type conversion on the GHC type (backport #3340) (#3381)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T18:48:55+00:00"
+  "updated": "2026-08-30T18:57:05+00:00"
 }
