@@ -230,10 +230,15 @@
       "date": "2026-08-29",
       "sha": "ae08ad60391eb52a25bb28c146b468af93227c01",
       "subject": "Merge pull request #3373 from clash-lang/martijn/1.10-backport-3323"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "324486963d7f0a9960d521d2b1a06bb6aee2a9c2",
+      "subject": "nix: avoid building local packages in dev shells (backport #3332) (#3374)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T17:41:14+00:00"
+  "updated": "2026-08-30T17:49:22+00:00"
 }
