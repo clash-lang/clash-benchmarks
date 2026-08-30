@@ -215,10 +215,15 @@
       "date": "2026-08-29",
       "sha": "2af5ca99ca7bcca5e5c827ee269059d2ac75a95b",
       "subject": "Merge pull request #3370 from clash-lang/martijn/1.10-backport-3282"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "258b2e85599376e8b07b6b0fe1a08209520f9687",
+      "subject": "Remove obsolete nix flake patches (backport #3284) (#3371)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T17:07:03+00:00"
+  "updated": "2026-08-30T17:18:09+00:00"
 }
