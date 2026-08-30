@@ -290,10 +290,15 @@
       "date": "2026-08-29",
       "sha": "742223156d301abd94fe12eeb3fcd6bbb2c0b77d",
       "subject": "Do not add `-dynamic-too` when already dynamic (backport #3358) (#3385)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "f05d40f0288d7c3b2bd4a0b64c362c6bfd59938d",
+      "subject": "Correct `RTree` offset calculations in SV backend (backport #3360) (#3386)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T19:29:28+00:00"
+  "updated": "2026-08-30T19:37:25+00:00"
 }
