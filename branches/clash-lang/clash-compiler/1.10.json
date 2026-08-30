@@ -245,10 +245,15 @@
       "date": "2026-08-29",
       "sha": "6c63e806b26d7470aefdf8c49956bdf82b5dd348",
       "subject": "Add `Hashable Term` and `Hashable Type` (backport #3336) (#3376)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "ed2706a83bd05133b16193aa4c2f1fc08ce7a503",
+      "subject": "Add and use `unsafeSubstTm` in `appProp` beta reduction (backport #3341) (#3377)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T18:10:47+00:00"
+  "updated": "2026-08-30T18:20:21+00:00"
 }

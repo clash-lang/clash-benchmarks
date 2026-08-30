@@ -1,0 +1,104 @@
+{
+  "clash": {
+    "commit": "ed2706a83bd05133b16193aa4c2f1fc08ce7a503",
+    "committer_date": "2026-08-29",
+    "parents": [
+      "6c63e806b26d7470aefdf8c49956bdf82b5dd348"
+    ],
+    "ref": "1.10",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Add and use `unsafeSubstTm` in `appProp` beta reduction (backport #3341) (#3377)"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 40737455.04854369,
+        "gc_wall_s": 2.0969999999999873e-06,
+        "mean_s": 0.011996391287037604,
+        "mut_wall_s": 0.011947539917475731,
+        "stddev_s": 0.00015056730201719532
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 801849584.0,
+        "gc_wall_s": 0.00035350809523809756,
+        "mean_s": 0.22447043358050803,
+        "mut_wall_s": 0.22498157233333313,
+        "stddev_s": 0.006166197373177388
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 81262284.76190476,
+        "gc_wall_s": 8.803857142857041e-06,
+        "mean_s": 0.02272683886949616,
+        "mut_wall_s": 0.02267606143333334,
+        "stddev_s": 0.00019695554431535656
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 53031721.242937855,
+        "gc_wall_s": 4.285661016949412e-06,
+        "mean_s": 0.013299403151360889,
+        "mut_wall_s": 0.013267626468926536,
+        "stddev_s": 0.00013915433508952945
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 3355609016.8,
+        "gc_wall_s": 0.007472282500000002,
+        "mean_s": 0.8750447759569701,
+        "mut_wall_s": 0.8680250703999999,
+        "stddev_s": 0.0032442010221415967
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 1235858869.3333333,
+        "gc_wall_s": 0.00048552526666666797,
+        "mean_s": 0.29321617276407774,
+        "mut_wall_s": 0.2927935966000002,
+        "stddev_s": 0.00016037755138568902
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 443537535.14285713,
+        "gc_wall_s": 0.00010101678571428471,
+        "mean_s": 0.14350343223464782,
+        "mut_wall_s": 0.14342732617857099,
+        "stddev_s": 0.0006046005276123816
+      }
+    },
+    "skip_reason": null,
+    "status": "ok"
+  },
+  "run": {
+    "date": "2026-08-30T18:20:21+00:00",
+    "quick": false,
+    "trigger": "dispatch",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/33323004827"
+  },
+  "schema_version": 4,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0001-quickcheck-bound",
+      "0002-termtodata-hash",
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "alloc_bytes": 608962721640,
+        "gc_cpu_s": 18.936,
+        "gc_wall_s": 13.334,
+        "max_live_bytes": 646025272,
+        "mut_cpu_s": 210.153,
+        "mut_wall_s": 206.498,
+        "netlist_s": 2.284,
+        "normalization_s": 199.0,
+        "num_gcs": 13416,
+        "peak_mb": 1862,
+        "total_s": 214.0
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
