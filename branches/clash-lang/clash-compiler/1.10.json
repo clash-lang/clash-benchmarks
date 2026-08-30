@@ -225,10 +225,15 @@
       "date": "2026-08-29",
       "sha": "b6e2dcc7b9203b5426df8fcebcc59934f90c4ff6",
       "subject": "Skip type traversal in identifier-only free-variable folds (backport #3327) (#3372)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "ae08ad60391eb52a25bb28c146b468af93227c01",
+      "subject": "Merge pull request #3373 from clash-lang/martijn/1.10-backport-3323"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T17:30:48+00:00"
+  "updated": "2026-08-30T17:41:14+00:00"
 }
