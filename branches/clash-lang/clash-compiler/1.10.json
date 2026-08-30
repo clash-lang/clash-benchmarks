@@ -205,10 +205,115 @@
       "date": "2026-08-27",
       "sha": "0373fc4920a1d46ebaaf1d66b36bd7d3a3060de3",
       "subject": "Merge pull request #3368 from clash-lang/release_v1.10.1"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "267e32750e18191375d27904e3daaabe42d9d6fc",
+      "subject": "Fix clash-testsuite nix packaging (backport #3202) (#3369)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "2af5ca99ca7bcca5e5c827ee269059d2ac75a95b",
+      "subject": "Merge pull request #3370 from clash-lang/martijn/1.10-backport-3282"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "258b2e85599376e8b07b6b0fe1a08209520f9687",
+      "subject": "Remove obsolete nix flake patches (backport #3284) (#3371)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "b6e2dcc7b9203b5426df8fcebcc59934f90c4ff6",
+      "subject": "Skip type traversal in identifier-only free-variable folds (backport #3327) (#3372)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "ae08ad60391eb52a25bb28c146b468af93227c01",
+      "subject": "Merge pull request #3373 from clash-lang/martijn/1.10-backport-3323"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "324486963d7f0a9960d521d2b1a06bb6aee2a9c2",
+      "subject": "nix: avoid building local packages in dev shells (backport #3332) (#3374)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "7aaa337f3a2a9dfd388abe441114c33f44dd1392",
+      "subject": "Merge pull request #3375 from clash-lang/martijn/1.10-backport-3335"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "6c63e806b26d7470aefdf8c49956bdf82b5dd348",
+      "subject": "Add `Hashable Term` and `Hashable Type` (backport #3336) (#3376)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "ed2706a83bd05133b16193aa4c2f1fc08ce7a503",
+      "subject": "Add and use `unsafeSubstTm` in `appProp` beta reduction (backport #3341) (#3377)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "c7bf77b02b1201c7faf55a7f0b5c7261d6b00fee",
+      "subject": "Compile primitives in a single shared hint session (backport #3337) (#3378)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "436580196370cf020b50d5908323d84caf050117",
+      "subject": "Merge pull request #3379 from clash-lang/martijn/1.10-backport-3339"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "fb8c29a15ced4202570617c49fcd9010a2dd95b5",
+      "subject": "Add `DefaultPat` in DEC when necessary (backport #3344) (#3380)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "b32467f76ed4f89a291951a4b79303ccd7156bd2",
+      "subject": "Memoize GHC-to-Clash type conversion on the GHC type (backport #3340) (#3381)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "e2757d9a87a794b69747d44770bbe9ab70ef56c5",
+      "subject": "Read family instance interfaces for precompiled modules (backport #3343) (#3382)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "81e6672779c29dd6d1aa65aa82f1ad6e151aecef",
+      "subject": "Account for zero-length/under-applied primitives (backport #3349) (#3383)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "ba1ad22a171227f8fd6d37bfd16acf87e02c78ad",
+      "subject": "Merge pull request #3384 from clash-lang/martijn/1.10-backport-3338"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "742223156d301abd94fe12eeb3fcd6bbb2c0b77d",
+      "subject": "Do not add `-dynamic-too` when already dynamic (backport #3358) (#3385)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "f05d40f0288d7c3b2bd4a0b64c362c6bfd59938d",
+      "subject": "Correct `RTree` offset calculations in SV backend (backport #3360) (#3386)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "3524c0bb82d87b376d6c7500467500520539cf49",
+      "subject": "Compare type variables structurally, not just by unique (backport #3362) (#3387)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "9ccfc25a2cfe630b401e07c66bfb47aea860734f",
+      "subject": "Fix performance regressions on `master` (backport #3357) (#3388)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "ba9f7658cd1c8389977a720fd8b0c9e4784af3bd",
+      "subject": "Merge pull request #3389 from clash-lang/martijn/1.10-backport-3356"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-29T17:01:35+00:00"
+  "updated": "2026-08-30T16:41:56+00:00"
 }
