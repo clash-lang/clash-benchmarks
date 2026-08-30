@@ -250,10 +250,15 @@
       "date": "2026-08-29",
       "sha": "ed2706a83bd05133b16193aa4c2f1fc08ce7a503",
       "subject": "Add and use `unsafeSubstTm` in `appProp` beta reduction (backport #3341) (#3377)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "c7bf77b02b1201c7faf55a7f0b5c7261d6b00fee",
+      "subject": "Compile primitives in a single shared hint session (backport #3337) (#3378)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T18:20:21+00:00"
+  "updated": "2026-08-30T18:29:48+00:00"
 }
