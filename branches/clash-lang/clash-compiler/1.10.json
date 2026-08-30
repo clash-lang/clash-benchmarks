@@ -275,10 +275,15 @@
       "date": "2026-08-29",
       "sha": "e2757d9a87a794b69747d44770bbe9ab70ef56c5",
       "subject": "Read family instance interfaces for precompiled modules (backport #3343) (#3382)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "81e6672779c29dd6d1aa65aa82f1ad6e151aecef",
+      "subject": "Account for zero-length/under-applied primitives (backport #3349) (#3383)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T19:05:05+00:00"
+  "updated": "2026-08-30T19:14:13+00:00"
 }
