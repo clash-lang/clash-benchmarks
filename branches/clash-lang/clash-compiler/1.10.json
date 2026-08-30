@@ -260,10 +260,15 @@
       "date": "2026-08-29",
       "sha": "436580196370cf020b50d5908323d84caf050117",
       "subject": "Merge pull request #3379 from clash-lang/martijn/1.10-backport-3339"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "fb8c29a15ced4202570617c49fcd9010a2dd95b5",
+      "subject": "Add `DefaultPat` in DEC when necessary (backport #3344) (#3380)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T18:39:51+00:00"
+  "updated": "2026-08-30T18:48:55+00:00"
 }
