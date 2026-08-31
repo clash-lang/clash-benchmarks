@@ -969,20 +969,6 @@ function iconButton(name, label, onClick) {
   return button;
 }
 
-// The width that text will have when the browser draws it. An SVG that
-// is not on screen cannot be measured - an exported figure is built off
-// screen - so measure it the way a canvas would draw it instead.
-const MEASURE = document.createElement("canvas").getContext("2d");
-function textWidth(text, font) {
-  MEASURE.font = font;
-  return MEASURE.measureText(text).width;
-}
-
-// The font of a mark label, as CSS shorthand for the measurement above.
-// It has to say what "svg text" and ".marklabel" together say; both the
-// page and an exported figure set the same two.
-const MARK_FONT = '600 10.5px system-ui, -apple-system, "Segoe UI", sans-serif';
-
 function niceTicks(lo, hi, n) {
   const span = hi - lo || 1;
   const step0 = span / Math.max(1, n);
@@ -1315,8 +1301,12 @@ function renderPanel(container, panel, height, opts) {
   opts = opts || {};
   const W = opts.width || Math.max(280, container.clientWidth);
   const H = height;
-  const m = W < NARROW ? M_NARROW : M;
-  const tight = m === M_NARROW;
+  const tight = W < NARROW;
+  const m = Object.assign({}, tight ? M_NARROW : M);
+  // The names of the marked commits lean up along the top edge of the
+  // plot; when the view has one to show, give the top the room for it.
+  const marks = VD.ref.marks || {};
+  if (VD.commits.some(sha => marks[sha])) m.top += 10;
   const iw = W - m.left - m.right, ih = H - m.top - m.bottom;
   const n = VD.commits.length;
   const ns = panel.series.length;
@@ -1451,14 +1441,17 @@ function renderPanel(container, panel, height, opts) {
   // The marked commits of this view: the releases of a release branch,
   // or, on master, the commits where the release branches left. Neither
   // moves, so both mark a point of the graph that a reader can come back
-  // to and compare against. The label sits at the foot of the plot,
-  // which is where the branch point label is not.
+  // to and compare against. The name sits at the top of the plot, leaning
+  // up and always to the right of its rule; the wider top margin above
+  // makes the room for the lean. The top is free for it: a view with
+  // marks never has a branch point label there - master has no branch
+  // point, and on a release branch the branch point is the first commit
+  // of the chain, which gets no label.
   //
   // A release carries a tag icon and links to its page on GitHub. The
   // labels go on last, after the hit area, or the hit area would take
   // the clicks that belong to those links; markLabels holds them until
   // then.
-  const marks = VD.ref.marks || {};
   const markLabels = [];
   const ICON = 11;
   const GAP = 3;
@@ -1467,32 +1460,27 @@ function renderPanel(container, panel, height, opts) {
     if (!mark) continue;
     svg.appendChild(el("line", { x1: x(i), x2: x(i), y1: m.top, y2: m.top + ih,
       stroke: "var(--axis)", "stroke-width": 1, "stroke-dasharray": "2 3" }));
-    if (!panel.headline) continue;
-    // Keep the label inside the plot: a release is often the newest
-    // commit of the branch, hard against the right edge. The icon and
-    // the text move together, so the whole of it is placed at once.
     const tag = mark.kind === "tag";
-    const lead = tag ? ICON + GAP : 0;
-    const width = lead + textWidth(mark.text, MARK_FONT);
-    const late = x(i) > m.left + iw * 0.6;
-    const left = late ? x(i) - 5 - width : x(i) + 5;
-    const base = m.top + ih - 6;
-
-    let host = svg;
+    const lx = x(i) + 5, ly = m.top + 8;
+    // The icon and the text lean as one: the group turns about the
+    // anchor, so the text keeps its place beside the icon.
+    const lean = el("g", { transform: `rotate(-14 ${lx} ${ly})` });
+    let host = lean;
     if (mark.url) {
       host = el("a", { href: mark.url, target: "_blank", rel: "noopener" });
-      markLabels.push(host);
+      lean.appendChild(host);
     }
     if (tag) {
       const glyph = icon("tag", ICON, "var(--ink-2)");
-      glyph.setAttribute("x", left);
-      glyph.setAttribute("y", base - ICON + 2);
+      glyph.setAttribute("x", lx);
+      glyph.setAttribute("y", ly - ICON + 2);
       host.appendChild(glyph);
     }
-    const lab = el("text", { x: left + lead, y: base, class: "marklabel" });
+    const lab = el("text", { x: lx + (tag ? ICON + GAP : 0), y: ly,
+      class: "marklabel" });
     lab.textContent = mark.text;
     host.appendChild(lab);
-    if (host === svg) markLabels.push(lab);
+    markLabels.push(lean);
   }
   // See markLabels above: last, so that nothing covers a link.
   const addMarkLabels = () => markLabels.forEach(node => svg.appendChild(node));
