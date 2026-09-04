@@ -1,0 +1,14 @@
+{
+  "base": "7434be6bb97172da32a0c9313792cce54293b948",
+  "commits": [
+    {
+      "date": "2026-09-04",
+      "sha": "c7ae06b7316d47d0e5459bc454739f6dbca4d817",
+      "subject": "Run `deadCode` after in flattening loop"
+    }
+  ],
+  "pr": 3408,
+  "ref": "martijn/fix-3407",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-09-04T16:15:40+00:00"
+}
