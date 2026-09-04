@@ -8,7 +8,9 @@ name: Benchmark
 #
 # - the schedule. It benchmarks the commits of the open pull requests that
 #   carry the "performance" label, and the commits of clash-lang master
-#   that have no result on this machine yet.
+#   and of the release branches that have no result on this machine yet.
+#   The release branches are the RELEASE_BRANCHES of render.py; nothing
+#   here names them.
 # - workflow_dispatch. It benchmarks a branch, or one exact commit. Use
 #   this for a backfill and to measure a branch before a merge.
 #
@@ -30,7 +32,7 @@ on:
         description: "Exact commit to benchmark; empty means the newest commits without a result"
         required: false
       count:
-        description: "Most commits to benchmark in this run (master only)"
+        description: "Most commits to benchmark in this run (master and the release branches only)"
         required: false
         default: "1"
   schedule:
@@ -40,7 +42,7 @@ on:
 run-name: >-
   ${{ inputs.sha && format('Benchmark {0}', inputs.sha)
       || (inputs.ref && format('Benchmark {0} of {1}', inputs.ref, inputs.repo))
-      || 'Benchmark the labelled pull requests and new master commits' }}
+      || 'Benchmark the labelled pull requests and the new commits of master and the release branches' }}
 
 # There is no concurrency group on purpose: a group cancels queued runs,
 # and a cancelled run is a lost datapoint. The benchmark runner has one
@@ -106,14 +108,19 @@ jobs:
 
       # The branch point of a branch is relative to clash-lang master.
       # A fork checkout does not have it, so fetch it into a fixed local
-      # ref. Self-hosted workspaces persist, so force the update.
-      - name: Fetch clash-lang master
+      # ref. Self-hosted workspaces persist, so force the update. The
+      # release branches come along the same way: the schedule below
+      # catches up on them too, and a fork checkout has those neither.
+      - name: Fetch clash-lang master and the release branches
         working-directory: clash-compiler
         run: |
-          git fetch --no-tags --force \
-            https://github.com/clash-lang/clash-compiler.git \
-            master:refs/bench/upstream-master
-          git log -1 --format='clash-lang master is %h %s' refs/bench/upstream-master
+          for branch in master $(../benchmarks/render.py --release-branches); do
+            git fetch --no-tags --force \
+              https://github.com/clash-lang/clash-compiler.git \
+              "${branch}:refs/bench/upstream-${branch}"
+            git log -1 --format="clash-lang ${branch} is %h %s" \
+              "refs/bench/upstream-${branch}"
+          done
 
       # Both of the next two steps need this list, and the snapshot of a
       # branch that a benchmark writes later needs it too. One call.
@@ -187,13 +194,36 @@ jobs:
         run: |
           mkdir -p out
           : > out/work.tsv
+
+          # The commits of one release branch that have no result yet,
+          # newest --max of them. The branch point is relative to master;
+          # the walk stops there.
+          release_catchup() {
+            local branch=$1 max=$2
+            benchmarks/bench/catchup.py \
+              --clash-repo clash-compiler \
+              --results benchmarks \
+              --ref "refs/bench/upstream-${branch}" \
+              --upstream-ref refs/bench/upstream-master \
+              --max "${max}" \
+            | while read -r sha; do
+                printf '%s\tclash-lang/clash-compiler\t%s\trefs/bench/upstream-%s\n' \
+                  "${sha}" "${branch}" "${branch}"
+              done
+          }
+          is_release() {
+            [[ "${CLASH_REPO}" == "clash-lang/clash-compiler" ]] \
+              && benchmarks/render.py --release-branches | grep -qxF "$1"
+          }
+
           if [[ -n "${IN_SHA}" ]]; then
             sha=$(git -C clash-compiler rev-parse --verify "${IN_SHA}^{commit}")
             printf '%s\t%s\t%s\t-\n' "${sha}" "${CLASH_REPO}" "${CLASH_REF}" \
               >> out/work.tsv
           elif [[ "${CLASH_REPO}/${CLASH_REF}" == "clash-lang/clash-compiler/master" ]]; then
             # The labelled pull requests go first: somebody is waiting for
-            # those numbers. Master then fills its own budget.
+            # those numbers. Master then fills its own budget, and each
+            # release branch has that same budget after it.
             if [[ -f out/prs.json ]]; then
               benchmarks/bench/pr_catchup.py \
                 --clash-repo clash-compiler \
@@ -211,6 +241,14 @@ jobs:
             | while read -r sha; do
                 printf '%s\tclash-lang/clash-compiler\tmaster\t-\n' "${sha}"
               done >> out/work.tsv
+            for branch in $(benchmarks/render.py --release-branches); do
+              release_catchup "${branch}" "${IN_COUNT}" >> out/work.tsv
+            done
+          elif is_release "${CLASH_REF}"; then
+            # A dispatch of a release branch without a commit: the same
+            # catch-up as the schedule does, with the count of the
+            # dispatch. This is the backfill of a release branch.
+            release_catchup "${CLASH_REF}" "${IN_COUNT}" >> out/work.tsv
           else
             sha=$(git -C clash-compiler rev-parse HEAD)
             printf '%s\t%s\t%s\t-\n' "${sha}" "${CLASH_REPO}" "${CLASH_REF}" \

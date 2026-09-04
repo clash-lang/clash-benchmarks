@@ -47,12 +47,13 @@ see [Backfill](#backfill).
 
 ### The schedule
 
-A scheduled run measures the pull requests first and master after that,
-each with its own budget. The pull requests go first because somebody is
-waiting for those numbers, and master has its own budget so that the
-reference line keeps growing while the pull requests come and go. Both
-budgets in one run can take longer than the six hours to the next run; the
-runs then wait for each other in the runner queue.
+A scheduled run measures the pull requests first, master after that, and
+then the release branches, each with its own budget. The pull requests go
+first because somebody is waiting for those numbers, and master has its
+own budget so that the reference line keeps growing while the pull
+requests come and go. Each release branch gets the budget of master. All
+budgets in one run can take longer than the time to the next run; the runs
+then wait for each other in the runner queue.
 
 `bench/pr_catchup.py` takes the open pull requests that carry the label
 `performance` (`BENCH_PR_LABEL`), drafts included. GitHub publishes the
@@ -73,6 +74,13 @@ machine. The commits after that one need work, and the oldest of them goes
 first. The search stops after 200 commits: a machine with no result in that
 window starts at the newest commit only. Use a dispatch for a backfill of
 more than that.
+
+The same script runs once more for each release branch, with
+`--upstream-ref` pointing at master. The walk then stops at the commit
+where the branch left master: the commits before it are master commits,
+and master looks after those itself. The workflow takes the names of the
+release branches from `render.py --release-branches`, see
+[Release branches](#release-branches).
 
 GitHub disables a schedule after 60 days without activity in the
 repository. A result push is activity, so the schedule keeps itself alive
@@ -156,7 +164,17 @@ A benchmark run of a release branch writes a snapshot under `branches/`
 like any other branch. `render.py` leaves that snapshot out of the
 selector, so the branch has one entry there and not two.
 
-To benchmark one, name the branch and the commit in a dispatch:
+The schedule catches up on the release branches after master, see
+[The schedule](#the-schedule). A dispatch of a release branch without a
+commit does the same catch-up with the `count` of the dispatch, which is
+how to backfill one:
+
+```console
+gh workflow run benchmark.yml -R clash-lang/clash-benchmarks \
+  -f ref=1.10 -f count=20
+```
+
+To measure one commit of it, name the branch and the commit:
 
 ```console
 gh workflow run benchmark.yml -R clash-lang/clash-benchmarks \
@@ -166,8 +184,9 @@ gh workflow run benchmark.yml -R clash-lang/clash-benchmarks \
 A release branch has no pull request, so `ref` matters: without it the
 run records the commit as one of master.
 
-Adding a release branch is one entry in `RELEASE_BRANCHES`. Nothing else
-knows about them.
+Adding a release branch is one entry in `RELEASE_BRANCHES`. The workflows
+read the list from `render.py --release-branches`; nothing else knows
+about them.
 
 ## The runner
 
@@ -199,7 +218,7 @@ The jobs want a self-hosted runner with the labels `self-hosted` and
 | `BENCH_RUNS_ON` | JSON array that replaces the `runs-on` labels, for example `["ubuntu-latest"]`. Leave it unset in production. |
 | `BENCH_QUICK` | `1` trims the suite to `examples/FIR.hs` and skips the wireDemo leg. Fast, and the result is marked as partial. |
 | `BENCH_MACHINE` | machine id. The default is the runner name. |
-| `BENCH_CATCHUP_MAX` | most master commits per scheduled run (default 5). |
+| `BENCH_CATCHUP_MAX` | most master commits per scheduled run, and most commits of each release branch (default 5). |
 | `BENCH_PR_MAX` | most pull request commits per scheduled run (default 5). |
 | `BENCH_PR_LABEL` | label that asks for a benchmark (default `performance`). |
 | `BENCH_NORM_BUILD_TIMEOUT` | seconds the clash-benchmark build may take (default 3600). |
