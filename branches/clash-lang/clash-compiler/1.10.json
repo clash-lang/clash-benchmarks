@@ -305,10 +305,55 @@
       "date": "2026-08-29",
       "sha": "9ccfc25a2cfe630b401e07c66bfb47aea860734f",
       "subject": "Fix performance regressions on `master` (backport #3357) (#3388)"
+    },
+    {
+      "date": "2026-08-29",
+      "sha": "ba9f7658cd1c8389977a720fd8b0c9e4784af3bd",
+      "subject": "Merge pull request #3389 from clash-lang/martijn/1.10-backport-3356"
+    },
+    {
+      "date": "2026-08-31",
+      "sha": "b56ff00cb256d895e8cb787b28322a52da13c800",
+      "subject": "Extend the blackbox template tag ~SYM to be able to accept a name (#3326) (#3391)"
+    },
+    {
+      "date": "2026-09-01",
+      "sha": "36b2029d67df4df89fb79d6b8d87a98dee74d728",
+      "subject": "Fix hardcoded variable names in blackboxes (#3353) (#3392)"
+    },
+    {
+      "date": "2026-09-03",
+      "sha": "986342fdaa87917f410be8929f3c6fc98a492fe8",
+      "subject": "Merge pull request #3395 from clash-lang/mergify/copy/1.10/pr-3393"
+    },
+    {
+      "date": "2026-09-04",
+      "sha": "dea2d23af290a8a51613ad510217746785304413",
+      "subject": "Remove `clash-cosim` and `clash-ffi` packages (#3402)"
+    },
+    {
+      "date": "2026-09-04",
+      "sha": "367d3552668ecae5dab113d80e400f12ef38f5a5",
+      "subject": "Migrate on-push PR jobs from Gitlab over to Github (#3289) (#3401)"
+    },
+    {
+      "date": "2026-09-04",
+      "sha": "dbafd505709dd35378eb9571d6768997226bc4ca",
+      "subject": "Prefer `ghdl-mcode` over `ghdl-llvm` on CI (#3397) (#3400)"
+    },
+    {
+      "date": "2026-09-04",
+      "sha": "5419657743fbdab9471f85251dd3d6f5a5283cb6",
+      "subject": "Retry `cabal update` on CI (#3398) (#3399)"
+    },
+    {
+      "date": "2026-09-04",
+      "sha": "43310f77e941e91adbfed0c9100cf5b4643114c0",
+      "subject": "Merge pull request #3405 from clash-lang/mergify/copy/1.10/pr-3404"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-30T19:53:12+00:00"
+  "updated": "2026-09-04T18:16:17+00:00"
 }
