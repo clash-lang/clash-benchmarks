@@ -350,10 +350,15 @@
       "date": "2026-09-04",
       "sha": "43310f77e941e91adbfed0c9100cf5b4643114c0",
       "subject": "Merge pull request #3405 from clash-lang/mergify/copy/1.10/pr-3404"
+    },
+    {
+      "date": "2026-09-05",
+      "sha": "f33b329b2799cc188c3e20a2614ad26a9cfe2f1f",
+      "subject": "Avoid `Integer` in `popCount` and `count{Leading,Trailing}Zeros` (#3409) (#3412)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-09-04T20:29:36+00:00"
+  "updated": "2026-09-05T08:22:14+00:00"
 }
