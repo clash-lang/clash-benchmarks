@@ -355,10 +355,15 @@
       "date": "2026-09-05",
       "sha": "f33b329b2799cc188c3e20a2614ad26a9cfe2f1f",
       "subject": "Avoid `Integer` in `popCount` and `count{Leading,Trailing}Zeros` (#3409) (#3412)"
+    },
+    {
+      "date": "2026-09-05",
+      "sha": "f564a6f02dfbb05654a965a1effc476a45849f38",
+      "subject": "Merge pull request #3406 from clash-lang/release_v1.10.2"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-09-05T08:22:14+00:00"
+  "updated": "2026-09-05T16:05:43+00:00"
 }
