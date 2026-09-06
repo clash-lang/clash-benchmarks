@@ -365,10 +365,15 @@
       "date": "2026-09-05",
       "sha": "ab202083356c01ab11c8e775a586fb9b5462aabd",
       "subject": "Merge pull request #3413 from clash-lang/mergify/copy/1.10/pr-3182"
+    },
+    {
+      "date": "2026-09-06",
+      "sha": "0203a007f196c616ea90bb651eba41502b44fc7f",
+      "subject": "Warn about `resetGenN` on every backend (#3410) (#3414)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-09-05T22:48:33+00:00"
+  "updated": "2026-09-06T10:27:14+00:00"
 }
