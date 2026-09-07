@@ -370,10 +370,15 @@
       "date": "2026-09-06",
       "sha": "0203a007f196c616ea90bb651eba41502b44fc7f",
       "subject": "Warn about `resetGenN` on every backend (#3410) (#3414)"
+    },
+    {
+      "date": "2026-09-07",
+      "sha": "23622dae9714eb77dfa7de31c79d7fef669510c1",
+      "subject": "Qlog entries 1.10 (#3420)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-09-06T10:27:14+00:00"
+  "updated": "2026-09-07T19:14:03+00:00"
 }
