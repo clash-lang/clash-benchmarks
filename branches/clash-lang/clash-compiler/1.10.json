@@ -380,10 +380,15 @@
       "date": "2026-09-07",
       "sha": "60dbd7373fd8401965748b21ef92284f65f7c77f",
       "subject": "Merge pull request #3423 from clash-lang/mergify/copy/1.10/pr-3422"
+    },
+    {
+      "date": "2026-09-08",
+      "sha": "8013cc6f1098d943d497839ff702ee59110282b9",
+      "subject": "Run `deadCode` after in flattening loop (#3408) (#3425)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-09-07T22:46:51+00:00"
+  "updated": "2026-09-08T15:20:40+00:00"
 }
