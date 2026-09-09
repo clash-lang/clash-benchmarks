@@ -385,10 +385,20 @@
       "date": "2026-09-08",
       "sha": "8013cc6f1098d943d497839ff702ee59110282b9",
       "subject": "Run `deadCode` after in flattening loop (#3408) (#3425)"
+    },
+    {
+      "date": "2026-09-09",
+      "sha": "0d41d8f6ebec3cfe2ae3b5efcb7bf1283964903f",
+      "subject": "Small documentation improvements (#3427) (#3428)"
+    },
+    {
+      "date": "2026-09-09",
+      "sha": "18b31d340a31a06ed1d0ff756361f14844bd46da",
+      "subject": "Add pipeline for rejecting PRs with old changelog entries. (#3421) (#3430)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-09-08T15:20:40+00:00"
+  "updated": "2026-09-09T17:55:04+00:00"
 }
