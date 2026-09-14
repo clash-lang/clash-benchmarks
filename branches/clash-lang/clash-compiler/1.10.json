@@ -400,10 +400,15 @@
       "date": "2026-09-14",
       "sha": "2b40934608d1c5cfbdc9de1287601d5f7ae3d87b",
       "subject": "Switch changelog entries to qlog (copy #3317) (#3417)"
+    },
+    {
+      "date": "2026-09-14",
+      "sha": "bf3d01f8bc85f1da5fd79a5e2b49dd7c2ff0dbcf",
+      "subject": "Cache Verilator builds in `clash-testsuite` with `ccache` (#3436) (#3437)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-09-14T18:03:21+00:00"
+  "updated": "2026-09-14T21:48:00+00:00"
 }
