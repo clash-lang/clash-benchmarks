@@ -395,10 +395,15 @@
       "date": "2026-09-09",
       "sha": "18b31d340a31a06ed1d0ff756361f14844bd46da",
       "subject": "Add pipeline for rejecting PRs with old changelog entries. (#3421) (#3430)"
+    },
+    {
+      "date": "2026-09-14",
+      "sha": "2b40934608d1c5cfbdc9de1287601d5f7ae3d87b",
+      "subject": "Switch changelog entries to qlog (copy #3317) (#3417)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-09-09T17:57:54+00:00"
+  "updated": "2026-09-14T18:03:21+00:00"
 }
