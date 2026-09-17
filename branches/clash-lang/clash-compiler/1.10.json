@@ -405,10 +405,20 @@
       "date": "2026-09-14",
       "sha": "bf3d01f8bc85f1da5fd79a5e2b49dd7c2ff0dbcf",
       "subject": "Cache Verilator builds in `clash-testsuite` with `ccache` (#3436) (#3437)"
+    },
+    {
+      "date": "2026-09-17",
+      "sha": "5f200b6aec3ff4a7fc4123042c483b056cca0c96",
+      "subject": "Merge pull request #3444 from clash-lang/mergify/copy/1.10/pr-3442"
+    },
+    {
+      "date": "2026-09-17",
+      "sha": "d46254db5530c2126763ca21130af56373967a92",
+      "subject": "Merge pull request #3445 from clash-lang/mergify/copy/1.10/pr-3440"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-09-14T21:48:00+00:00"
+  "updated": "2026-09-17T11:39:31+00:00"
 }
