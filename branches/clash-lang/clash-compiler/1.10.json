@@ -435,10 +435,15 @@
       "date": "2026-09-21",
       "sha": "ccd7b8c153d26ceded1513faaef7d16990cd6fcc",
       "subject": "Add a CI job to check changelog entries in PRs (#3424) (#3452)"
+    },
+    {
+      "date": "2026-09-25",
+      "sha": "3ceff111d5e512a631c6f727ade14c78f919c28e",
+      "subject": "Merge pull request #3453 from clash-lang/mergify/copy/1.10/pr-3443"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-09-21T15:09:45+00:00"
+  "updated": "2026-09-25T00:35:05+00:00"
 }
