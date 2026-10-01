@@ -1,0 +1,14 @@
+{
+  "base": "1856618cb4975e4015795fac8c5e858e8c4ad920",
+  "commits": [
+    {
+      "date": "2026-10-01",
+      "sha": "1463fe64f682e5317cd5ffcc970077d9d9487369",
+      "subject": "Let-bind vectors in primitive unfoldings"
+    }
+  ],
+  "pr": 3462,
+  "ref": "martijn/fix-3461",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-10-01T17:58:24+00:00"
+}
