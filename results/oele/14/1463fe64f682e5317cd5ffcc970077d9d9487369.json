@@ -13,63 +13,63 @@
   "normalization": {
     "benchmarks": {
       "benchmark/tests/BundleMapRepeat.hs": {
-        "alloc_bytes": 98896262.26900585,
-        "gc_wall_s": 1.1478964912280794e-05,
-        "mean_s": 0.02694340547283795,
-        "mut_wall_s": 0.02689590692982458,
-        "stddev_s": 0.00013692346575773924
+        "alloc_bytes": 98896285.23976608,
+        "gc_wall_s": 1.1329690058479961e-05,
+        "mean_s": 0.026644734316994382,
+        "mut_wall_s": 0.0266406042163743,
+        "stddev_s": 8.747734932606866e-05
       },
       "benchmark/tests/PipelinesViaFolds.hs": {
         "alloc_bytes": 7133018143.2,
-        "gc_wall_s": 0.0027655464000000017,
-        "mean_s": 1.8799151728065528,
-        "mut_wall_s": 1.8710943216000004,
-        "stddev_s": 0.03288850270899901
+        "gc_wall_s": 0.002623838700000003,
+        "mean_s": 1.8454057454655413,
+        "mut_wall_s": 1.8437949161000007,
+        "stddev_s": 0.007803094337430311
       },
       "examples/FIR.hs": {
-        "alloc_bytes": 73430858.7193676,
-        "gc_wall_s": 6.305671936758906e-06,
-        "mean_s": 0.019125076729562693,
-        "mut_wall_s": 0.019024474047430833,
-        "stddev_s": 0.00032306876728805414
+        "alloc_bytes": 73430843.47826087,
+        "gc_wall_s": 6.470205533596915e-06,
+        "mean_s": 0.018975416595227796,
+        "mut_wall_s": 0.018922464632411068,
+        "stddev_s": 0.0001836558892761934
       },
       "examples/Queens.hs": {
-        "alloc_bytes": 47763782.36893204,
-        "gc_wall_s": 4.050677184466049e-06,
-        "mean_s": 0.01205747119930854,
-        "mut_wall_s": 0.012016772444174756,
-        "stddev_s": 0.0001320761088738491
+        "alloc_bytes": 47763782.116504855,
+        "gc_wall_s": 4.1662014563109375e-06,
+        "mean_s": 0.012058560171770214,
+        "mut_wall_s": 0.012008379029126225,
+        "stddev_s": 0.00014344870077825147
       },
       "examples/Reducer.hs": {
         "alloc_bytes": 3017755653.6,
-        "gc_wall_s": 0.005634167800000006,
-        "mean_s": 0.8326214207821371,
-        "mut_wall_s": 0.8301158690000001,
-        "stddev_s": 0.008752038838103859
+        "gc_wall_s": 0.005672696700000005,
+        "mean_s": 0.8246942672024792,
+        "mut_wall_s": 0.8195166994000003,
+        "stddev_s": 0.0018536273390230408
       },
       "tests/shouldwork/Basic/AES.hs": {
-        "alloc_bytes": 1188154355.2,
-        "gc_wall_s": 0.0006188298666666666,
-        "mean_s": 0.2872944785949464,
-        "mut_wall_s": 0.2864195789333337,
-        "stddev_s": 0.0009113220785514509
+        "alloc_bytes": 1188154605.3333333,
+        "gc_wall_s": 0.0005968391333333267,
+        "mean_s": 0.28603582358919083,
+        "mut_wall_s": 0.28529823546666744,
+        "stddev_s": 0.0008173268659455321
       },
       "tests/shouldwork/Basic/T1354B.hs": {
         "alloc_bytes": 270572483.6363636,
-        "gc_wall_s": 5.581132727272766e-05,
-        "mean_s": 0.08547338933258923,
-        "mut_wall_s": 0.08582872183636323,
-        "stddev_s": 0.0028867403095241767
+        "gc_wall_s": 5.2945945454548183e-05,
+        "mean_s": 0.08503291586565505,
+        "mut_wall_s": 0.08491332119999981,
+        "stddev_s": 0.0022246066022793528
       }
     },
     "skip_reason": null,
     "status": "ok"
   },
   "run": {
-    "date": "2026-10-01T18:06:25+00:00",
+    "date": "2026-10-01T18:12:31+00:00",
     "quick": false,
     "trigger": "dispatch",
-    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/36903297244"
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/36903297837"
   },
   "schema_version": 4,
   "toolchain": {
