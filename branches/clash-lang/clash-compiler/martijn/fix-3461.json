@@ -2,13 +2,18 @@
   "base": "1856618cb4975e4015795fac8c5e858e8c4ad920",
   "commits": [
     {
-      "date": "2026-10-01",
-      "sha": "1463fe64f682e5317cd5ffcc970077d9d9487369",
-      "subject": "Let-bind vectors in primitive unfoldings"
+      "date": "2026-10-02",
+      "sha": "ec20644ac2e010364ed4b094ecd07608ae3cff72",
+      "subject": "Let-bind representable vectors in primitive unfoldings"
+    },
+    {
+      "date": "2026-10-02",
+      "sha": "933548877fc43043b5db43a5719161ddc2c8a9c9",
+      "subject": "Rename `reduceNonRepPrim` to `reducePrim`"
     }
   ],
   "pr": 3462,
   "ref": "martijn/fix-3461",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-01T18:12:31+00:00"
+  "updated": "2026-10-02T12:04:17+00:00"
 }
