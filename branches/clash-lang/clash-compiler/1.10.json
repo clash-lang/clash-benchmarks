@@ -445,10 +445,20 @@
       "date": "2026-09-27",
       "sha": "dccb54eb87bf028bc6f9c086dcd9da420ce38721",
       "subject": "Add `NumConvert` support for converting from `SNat` (#3455) (#3456)"
+    },
+    {
+      "date": "2026-10-02",
+      "sha": "8f77bd6f561273ab00593a887ea1116a34f7a5e4",
+      "subject": "Merge pull request #3463 from clash-lang/mergify/copy/1.10/pr-3462"
+    },
+    {
+      "date": "2026-10-02",
+      "sha": "623367234791c6d0e4837df38c4895689a1fb5f3",
+      "subject": "Merge pull request #3464 from clash-lang/mergify/copy/1.10/pr-3459"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-09-27T17:47:46+00:00"
+  "updated": "2026-10-02T19:12:58+00:00"
 }
