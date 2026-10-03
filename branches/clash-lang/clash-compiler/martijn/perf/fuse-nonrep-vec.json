@@ -3,12 +3,12 @@
   "commits": [
     {
       "date": "2026-10-03",
-      "sha": "f6ae0f246f5d605657f14b95498ab62f488c68df",
+      "sha": "47e0ad735a2acb2d9722239f50f9c262ba2d57e9",
       "subject": "Look through non-representable `map`/`zipWith` when unrolling vectors"
     }
   ],
   "pr": null,
   "ref": "martijn/perf/fuse-nonrep-vec",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-03T07:35:13+00:00"
+  "updated": "2026-10-03T08:16:56+00:00"
 }
