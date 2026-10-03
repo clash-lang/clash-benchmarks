@@ -1,0 +1,100 @@
+{
+  "clash": {
+    "commit": "4eb92a362c894b33a2bc67f149d98aaa579920b9",
+    "committer_date": "2026-10-03",
+    "parents": [
+      "361d117d07ddc4c7539d6c1d48707a12be71fd92"
+    ],
+    "ref": "martijn/perf/combined-sharing",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Use literals for small bignums in specialization cache keys"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 39876828.15533981,
+        "gc_wall_s": 2.4170533980581978e-06,
+        "mean_s": 0.011652849048281077,
+        "mut_wall_s": 0.011625960766990316,
+        "stddev_s": 0.00011059871502563464
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 700006156.1904762,
+        "gc_wall_s": 0.00021256714285714624,
+        "mean_s": 0.18496846245058504,
+        "mut_wall_s": 0.18495023757142837,
+        "stddev_s": 0.0006014013981606507
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 73430550.26086956,
+        "gc_wall_s": 6.4310434782608805e-06,
+        "mean_s": 0.01890531407144764,
+        "mut_wall_s": 0.018876461750988144,
+        "stddev_s": 9.292934491010149e-05
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 47763239.32038835,
+        "gc_wall_s": 4.0025145631067785e-06,
+        "mean_s": 0.012025587511783025,
+        "mut_wall_s": 0.011984940963592242,
+        "stddev_s": 0.00013720675670909544
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 3017755694.4,
+        "gc_wall_s": 0.005624046999999996,
+        "mean_s": 0.8213514357630629,
+        "mut_wall_s": 0.8174030991999999,
+        "stddev_s": 0.007598817007287092
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 1130519435.7333333,
+        "gc_wall_s": 0.0005884426666666664,
+        "mean_s": 0.2710827183894192,
+        "mut_wall_s": 0.2706551505333328,
+        "stddev_s": 0.00044759807546266883
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 244694425.45454547,
+        "gc_wall_s": 6.168579999999879e-05,
+        "mean_s": 0.07876507924350408,
+        "mut_wall_s": 0.07885340985454535,
+        "stddev_s": 0.002829209198800933
+      }
+    },
+    "skip_reason": null,
+    "status": "ok"
+  },
+  "run": {
+    "date": "2026-10-03T09:33:31+00:00",
+    "quick": false,
+    "trigger": "dispatch",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/37112599506"
+  },
+  "schema_version": 4,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [],
+    "runs": [
+      {
+        "alloc_bytes": 174879614024,
+        "gc_cpu_s": 10.768,
+        "gc_wall_s": 7.34,
+        "max_live_bytes": 590427696,
+        "mut_cpu_s": 57.123,
+        "mut_wall_s": 55.852,
+        "netlist_s": 1.626,
+        "normalization_s": 49.606,
+        "num_gcs": 3976,
+        "peak_mb": 1663,
+        "total_s": 57.543
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}

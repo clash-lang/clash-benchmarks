@@ -5,10 +5,15 @@
       "date": "2026-10-03",
       "sha": "361d117d07ddc4c7539d6c1d48707a12be71fd92",
       "subject": "Normalize work-free applications only once"
+    },
+    {
+      "date": "2026-10-03",
+      "sha": "4eb92a362c894b33a2bc67f149d98aaa579920b9",
+      "subject": "Use literals for small bignums in specialization cache keys"
     }
   ],
   "pr": null,
   "ref": "martijn/perf/combined-sharing",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-03T09:27:21+00:00"
+  "updated": "2026-10-03T09:33:31+00:00"
 }
