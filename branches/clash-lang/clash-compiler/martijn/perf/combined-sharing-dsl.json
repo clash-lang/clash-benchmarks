@@ -45,10 +45,15 @@
       "date": "2026-10-03",
       "sha": "6d029acbb6bc85f355746cbccf664fa47d98a3e0",
       "subject": "Give normalization transformations top-level workers"
+    },
+    {
+      "date": "2026-10-03",
+      "sha": "64dd31a86265330020d1706358e07dc4eb7e5a87",
+      "subject": "Add strategy DSL / generate code with Template Haskell"
     }
   ],
   "pr": null,
   "ref": "martijn/perf/combined-sharing-dsl",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-03T10:55:00+00:00"
+  "updated": "2026-10-03T11:01:18+00:00"
 }
