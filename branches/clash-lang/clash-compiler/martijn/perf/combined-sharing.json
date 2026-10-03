@@ -20,10 +20,15 @@
       "date": "2026-10-03",
       "sha": "eb6d1f1134a6a08a390cbc18f03a9980f59fb0fc",
       "subject": "Don't import the `Letrec` pattern with a namespace specifier"
+    },
+    {
+      "date": "2026-10-03",
+      "sha": "7059d6c64ab341945e04798e470b6f1f48f1c8f0",
+      "subject": "Share constructor fields in evaluator's case-of-known-constructor"
     }
   ],
   "pr": null,
   "ref": "martijn/perf/combined-sharing",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-03T09:45:19+00:00"
+  "updated": "2026-10-03T09:50:34+00:00"
 }
