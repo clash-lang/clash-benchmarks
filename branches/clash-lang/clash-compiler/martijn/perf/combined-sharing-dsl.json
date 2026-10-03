@@ -40,10 +40,15 @@
       "date": "2026-10-03",
       "sha": "82a23cfd6c9bfcac740524599920aa0e24c53f57",
       "subject": "Move `topdownSucR` and `innerMost` to `Clash.Rewrite.Combinators`"
+    },
+    {
+      "date": "2026-10-03",
+      "sha": "6d029acbb6bc85f355746cbccf664fa47d98a3e0",
+      "subject": "Give normalization transformations top-level workers"
     }
   ],
   "pr": null,
   "ref": "martijn/perf/combined-sharing-dsl",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-03T10:48:43+00:00"
+  "updated": "2026-10-03T10:55:00+00:00"
 }
