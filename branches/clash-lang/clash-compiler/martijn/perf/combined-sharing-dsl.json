@@ -1,0 +1,44 @@
+{
+  "base": "3b87bbdb436c246064305abf7ad85466c79bf3a8",
+  "commits": [
+    {
+      "date": "2026-10-03",
+      "sha": "361d117d07ddc4c7539d6c1d48707a12be71fd92",
+      "subject": "Normalize work-free applications only once"
+    },
+    {
+      "date": "2026-10-03",
+      "sha": "4eb92a362c894b33a2bc67f149d98aaa579920b9",
+      "subject": "Use literals for small bignums in specialization cache keys"
+    },
+    {
+      "date": "2026-10-03",
+      "sha": "df89bd6e71473224156a3f2b8e7cd3f768017df1",
+      "subject": "Skip unchanged let-bindings when flattening"
+    },
+    {
+      "date": "2026-10-03",
+      "sha": "eb6d1f1134a6a08a390cbc18f03a9980f59fb0fc",
+      "subject": "Don't import the `Letrec` pattern with a namespace specifier"
+    },
+    {
+      "date": "2026-10-03",
+      "sha": "7059d6c64ab341945e04798e470b6f1f48f1c8f0",
+      "subject": "Share constructor fields in evaluator's case-of-known-constructor"
+    },
+    {
+      "date": "2026-10-03",
+      "sha": "e9526d25eceee8e69f16255d7afc7832bee7dbc6",
+      "subject": "Look through non-representable `map`/`zipWith` when unrolling vectors"
+    },
+    {
+      "date": "2026-10-03",
+      "sha": "92dfaa0a7b23b5f350c487b70101d883369b1c2f",
+      "subject": "Make the rewrite traversal combinators inlineable"
+    }
+  ],
+  "pr": null,
+  "ref": "martijn/perf/combined-sharing-dsl",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-10-03T10:42:54+00:00"
+}
