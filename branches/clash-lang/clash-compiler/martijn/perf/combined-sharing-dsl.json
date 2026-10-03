@@ -35,10 +35,15 @@
       "date": "2026-10-03",
       "sha": "92dfaa0a7b23b5f350c487b70101d883369b1c2f",
       "subject": "Make the rewrite traversal combinators inlineable"
+    },
+    {
+      "date": "2026-10-03",
+      "sha": "82a23cfd6c9bfcac740524599920aa0e24c53f57",
+      "subject": "Move `topdownSucR` and `innerMost` to `Clash.Rewrite.Combinators`"
     }
   ],
   "pr": null,
   "ref": "martijn/perf/combined-sharing-dsl",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-03T10:42:54+00:00"
+  "updated": "2026-10-03T10:48:43+00:00"
 }
