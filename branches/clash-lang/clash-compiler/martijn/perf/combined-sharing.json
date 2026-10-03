@@ -15,10 +15,15 @@
       "date": "2026-10-03",
       "sha": "df89bd6e71473224156a3f2b8e7cd3f768017df1",
       "subject": "Skip unchanged let-bindings when flattening"
+    },
+    {
+      "date": "2026-10-03",
+      "sha": "eb6d1f1134a6a08a390cbc18f03a9980f59fb0fc",
+      "subject": "Don't import the `Letrec` pattern with a namespace specifier"
     }
   ],
   "pr": null,
   "ref": "martijn/perf/combined-sharing",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-03T09:39:30+00:00"
+  "updated": "2026-10-03T09:45:19+00:00"
 }
