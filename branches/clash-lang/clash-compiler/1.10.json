@@ -455,10 +455,20 @@
       "date": "2026-10-02",
       "sha": "623367234791c6d0e4837df38c4895689a1fb5f3",
       "subject": "Merge pull request #3464 from clash-lang/mergify/copy/1.10/pr-3459"
+    },
+    {
+      "date": "2026-10-04",
+      "sha": "6d882a05061ae7d990be2ee8d5fed3feff02fad8",
+      "subject": "No longer run Kloonbot on GitHub (#3466) (#3467)"
+    },
+    {
+      "date": "2026-10-04",
+      "sha": "ba1e68691bef7bd02facb7232379934eaf40fb25",
+      "subject": "Only run the \"All jobs finished\" job on PRs (#3433) (#3468)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-02T19:17:21+00:00"
+  "updated": "2026-10-04T19:37:11+00:00"
 }
