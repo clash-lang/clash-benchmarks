@@ -5,20 +5,10 @@
       "date": "2026-10-07",
       "sha": "4177397e73d6f4251db40778420bde1f7f275045",
       "subject": "Normalize work-free applications only once"
-    },
-    {
-      "date": "2026-10-07",
-      "sha": "7fb75acff61cde58ffca952b8d896e189c1f4345",
-      "subject": "Use literals for small bignums in specialization cache keys"
-    },
-    {
-      "date": "2026-10-07",
-      "sha": "783371b56896cdac74ad11e011294c5721c7c61d",
-      "subject": "Use a `HashMap` for the specialization cache"
     }
   ],
   "pr": 3472,
   "ref": "martijn/perf/workfree-app-cache",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-07T14:38:43+00:00"
+  "updated": "2026-10-07T14:44:29+00:00"
 }
