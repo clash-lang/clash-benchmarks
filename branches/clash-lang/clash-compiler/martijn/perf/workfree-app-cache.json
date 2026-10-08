@@ -10,15 +10,10 @@
       "date": "2026-10-07",
       "sha": "453a9fce349e300340cc40f57f7d86f9ec0b5708",
       "subject": "Use literals for small bignums in specialization cache keys"
-    },
-    {
-      "date": "2026-10-07",
-      "sha": "aaaeb7d9b1697f33a5ad452c9d23fe576113596d",
-      "subject": "Use a `HashMap` for the specialization cache"
     }
   ],
   "pr": 3472,
   "ref": "martijn/perf/workfree-app-cache",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-07T17:26:24+00:00"
+  "updated": "2026-10-08T08:19:12+00:00"
 }
