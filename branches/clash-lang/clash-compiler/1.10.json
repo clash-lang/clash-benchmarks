@@ -475,10 +475,15 @@
       "date": "2026-10-07",
       "sha": "b8c1ac80abeaad1ac37fdbb401fc0ea3b2afa7b8",
       "subject": "Merge pull request #3471 from clash-lang/mergify/copy/1.10/pr-3328"
+    },
+    {
+      "date": "2026-10-08",
+      "sha": "2ebe60804da14b81b02c96adf65ef3c57c30054e",
+      "subject": "Merge pull request #3474 from clash-lang/mergify/copy/1.10/pr-3472"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-07T17:34:12+00:00"
+  "updated": "2026-10-08T17:51:42+00:00"
 }
