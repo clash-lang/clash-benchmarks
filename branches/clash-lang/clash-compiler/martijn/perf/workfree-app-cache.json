@@ -2,18 +2,18 @@
   "base": "2634714f3557c181792a02b468b2e4118fdebb7a",
   "commits": [
     {
-      "date": "2026-10-07",
-      "sha": "0b8741dadc23c376357b3c1304c20435084695a6",
+      "date": "2026-10-08",
+      "sha": "21758b66477ac043cb9c55d5ab3ae02c3a879b3f",
       "subject": "Normalize work-free applications only once"
     },
     {
-      "date": "2026-10-07",
-      "sha": "453a9fce349e300340cc40f57f7d86f9ec0b5708",
+      "date": "2026-10-08",
+      "sha": "a8c92d55d4b2c4b10f6eab1cbbe1b7cc8b1ca48c",
       "subject": "Use literals for small bignums in specialization cache keys"
     }
   ],
   "pr": 3472,
   "ref": "martijn/perf/workfree-app-cache",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-08T08:19:12+00:00"
+  "updated": "2026-10-08T08:27:59+00:00"
 }
