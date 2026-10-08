@@ -64,8 +64,9 @@ that leaves the selector, because its pull request closed, keeps its
 snapshot, and the link lands on the newest commit of that snapshot as a
 detached view. Once prune_branches.py removes the snapshot, because the
 branch itself is gone, the page no longer knows what the name meant and
-the link falls back to master; a commit link to a measured commit of that
-branch keeps working, because a result carries its own commit. A link
+says that it has no results for it, as it does for a commit that it does
+not know; a commit link to a measured commit of that branch keeps
+working, because a result carries its own commit. A link
 that has to stay good for a long time is a commit link.
 
 "Commit details" under the selectors shows what the link names: the
@@ -2244,6 +2245,17 @@ function detachedRef(sha) {
   };
 }
 
+// The view of a branch that the page does not know: no commits, so no
+// results. It is "detached" in that it is not an option of the selector.
+function missingRef(name) {
+  return {
+    key: "missing", detached: true, missing: true,
+    label: "branch " + name,
+    repo: DATA.upstreamRepo, ref: name, pr: null,
+    commits: [], branchPoint: null,
+  };
+}
+
 // Find the branch that carries one commit: a branch of the selector where
 // the commit sits past the branch point, else master, else nothing - then
 // the commit gets a detached view.
@@ -2303,10 +2315,13 @@ function readUrl() {
   // more than a silent jump to master.
   const gone = ref ? null : findPruned(name);
   // A link that names nothing means the default view, not "keep what is
-  // there": the URL names the whole view. So does a missing metric.
+  // there": the URL names the whole view. So does a missing metric. A
+  // name that the page does not know stays in the state as it is, and
+  // apply() shows that there are no results for it: a silent jump to
+  // master would pass off the results of master as those of the branch.
   state.sel = commit ? { type: "commit", sha: commit.toLowerCase() }
     : gone ? { type: "commit", sha: gone.head }
-    : { type: "branch", key: ref ? ref.key : "master" };
+    : { type: "branch", key: ref ? ref.key : name || "master" };
   const metric = get("metric");
   state.metric = ["memory", "alloc", "gc"].includes(metric) ? metric : "time";
 }
@@ -2362,8 +2377,10 @@ function syncPin() {
   const stuck = pinned && VD.ref.detached;
   pinButton.setAttribute("aria-pressed", pinned ? "true" : "false");
   pinButton.textContent = pinned ? "Pinned to commit" : "Pin to commit";
-  pinButton.disabled = stuck;
-  pinButton.title = stuck
+  pinButton.disabled = stuck || !!VD.ref.missing;
+  pinButton.title = VD.ref.missing
+    ? "This page knows no branch of that name, so there is no commit to pin"
+    : stuck
     ? "No branch of the selector carries this commit, so the link names the "
       + "commit"
     : pinned
@@ -2387,7 +2404,8 @@ function togglePin() {
 // then cut everything to the date range.
 function apply() {
   const ref = state.sel.type === "commit" ? resolveView(state.sel.sha)
-    : DATA.refs.find(r => r.key === state.sel.key) || DATA.refs[0];
+    : DATA.refs.find(r => r.key === state.sel.key)
+      || missingRef(state.sel.key);
   const head = state.sel.type === "commit"
     ? (findCommit(state.sel.sha) || state.sel.sha)
     : ref.commits[ref.commits.length - 1] || null;
