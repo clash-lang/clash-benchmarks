@@ -1,14 +1,14 @@
 {
-  "base": "3b87bbdb436c246064305abf7ad85466c79bf3a8",
+  "base": "3cdcb5c8e05557ab2e35748525717d8ebe22d543",
   "commits": [
     {
-      "date": "2026-10-03",
-      "sha": "6c710ecfebf75a34f0d6b8891795b322f08818b5",
+      "date": "2026-10-09",
+      "sha": "6908d8f0833ac3a0d6d7cca1d13d1ee9754819b6",
       "subject": "Skip unchanged let-bindings when flattening"
     }
   ],
   "pr": null,
   "ref": "martijn/perf/flatten-wrapper-chain",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-03T07:24:57+00:00"
+  "updated": "2026-10-09T10:48:42+00:00"
 }
