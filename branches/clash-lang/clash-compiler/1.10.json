@@ -478,12 +478,17 @@
     },
     {
       "date": "2026-10-08",
-      "sha": "3245f8a4238ebbac1a00d0b1e833df7bf07acd21",
-      "subject": "Normalize work-free applications only once"
+      "sha": "2ebe60804da14b81b02c96adf65ef3c57c30054e",
+      "subject": "Merge pull request #3474 from clash-lang/mergify/copy/1.10/pr-3472"
+    },
+    {
+      "date": "2026-10-09",
+      "sha": "f6250cd06ca3f152ef677e773b65a4e9ad317747",
+      "subject": "Fix accidental free variable capture in `appProp` (#3479) (#3480)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-09T09:31:56+00:00"
+  "updated": "2026-10-09T21:54:46+00:00"
 }
