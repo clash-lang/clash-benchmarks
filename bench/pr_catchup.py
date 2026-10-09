@@ -11,7 +11,9 @@ Usage:
                      BENCH_MACHINE, else RUNNER_NAME, else the hostname.
   --results DIR      repository root with results/ (default: this repository)
   --upstream-ref REF ref of clash-lang master in the clone
-                     (default refs/bench/upstream-master)
+                     (default refs/bench/upstream-master). A pull request
+                     into a release branch is measured against
+                     refs/bench/upstream-<branch> instead.
   --max N            most commits to print (default 5)
   --chain-max N      most commits of one pull request to look at (default 500)
   --dry-run          write a readable list to standard error instead
@@ -50,7 +52,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from list_prs import load, with_label  # noqa: E402
-from pr_refs import fetch_pr, pr_ref  # noqa: E402
+from pr_refs import fetch_pr, pr_ref, upstream_for  # noqa: E402
 from result_schema import machine_id, result_path  # noqa: E402
 
 
@@ -79,8 +81,10 @@ def commits_of(args, pr, base_url):
     if ref is None:
         return []
     # Take the head from the fetched ref, not from the list: the branch
-    # can have moved since the list was made.
-    base = git(args.clash_repo, "merge-base", args.upstream_ref, ref, check=False)
+    # can have moved since the list was made. A pull request into a
+    # release branch starts where it left that branch, not master.
+    upstream = upstream_for(args.clash_repo, pr, args.upstream_ref)
+    base = git(args.clash_repo, "merge-base", upstream, ref, check=False)
     if base is None:
         return []
     out = git(args.clash_repo, "rev-list", "--first-parent", "--reverse",
@@ -127,7 +131,7 @@ def main():
         chain = commits_of(args, pr, base_url)
         if not chain:
             print(f"pr_catchup.py: #{pr['number']} has no commits on top of "
-                  f"{args.upstream_ref}, skipping", file=sys.stderr)
+                  f"{pr['base_ref']}, skipping", file=sys.stderr)
             continue
         missing = {sha for sha in chain
                    if not (args.results / result_path(args.machine, sha)).exists()}

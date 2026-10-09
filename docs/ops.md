@@ -7,7 +7,7 @@ and how to read the site, see the [README](../README.md).
 
 | Workflow | When | What it does |
 |---|---|---|
-| `benchmark.yml` | every six hours, and on demand | prunes the branch snapshots, measures one or more commits, and pushes each result to `main` |
+| `benchmark.yml` | every hour, and on demand | prunes the branch snapshots, measures one or more commits, and pushes each result to `main` |
 | `publish.yml` | after a benchmark run, after a push to `main`, and on demand | renders the site and pushes it to the `pages` branch |
 
 `benchmark.yml` has no concurrency group on purpose: a concurrency group
@@ -63,6 +63,12 @@ for a branch in a fork, so the script fetches each one into
 Every commit of the chain is a datapoint: a pull request that claims to
 make Clash faster has to show which commit did it.
 
+The branch point is relative to the branch that the pull request targets.
+For a backport into a release branch that is the release branch, not
+master: against master, the chain would hold every commit of the release
+branch as well. The snapshot of such a branch has its base on the release
+branch, and the site leads its view in with that branch.
+
 The head commit of each pull request goes first, and the rest of its
 commits follow oldest first. The script takes turns between the pull
 requests, so with three labelled pull requests and a budget of five the
@@ -81,6 +87,14 @@ where the branch left master: the commits before it are master commits,
 and master looks after those itself. The workflow takes the names of the
 release branches from `render.py --release-branches`, see
 [Release branches](#release-branches).
+
+The cron fires every hour, at minute 23. GitHub drops scheduled runs
+when it is busy, and the start of the hour is when it is busiest: on
+`0 * * * *` only four or five runs a day came through. A pull request
+that is labelled and merged between two runs that do come through is
+never measured as a pull request; only its merge commit is, by the
+catch-up of the branch that it went into. A dispatch measures it on
+demand.
 
 GitHub disables a schedule after 60 days without activity in the
 repository. A result push is activity, so the schedule keeps itself alive

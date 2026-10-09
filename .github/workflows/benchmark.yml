@@ -36,8 +36,12 @@ on:
         required: false
         default: "1"
   schedule:
-    # Every six hours. A full run takes ~20 minutes per commit.
-    - cron: "0 * * * *"
+    # Every hour. A full run takes ~20 minutes per commit. Not on the
+    # hour: GitHub drops scheduled runs when it is busy, and the start of
+    # the hour is its busiest moment. On "0 * * * *" four or five of the
+    # 24 runs a day came through, and a pull request that was labelled
+    # and merged in between was never measured.
+    - cron: "23 * * * *"
 
 run-name: >-
   ${{ inputs.sha && format('Benchmark {0}', inputs.sha)

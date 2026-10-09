@@ -13,6 +13,12 @@ lives here so that the two cannot drift apart.
 
 A fetch is idempotent and forced, so it costs little to ask twice.
 
+The branch point of a pull request is relative to the branch that it
+targets. That is master for most of them, but a backport targets a
+release branch, and the merge base with master would then pull in every
+commit of that release branch. upstream_for() names the ref to measure
+the branch point against.
+
 This module is not a script.
 """
 
@@ -23,6 +29,23 @@ import sys
 def pr_ref(number):
     """Return the local ref that holds the head commit of a pull request."""
     return f"refs/bench/pr/{number}"
+
+
+def upstream_for(clash_repo, pr, default):
+    """Return the ref of the branch that a pull request targets.
+
+    The workflow fetches master and the release branches into
+    refs/bench/upstream-<name>. A pull request into one of those gets
+    that ref; any other target, a stacked pull request for example,
+    gets the default.
+    """
+    ref = f"refs/bench/upstream-{pr.get('base_ref') or 'master'}"
+    proc = subprocess.run(
+        ["git", "-C", str(clash_repo), "rev-parse", "--verify", "--quiet",
+         f"{ref}^{{commit}}"],
+        capture_output=True, text=True,
+    )
+    return ref if proc.returncode == 0 else default
 
 
 def fetch_pr(clash_repo, base_url, number):

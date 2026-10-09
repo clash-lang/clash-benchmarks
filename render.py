@@ -19,7 +19,8 @@ The page holds all data. It gives the reader three selectors:
   page shows one machine at a time.
 - the branch. The default is master. For another branch, the x-axis is
   master up to the branch point, then the commits of the branch. The
-  commits of the branch have their own colour.
+  commits of the branch have their own colour. A backport leads in with
+  the release branch that it targets instead of master.
 - the metric. The default is the compile time. The other choices show
   the memory of the same runs: the live heap and the memory taken from
   the OS, the total allocation, and the wall time split into mutator
@@ -440,6 +441,8 @@ def main():
             continue
         releases.append((name, chain))
     branch_offs = {chain[0]["sha"]: name for name, chain in releases}
+    release_index = {c["sha"]: (chain, i)
+                     for _, chain in releases for i, c in enumerate(chain)}
 
     master = master_chain(clone, args.clash_ref, known, branch_offs)
     master_index = {c["sha"]: i for i, c in enumerate(master)}
@@ -524,6 +527,12 @@ def main():
         base = snapshot["base"]
         if base in master_index:
             head = [c["sha"] for c in master[: master_index[base] + 1]]
+            branch_point = len(head) - 1
+        elif base in release_index:
+            # A backport: the branch left a release branch, so the view
+            # leads in with that branch instead of master.
+            chain, i = release_index[base]
+            head = [c["sha"] for c in chain[: i + 1]]
             branch_point = len(head) - 1
         else:
             # The branch point is not on master any more. Show the branch

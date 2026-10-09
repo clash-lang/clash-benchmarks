@@ -7,7 +7,9 @@ Usage:
   --repo          owner/name of the repository that holds the branch
   --ref           branch name, for example "perf/faster-strings"
   --upstream-ref  ref of clash-lang master in this clone. The default is
-                  "upstream/master".
+                  "upstream/master". A branch whose pull request targets a
+                  release branch is recorded against
+                  refs/bench/upstream-<branch> instead.
   --head REV      tip of the branch in this clone (default HEAD)
   --prs FILE      open pull requests, from bench/list_prs.py
   --out DIR       repository root to write to (default: this repository).
@@ -49,6 +51,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from list_prs import by_head, load  # noqa: E402
+from pr_refs import upstream_for  # noqa: E402
 from result_schema import branch_path, now, validate_branch  # noqa: E402
 
 # How far back the script looks for the branch point.
@@ -79,23 +82,28 @@ def main():
     if args.ref == "master" and args.repo == "clash-lang/clash-compiler":
         sys.exit("branch_snapshot.py: master needs no snapshot")
 
-    base = git("merge-base", args.upstream_ref, args.head)
+    pr = None
+    upstream = args.upstream_ref
+    if args.prs:
+        data = load(args.prs)
+        pr = by_head(data).get((args.repo, args.ref))
+        if pr is not None:
+            record = next(p for p in data["prs"] if p["number"] == pr)
+            upstream = upstream_for(".", record, args.upstream_ref)
+
+    base = git("merge-base", upstream, args.head)
     shas = git(
         "rev-list", "--first-parent", "--reverse",
         f"--max-count={MAX_BRANCH_LENGTH}", f"{base}..{args.head}",
     ).split()
     if not shas:
-        sys.exit(f"branch_snapshot.py: {args.head} is on {args.upstream_ref}, "
+        sys.exit(f"branch_snapshot.py: {args.head} is on {upstream}, "
                  f"there is no branch to record")
 
     commits = []
     for sha in shas:
         subject, date = git("log", "-1", "--format=%s%n%cs", sha).splitlines()[:2]
         commits.append({"sha": sha, "subject": subject, "date": date})
-
-    pr = None
-    if args.prs:
-        pr = by_head(load(args.prs)).get((args.repo, args.ref))
 
     snapshot = {
         "repo": args.repo,

@@ -76,7 +76,8 @@ branch_path(). The layout is:
       "commits": [{"sha": "<40 hex>", "subject": "...", "date": "2026-08-11"}]
     }
 
-"base" is the branch point on clash-lang master; "commits" is the
+"base" is the branch point on clash-lang master, or on the release
+branch that the pull request of the branch targets; "commits" is the
 first-parent chain from there to the tip of the branch, oldest first.
 "pr" is the open pull request that has this branch as its head, and null
 when there is none. render.py shows the branches that have one, and only

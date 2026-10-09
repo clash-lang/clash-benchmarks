@@ -51,7 +51,7 @@ def unchanged(path, snapshot):
 
     Every write gives a snapshot a new "updated" stamp. The poll runs on
     a schedule, so writing that stamp alone would put a commit on main
-    every six hours and say nothing. Compare everything else.
+    every hour and say nothing. Compare everything else.
     """
     if not path.exists():
         return False
