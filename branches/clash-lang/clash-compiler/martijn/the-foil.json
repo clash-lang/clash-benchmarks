@@ -1,0 +1,2424 @@
+{
+  "base": "5ebc9d09b71082a1b46e45f20d712ffcbc95aca0",
+  "commits": [
+    {
+      "date": "2026-10-13",
+      "sha": "af4ad0852eefdeed13ca57c86ee3455ca89c86e6",
+      "subject": "Add regression tests for capture-avoiding substitution"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f39d42ee89d1d96a8c10b30e08ba30cc2d7978b5",
+      "subject": "Add regression tests for closing over kinds in free variables"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "edaf868c747cda0c1387adc5cc7256a2e40d048e",
+      "subject": "Restore the regression test for term/type namespaces in `lookupIdSubst`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a683b343b4f658957b7978f6d76bab61c21a1037",
+      "subject": "Add regression tests for `substWithTyEq` and `tvSubstWithTyEq`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "4ace9bc5f546c576a6f24afb181010bf7f9d8a10",
+      "subject": "Move the `appProp` capture test to its own module"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e3a6317adb30160621b370f451ea9e1565cfbbea",
+      "subject": "Add regression tests for capture in `appProp` and `caseCon`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "72b10cb7b98672727838b3bacd4d7f129cc65109",
+      "subject": "Add regression tests for `topLet`'s in-scope set and `apply`'s shadowing check"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "bc3d0eac3f61f612231ca18a56c102d58a5fa1d5",
+      "subject": "Add regression tests for inlining local variables as globals"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8d3078d357be399b8a194daf4e48dd7f6e8e0a23",
+      "subject": "Add regression test for let-binding capture in `appProp` after inlining"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "599609fce42a95a2e73fcd41409704b1e8037bf0",
+      "subject": "Add regression tests for `flattenNode` free variables"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "53ca40be40cdaba428209f313eba8bb420c6d149",
+      "subject": "Add regression tests for `flattenLet` on nested letrec"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "91d6b0c35456e257774e63436ee9dffab56d6948",
+      "subject": "Add regression test for `flattenLet` deshadowing let-bindings"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "29190fc7165e8b1ba66c74af904465727b6f6e4b",
+      "subject": "Add regression test for capture in `caseCase`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "53be342c115735223e2dba4338ae47c0894db31b",
+      "subject": "Add regression tests for capture in `caseLet` and `nonRepANF`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ccdf285da8d1831d7f0fb00e2855e0e22c885518",
+      "subject": "Add regression test for the relaxed free variable check"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d268b3471f8a1fdfe5d1a1415d9016ceb9bfb65f",
+      "subject": "Add regression test for specializing on locals shadowing globals"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "eb00f5f7512c97295b6e778f3c476f939d5ca67b",
+      "subject": "Add regression tests for scope checks in `specialize` and `mkFunApp`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "17f45dadd0c13d32d9a8106b39da16b8336de251",
+      "subject": "Add regression test for not overwriting binders when specializing"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "993ee2422858b928f5f3750bfc60b3e373653d4c",
+      "subject": "Add regression test for capture of lifted expressions in DEC"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "35073d62989c45d1cdf2592700816ab6a91ec23a",
+      "subject": "Add regression test for substitution order in `liftBinding`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "fc0f29d2a9e7bba716fb3ef33facc93347cc7932",
+      "subject": "Add regression test for ANF creating duplicate binders"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b2ce27cff20e8389f6fffa88ae3c27e64dafb1b3",
+      "subject": "Add regression test for ANF lifting out of lambdas"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "693df671b973ecd78bd76eb446fe09c214e2a378",
+      "subject": "Add regression test for heap-binding free variables in the evaluator"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c11684e314505c0f3d7205f00dfeea0bb0fd67e6",
+      "subject": "Add regression test for free type variables from `splitAt`/`fold` evaluation"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e6bd456ae39f6ae1f0f211f355f2830e17ef52fc",
+      "subject": "Add regression test for `EmptyCase` primitive with free type variables"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "48b2648d45bbf153a2b2a0f174cd0fdcb4688684",
+      "subject": "Look through `AnnType` in type substitution and free variable traversals"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "08740cdb767d841e33cc16e2fe5b7d8850a2a510",
+      "subject": "Project `Signal` fields in ANF instead of leaving `(:-)` alternatives in place"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "67cc316cd3ba774d58f282df5ac472cc013a3ab3",
+      "subject": "Apply type arguments in values created by `zeroWidthSpec`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a9e3651fb91a2718a092d69ad199fa304a0144a9",
+      "subject": "Generate valid VHDL for entities without ports"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9a0fa4125d1118e24cf3cecbe5329214e3fa438d",
+      "subject": "Handle empty vectors in primitive reductions using `extractElems`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a223f1cecabb2bdc7b8ecdaa0fb1d283fd94a274",
+      "subject": "Don't let `lookupIdSubst` replace a local by a global"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ad011fefe0d31ae36434046424e7ed518e17cd55",
+      "subject": "Track type and term variables in scope separately in free variable folds"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a57f9b9a3ec36ac3b0bd38c6a6ce558c853f572f",
+      "subject": "Fix the handling of free type variables in `liftBinding`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9909b874095baa24f9d050f8a9a0a6505472ffea",
+      "subject": "Don't instantiate a global for a local function argument in `mkFunInput`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e3beeea9133ddbed90948d713a65e921dde21c04",
+      "subject": "Correct comments claiming normalization keeps globals in scope"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9c6a533a20884e2aa552769682c35f4d7e3efee8",
+      "subject": "Keep non-recursive lets non-recursive in traversals"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a7d1061029fa6222c6f021d6eccf8157268b9976",
+      "subject": "Rename a shadowing `NonRec` binder before `flattenLet` and `topLet` merge it"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "3156a7e4d1c1fe021fee829be6e656b72955eee7",
+      "subject": "Rename a shadowing let binder before `splitNormalized` merges it"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d63bb6de2b748d62c91b44e29122dbc42d0d0482",
+      "subject": "Make `splitCastWork` binders fresh with respect to the let's binders"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ab8df5f044b9ff19b282333f688be5ce4fd4c8c7",
+      "subject": "Fix scoping and result type in `caseCast`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "cf1014d7386d3031867227571b3cc16c839ac43f",
+      "subject": "Check the patterns of all alternatives in `caseOneAlt`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "bf095e820e2b77814b44cd7b1827e700ec9cdda7",
+      "subject": "Make the binders of `mkSelectorCase` fresh with respect to each other"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "0dbe7d2eefa1e94f36481287d725d6f9845ca0cd",
+      "subject": "Only treat global binders as no-ops in `collapseRHSNoops`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8823b50f2644a586007679d6411359014bef30b5",
+      "subject": "Don't inline let-bindings that are part of a cycle in `inlineCleanup`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a0a8490cd72eb4df2a509cb93203459a733e33a0",
+      "subject": "Only cache recursiveness of global binders in `isRecursiveBndr`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "531bedf2b0ccb9f4c54b02467a9576530a41075b",
+      "subject": "Continue `&&` and `||` evaluation in the machine of their arguments"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "abb7c8de5a38f705e0ba97c333548defb7516f01",
+      "subject": "Don't use shadowed context let-bindings in `whnfRW`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "aea5c3c8ef7d7101db7c64afb63107495b437a8d",
+      "subject": "Look up variables in the evaluator heap of their own scope"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b68b4d71b1ceb300b7f92dc76a3f4b0f87498464",
+      "subject": "Rename evaluated let-binders away from the variables in scope"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a6b08eee61cef09b2e6e61e2215588c9ed214d80",
+      "subject": "Fix DEC lifting applications that refer to binders in the alternatives"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "62f68b063129f67975211d22f2600f717728c6ee",
+      "subject": "Fix `etaExpansionTL` moving lambdas past a let without renaming them"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "232b57f376c9d7195497e307a07e3049eac2258c",
+      "subject": "Fix `xOptimize` turning pattern binders into let-binders unrenamed"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "40e04f4343bafab37e79edd30f31335a60b3d87d",
+      "subject": "Fix `extractHeadTail` binding the head and tail at fixed uniques"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "410804806ef7d3d876f91741a6be3468b1aa374d",
+      "subject": "Fix `reduceFold`, `reduceImap` and `reduceTraverse` rewinding the supply"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f54dcaa7b4f81bdbe4447ae4943f4f5c9052ecca",
+      "subject": "Deshadow arguments that `appProp` substitutes"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ede62f762a5a5a16f112ceb2fa3a5c47b21c7886",
+      "subject": "Only look up global heads in `specialize`'s global tables"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e1fdfcaf16769d906cf0ddef9c991657d9409826",
+      "subject": "Give `specialize`'s argument binders the types of the parameters"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6509dbe63647072037a4cda113fcfabcc754b3a4",
+      "subject": "Order `specialize`'s type binders by kind dependency"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "3cf4768869abe6184bf0636e24cdfe3baffca3cd",
+      "subject": "Don't check type arguments against kind arrows in `inferCoreKindOf`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8f9df061a8953689781143e28efc482cdc574ced",
+      "subject": "Don't loop in `isWorkFree` on mutually recursive global binders"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "14b87cfad06efcc3bc7cd46684be39223de30d73",
+      "subject": "Give `reduceMap` on an empty vector the result element type"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a987072436043280400a6134bedd945edf397dfc",
+      "subject": "Instantiate the type of `$wproperFractionDouble` in its evaluator rule"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "61ab3d1b63c55c13eecb908228de7fd8b977b77a",
+      "subject": "Keep a shadowing `NonRec` let in a right-hand side non-recursive in `flattenLet`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d7c5576ba472f607cd727ed3369f10987476aa42",
+      "subject": "Give `c$multiPrimSelect` a closed type"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7ff2329924e0ae2c5d562b0ff95bfb2cab684259",
+      "subject": "Account for shadowing binders in `isJoinPointIn`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "dcec76382fd741ea3f3a980f5d85823e229d68d4",
+      "subject": "Don't give DEC's lifted arguments types with existentials of the alternatives"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8bf5ea3973d8f88970e32716edf8765427d8a59e",
+      "subject": "Give the half-selecting binders of `dtfold`'s reduction their vector type"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "db3292332b2edfa6a7030466f0da3a965c6e18bf",
+      "subject": "Give globals the field types of the arguments `separateArguments` splits"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "49ad44d1dd069250c6da0ec1c4345ea69e814bfe",
+      "subject": "Claim names of concurrently compiled top entities in a fixed order"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6c3eae915741e939b684ebfd93962b4256801e3e",
+      "subject": "Build `clash-prelude` with `-j1` so its unfoldings don't depend on the build"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a31fee322471216e2a475a25833d28513b3b8a5f",
+      "subject": "Fix `-fclash-debug-transformations-limit` with `-fclash-debug-transformations-from`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b347bff420886166eda8e408232c183054c7284c",
+      "subject": "Add `Clash.Core.Lint`, a scope lint for Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "33fcb31ebd072bec6335a15500f3e0b4005d2698",
+      "subject": "Add `-fclash-debug-invariants-shadowing`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "86da7b7174429ee83de39aae8038310dbf63dd71",
+      "subject": "Vendor the scope machinery of `free-foil`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "91338db88d81c4b26984b29f42680432f9621a9e",
+      "subject": "Add the syntax of scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "850df511bf86ec8fcdebafaee5fcc9935c4e03f0",
+      "subject": "Add sets and maps of local and global names to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f13d2fbabb9594e03a650d32353a463a4258cca9",
+      "subject": "Convert between Clash Core and scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "28a23a05cf14cfbefff30eced45b12092f6d9326",
+      "subject": "Add free variables of scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a57f7741c289e00976bc1e1b6cc04057ce10c0ce",
+      "subject": "Add capture-avoiding substitution for scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "22bb4a1499e1e61d98bb41bfc7515f1cfb1fe4aa",
+      "subject": "Add alpha-equivalence of scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8d4c7b630655bb42ccb85377a9897318a51780ea",
+      "subject": "Instantiate data constructors in scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "edf88654c639770f6ba43abc26b6a5953d8ac06f",
+      "subject": "Pretty print scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "3abecf189644726292adf75e55be7f21d1048278",
+      "subject": "Add negative compile tests for scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "cf4584f71ad9eedff37359daea18cfd9e7d9a130",
+      "subject": "Correct the documentation of `freshen`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d252ecfb4bccd5e252240d3b2cf6ebc81af3f36d",
+      "subject": "Add generators of well-scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "3afd7dc24791b685d50b2004529576bbe2ef605c",
+      "subject": "Add property tests for scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "0ee68775c36e3a74e8ef314f7d3c26106a9f9669",
+      "subject": "Run the negative compile tests of scoped Clash Core in CI"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d2372a0d41379ad5c85f8cee0b373167ed2e6b90",
+      "subject": "Add signatures of type constructors to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d43aec615271b533c9ecc10ef676f6a665c335d1",
+      "subject": "Add the builtin types of scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c8fbece0e746c65835a7ec658dc5a57e77ca5559",
+      "subject": "Add views on, and utilities for, the types of scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7954d165c57766cc072fff6b690fba917135f614",
+      "subject": "Add the types of terms of scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "eb5ea3c6f695083305c324847800361a3857b201",
+      "subject": "Add solving type equations to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9dd4cb96d101f5df54d7e3577dcb30df0df22ac2",
+      "subject": "Add `teleIdBinderTypes` and `appendNameBinders` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5486cb1b8249d5b2890a067ff7195fd6dc7e7179",
+      "subject": "Share the type constructor test fixtures in `Test.Clash.Rewrite`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "2b452a937004bc13d822fb2c7cd2b9a9a31c5d36",
+      "subject": "Use `teleIdBinderTypes` for the field types of patterns"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e29d04b098a021c412ef1f6d48f518077395275b",
+      "subject": "Add smart constructors and destructors for scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "2891a7b7f92ab15268e49a64a117b4f19bf09ae2",
+      "subject": "Add predicates and measures on scoped Clash Core terms"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "57bc73020ac4898a1d116331986685990d20cf30",
+      "subject": "Add regrouping of let-bindings in scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "2d7bac41d923f4562f738f07e2b018783dda570e",
+      "subject": "Add vector, selector and type helpers for scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e54cddff884cafc3207d3b9880ceb770a1ec36a8",
+      "subject": "Add work-free analysis of scoped Clash Core terms"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7bf417a49028651cfa945b49c97f65cab708c147",
+      "subject": "Add the variables of telescopes and patterns to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "16df1a337ae71702f11c92fb2d5375b6a47796fb",
+      "subject": "Split `whnfRW` into evaluation and binding the heap"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5a09cf416e5192198eba775ed8750234712b37c9",
+      "subject": "Add the rewrite context and combinators of scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "231a6f7027c8d8770b7b1a3359fd96763dd076d3",
+      "subject": "Add `viaFoil` and a `whnfRW` adapter for scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "1fc02ad7f3da92e095a6486d6956fbde39cafa31",
+      "subject": "Compile strategies of scoped transformations"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "fb55b50eaf7f7508fa36b0872cdb29361dca7dbf",
+      "subject": "Port `deadCode` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7b1e132d3a95099bef6ab24e6c700adc7c46ed86",
+      "subject": "Document how to write transformations of scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "58c9d2dde7ab669b979c835510e445260eb6557e",
+      "subject": "Add a differential test harness for scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "74faa4c110a9845354ca5aeb4cd0e14a87a67615",
+      "subject": "Add `clash-differential`, to compare ports on serialized designs"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "daf8e9b1f6b29d02a5096707065abd466563ca61",
+      "subject": "Run the scoped side of differential comparisons with scoped combinators"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8fc4cf27b717d9efbc6bb065393842e0d29c686d",
+      "subject": "Don't check type arguments against kind arrows in scoped `inferCoreKindOf`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "109226dcd15ba100eef8dfcd0570813411bffa93",
+      "subject": "Add `freshenDistinct`, which gives every binder of a term its own name"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ab001b3dc1899b970f7d10c7a15cae1219691e3b",
+      "subject": "Convert coercions with open types to type applications of `_CO_`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c27958f66b10811d03b798068613aa7848ca15de",
+      "subject": "Cache the scoped signatures of type constructors, data constructors and globals"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "372be5a032cb37af922a7782c1548d8a2cc53e1e",
+      "subject": "Hold the `TypeEnv` of scoped Clash Core in the `RewriteEnv`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "19d96cddf3d632a292d083490edab9541dfb877d",
+      "subject": "Add `closeTerm` and `closeType`, which move closed values into the empty scope"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d6716c3e891e921ea47cea4f4582d8afc964bb9c",
+      "subject": "Add transitivity of scope extension to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7facdf1edcf3a73828473defe287b6433559faa9",
+      "subject": "Convert Clash Core terms into an existing scope"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "2c09d2d59c4dad8c8e478cbafbae0bfeaea3dfdb",
+      "subject": "Split the let-bindings of the context off `whnfHeap`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7f74cd6d0328db1ef130e284d47e635b420547df",
+      "subject": "Evaluate `Attributes` ticks with the whnf evaluator"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5b11a524f6ce2930d0eb194b3173190c1d882eaf",
+      "subject": "Remove the partial evaluator"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "92bb52d8d8dbbaf6382939fbbf55793d6c98ff3b",
+      "subject": "Add a whnf evaluator for scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8479ea91fe0bf9f3bf53d9cd087fd4ebb9ac3978",
+      "subject": "Reduce unported primitives in the scoped evaluator with Clash Core's"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "13e28d6985242f0d7f970896b8e3f5dc24b7ea6d",
+      "subject": "Keep the let-bindings of the scoped rewrite context on a heap"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "bfdb682cbdb72b6a06fd8568418bfcd9f9a630e4",
+      "subject": "Evaluate with the scoped evaluator in the scoped `whnfRW`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "eb02ee2a397ac1bfd92e1de2468ddac1131ff903",
+      "subject": "Replay calls of `whnfRW` in `clash-differential`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "366d32825fde671c99556c19723ca44fb3f52e57",
+      "subject": "Add closing over variables of a scope to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "57633d325356e919d3839c5196a7f118172cf1aa",
+      "subject": "Export converting closed scoped terms with fresh uniques from `ViaFoil`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7b92c335eca7491c1e08003bcce49b2d4564fb66",
+      "subject": "Add substituting for variables of a scope to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ed39627d8f61a68cfef4b8b3cbc2e1bfc03d1eb3",
+      "subject": "Order the type variables of `withFreeVarsOf` by their kinds"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6169ec2479cccd0881b6ebe61b66232c148b55dd",
+      "subject": "Add helpers to test scoped rewrites against Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "be615d797803b4b025dc7450f047ee56d71e5dfd",
+      "subject": "Add the boundary of global bindings for scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7a4a0badced96013c470b6072d84a1cb7266122a",
+      "subject": "Port `Clash.Rewrite.Util` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ba01d20ff669c0b489ef0b186389b14d4f23041b",
+      "subject": "Port `specialize` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e74f1cb86ac89231f1c040e9277bdcd83048a077",
+      "subject": "Add `viaLegacy`, running rewrites of Clash Core on scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ed49e88cc1151b06f8220e76bb8dc6413a360bcb",
+      "subject": "Add `Clash.Normalize.Scoped.Util`, with predicates on globals"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ee7070178ae637b6739b391beaac2b96b303b3cd",
+      "subject": "Port `substWithTyEq` and `tvSubstWithTyEq` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "3cce401032a6b67f116ef847805cbedb09c99ca8",
+      "subject": "Port `constantSpecInfo` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f4158ac267d110056187aa517d5a7474fbd589ec",
+      "subject": "Port `normalizeTopLvlBndr`, `normalizeWorkFreeApp` and `rewriteExpr`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7afc25f46af0869a11dca37c7c0eaed42fded164",
+      "subject": "Add replaying a supply of uniques to `Clash.Util.Supply`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c09062f66a2df059a57d11c0d0c39a2bc9bc470f",
+      "subject": "Add `restrictInScopeSet` to `Clash.Core.VarEnv`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "331fff2e00b2b60264c6add402731db92f608452",
+      "subject": "Capture the sites at which transformations fire"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a58d1a32c74f6fb9ab6c003414965b901dce85f4",
+      "subject": "Write captured rewrite sites from `clash-profile-normalization-run`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7ae09ca2c9bf246c8aead7aea448e152e5ea62f3",
+      "subject": "Add the `letrecOrder` known difference to the differential harness"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7195a5bac8584cf3cd8f6e36e00ccde6ad410a37",
+      "subject": "Compare transformations at captured sites"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "950ad151808af16daf62c920602f4cee54ab8394",
+      "subject": "Make the types of term variables lazy in scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "1f2040087259d8403cba0390dc32dc6ee3e87d13",
+      "subject": "Add tuple type constructors to the rewrite test helpers"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "efb635bed0395498fd1751abb160bc96f4421c84",
+      "subject": "Port `disjointExpressionConsolidation` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b829886609ab76386b0197b7fdefe240824b56f7",
+      "subject": "Compare `disjointExpressionConsolidation` with its port at captured sites"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ec594addfd244cf7e6bf85c2addce71a611ed3d1",
+      "subject": "Run the scoped `disjointExpressionConsolidation` in the normalizer"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6be7926ad0423f0b073764b9a690388d228e52af",
+      "subject": "Add the `coercionForm` known difference to the differential harness"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "eed1e03e28253f8e694ad53176e3f90a4c746311",
+      "subject": "Port the transformations on case-expressions to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b250385953d90a71d340ccd70bc523b77dc2b7d6",
+      "subject": "Compare the ported transformations on case-expressions at captured sites"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "cd6a3a64a2c170c6a08dab2cb63f18e41eee15da",
+      "subject": "Run the scoped transformations on case-expressions in the normalizer"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e55cf6cad001af07254db7d88308455aa536537d",
+      "subject": "Port `makeANF` and `nonRepANF` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e196ea11a3dced60b00bddda9df6386b97ebdf20",
+      "subject": "Run the scoped `makeANF` and `nonRepANF` in the normalizer"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e657ea435a57a6d984f2f83d3547e17d6ca27099",
+      "subject": "Add `viaFoilWhen`, which converts only where a transformation can fire"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "2e149145915d5fc199bb79bc69e27915429c0384",
+      "subject": "Port `reduceConst`, `reducePrim` and `reduceBinders` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c2d7deb12be85cc14983569631b04e8c35262a1f",
+      "subject": "Compare `reduceConst` and `reducePrim` with their ports at captured sites"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "66fba650298f3a41c993621dfb6d0b01644ad1bd",
+      "subject": "Run the scoped `reduceConst`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "49af6a617ab9abdd123d924dbb61111f01dec7ea",
+      "subject": "Run the scoped `reducePrim`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "22f0013349c21b64bded4e82f8ff0b6ab0720ebc",
+      "subject": "Only convert applications of primitives for `reduceConst` and `reducePrim`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e1e9a20d9ba84d656a7a048ce8bfc7f0798a91f8",
+      "subject": "Measure the allocation of the sides of site comparisons"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d67585ef96338a35cc4cc7bef42a9eca47f4ae7e",
+      "subject": "Export `selectField` from `Clash.Core.Scoped.Util`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d8ab2d4252e0f6ee14da0a70973915a7b9f1b624",
+      "subject": "Add fixtures of the primitive reductions to the rewrite test helpers"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ebb50be1b1f767aabad13140fdb162974c9caf14",
+      "subject": "Share `stripCoercionTypes` in `Test.Clash.Scoped`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "13db0371a091282ea5aa4eaa6fa5d9f2a63638de",
+      "subject": "Port `Clash.Normalize.PrimitiveReductions` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a81256551c7344a7cca7ab1aa22a976ec5f9e675",
+      "subject": "Run the scoped primitive reductions in the scoped `reducePrim`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9443383eafceb7a636768ffc893c50dcb7dacd40",
+      "subject": "Run the tests of the primitive reductions on their scoped port"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "41c1038b855fef1cabad5794947a060cade61562",
+      "subject": "Add `freeTmVarOccurrences` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ad1a820478fd9afdaf1d512de1f22a44ec42cb39",
+      "subject": "Add `inverseTopSortOrder` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6959d4c79bc242a9aadb4647e74cec01930e1b9a",
+      "subject": "Add `assertRewritesAgree` to the test helpers of scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "578737daf69139d6ca89caefef4ea6f77ffe60a8",
+      "subject": "Port `removeUnusedExpr` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "af0842aeb2a0134fdde83080fb614bd4dd51f070",
+      "subject": "Port `flattenLet` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f156e4c1710fb6757aac18ab94330bdc20adae37",
+      "subject": "Port `topLet` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "bcb25e280318d16b466b7fc20381a72a913934cc",
+      "subject": "Port `simpleCSE` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "991064e2b2521f8006a43250c42cb376449c181f",
+      "subject": "Port `recToLetRec` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d428e39b45521e91c9657682c3cfdbaa9cd7a68c",
+      "subject": "Add a negative compile test for making a `NonRec` let-binding recursive"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f25cab9911f22e6cbe1c291ca62a53cdec0827e2",
+      "subject": "Only convert terms to scoped Core where the `Letrec` ports can fire"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6307783c225446da1420c35fcfb66d15fc908fc2",
+      "subject": "Show the term offered at a differing site in `clash-differential`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "0478d9bc70660707c374e463a142f61dc48293bb",
+      "subject": "Add the `global-uniques` known difference to the differential harness"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d62c0e23c6cd88b57dd3422fd50ac671439311e6",
+      "subject": "Compare `isJoinPointIn` with its port on shadowing binders"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6496842a277ee4e3cc43c4a406ae681ec6152557",
+      "subject": "Set up the `setupMultiResultPrim` tests with `withTyConMap`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f74a58116bc703822c0a6cbcea93598c6fd5aa02",
+      "subject": "Port `bindConstantVar`, `inlineCast`, `inlineSimIO` and `inlineOrLiftNonRep`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "fa15ce52f2ee1d73cc68f1747f7f8c64cae26628",
+      "subject": "Port `inlineCleanup` and `collapseRHSNoops` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9bb4001eee783d07bec1ea7179b167ac422e971b",
+      "subject": "Port `inlineSmall`, `inlineWorkFree` and `inlineNonRep` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9f10cfcbf9e074d5e207cc526c3cfd71b91baa70",
+      "subject": "Only convert let-expressions where the inlining ports can fire"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "26ea0649801b6c00abd3fe91d2fc5f91a198b255",
+      "subject": "Add the `nonRecLetOrder` known difference to the differential harness"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "4e9b1ca48723a430d5f0ad78ae09dd90666cf402",
+      "subject": "Add zero-width types to the test type constructors"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "63959094111a8bc2a5fac28e5a40e143076004c4",
+      "subject": "Move the helpers of `specialize` to its scoped module"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6071bb63d1b7f35ec30778efcfbb31a13dfa69d8",
+      "subject": "Port `appProp` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "34dbba016353d134615730d9a5b77fe44b7fdcfa",
+      "subject": "Port `constantSpec` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "59dd15ba8ec625c1f9031b337eb9cb9371968918",
+      "subject": "Port `nonRepSpec` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "20bd90dc0510515aa096dc131ec0addf52b9f5c7",
+      "subject": "Port `typeSpec` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b1a8aec734c05eb0495c9e2c03486618017171fd",
+      "subject": "Port `zeroWidthSpec` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "53260cacd4435728a87055d74d0908e37b61f3ea",
+      "subject": "Port `argCastSpec` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9460740517f804312e6f76d4b1c59c509c4af435",
+      "subject": "Add negative compile tests of `appProp`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "cae2cab2e1c7d32d987e5f70c02576500dba2dbd",
+      "subject": "Add `primAtType` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "295158a995c82454910b95ff74e29e70dfbd8652",
+      "subject": "Add the `primTypeForm` known difference to the differential harness"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f9ea23904540db9b2aaf71fa6a388ffd7e875f28",
+      "subject": "Add `assertRewritesAgreeUpTo` and `assertFires` to the rewrite test helpers"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "0afac8b14e3be6b7d455b434cd31919701c39a27",
+      "subject": "Port `caseCast`, `letCast`, `elimCastCast` and `splitCastWork` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "75f07919f1638e4c4c1f91b66936498d4e692a0c",
+      "subject": "Port `etaExpansionTL` and `etaExpandSyn` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c4533ef52a5feac1a241a9bd0ca35253064592e7",
+      "subject": "Port `separateArguments` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b6da6123445ef9b4e7367d137d85eac14caffce4",
+      "subject": "Give globals the field types of the arguments the scoped `separateArguments` splits"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c12f87969980a25907244b2b147fa3677fc645c4",
+      "subject": "Port `xOptimize` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "80fb2ccac08521189e30f6683ab5a44cbf82de16",
+      "subject": "Port `setupMultiResultPrim` to scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "665a5b19a97bc00977fa951ebeb0db15ff64b9d3",
+      "subject": "Compare the ports of the cast and other small transformations at captured sites"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "eb6a4552a49cc7c3a133b0cb13ebe76de7d7c60e",
+      "subject": "Run the scoped `caseCast`, `letCast`, `elimCastCast` and `splitCastWork` in the normalizer"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e24f104c55ca1c2ab89f05f263732053e288899e",
+      "subject": "Run the scoped `etaExpansionTL` and `etaExpandSyn` in the normalizer"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5928f121537b79561b3b0a2359e5f78349e51dd3",
+      "subject": "Run the scoped `separateArguments` in the normalizer"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a0b0b0bad6b0984d525fa0fdca46ed2d7f8ae91e",
+      "subject": "Run the scoped `xOptimize` in the normalizer"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c247534fa3830c0262c81e1f9fdf231552fec5ab",
+      "subject": "Run the scoped `setupMultiResultPrim` in the normalizer"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c55d09580d6ec621295fde43cdcb72810978e1e8",
+      "subject": "Add shared helpers for scoped primitive reductions"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "4073dd1f472010beeb139b8b90818483e224e83c",
+      "subject": "Register ported primitive reductions per module"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e871ec2058ee3ca46d7cfdafe77bbdf90756d98b",
+      "subject": "Give every adapted reduction the heap its arguments reach"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7ae8e388f4fd384fe3b99b81bb16152352c6bf91",
+      "subject": "Port representative primitive reductions with `PrimStepContext`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "825f2c3a84fa1fe99f4e4226880d7a108d668211",
+      "subject": "Move the evaluator's test helpers to `Test.Clash.Scoped.Evaluator`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7b55e85d8e4d2553fb9c69df6b75a00c6353ccf8",
+      "subject": "Compare ported primitive reductions with the adapter"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6d5807361a998bb0b602a020035da322390ec3e2",
+      "subject": "Check ported primitive reductions in `clash-differential`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9740d7d5d6fdec83a0f710390a682ca38ea55f96",
+      "subject": "Port the `Char#`, `Int#` and `Word#` primitives of `GHC.Prim` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "cb9a10813f75ec5eccc3a510fd81f4d9f2a4d61c",
+      "subject": "Port the fixed-width integer primitives of `GHC.Prim` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6387fea2765cdddfdb81083f1e96c0526f993b69",
+      "subject": "Port the floating point primitives of `GHC.Prim` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9ff3335b58ff661ba51c3e3c5419ea92987fbd8c",
+      "subject": "Port the byte array and tag primitives of `GHC.Prim` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "824a73a81b042731d4efc50eba6f43314945e3d0",
+      "subject": "Port the primitives of `GHC.Magic` and `GHC.PrimopWrappers` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "401f1734f0b77fbcd6f97cd42f9b0382b3c40323",
+      "subject": "Register the reductions of `GHC.Magic` and `GHC.PrimopWrappers`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8b8748e61518efec658bce426cba3f46a359f857",
+      "subject": "Add helpers for the type constructors in the type of a primitive"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "4bc9da89cffc36dcb6ef975c3d238d445a2f241c",
+      "subject": "Generate opaque arguments and trees in `clash-differential prims`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f5d22a4f786413fc596022fb60cff4de955580c3",
+      "subject": "Add `SNat`, boxed `Int`, pairs and `KnownNat` to the rewrite test helpers"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c91a342c30afbf68b4c3098477a312f0846478e1",
+      "subject": "Port the indexing, splitting and permuting reductions of `Clash.Sized.Vector`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9d92cdd031bb671b849bd0351b858ceb03c41df0",
+      "subject": "Port the mapping, folding and traversing reductions of `Clash.Sized.Vector`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "fba38bbf6b79b8377372390ba40b98071b84e61d",
+      "subject": "Port `concatBitVector#` and `unconcatBitVector#` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f19ca3e264c8e31096f57bb9a1e2515d12f006dd",
+      "subject": "Port the reductions of `Clash.Sized.RTree` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d9ca76f4556d708b47a8cfb6bca38c3643b3d2a1",
+      "subject": "Register the reductions of `Clash.Sized.RTree`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d740d29b496fd01cacf06c3ae713b9766302c5a2",
+      "subject": "Test the reductions of `tsplit` and `treplicate` on fixed inputs"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5ed5181ed5c607ec25362bbd52c150672f02392d",
+      "subject": "Move the helpers of the primitive tests to `Test.Clash.Scoped.Evaluator.Primitives`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "cd4f836039a89606ac6d35462eda26b5171ee5d9",
+      "subject": "Port the `Bit` primitives of `Clash.Sized.Internal.BitVector` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "039a78f5c3381342794186008c25ebdebe7ae15a",
+      "subject": "Port the indexing and slicing primitives of `Clash.Sized.Internal.BitVector` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "dad2fb970e9f1c32fda5150f303eacefa02c1f7f",
+      "subject": "Port the arithmetic primitives of `Clash.Sized.Internal.BitVector` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5b49f1f7538d73e7cf14eb6fd495561248baef7c",
+      "subject": "Test the ported reductions of `Clash.Sized.Internal.BitVector`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "51028ec5a948820dc9b5188d264ede7c9d8674d2",
+      "subject": "Port the primitives of `Clash.Class.BitPack.Internal` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6bef758fc8c110fd9b53e3df187ad99b1f2a3b24",
+      "subject": "Register the reductions of `Clash.Class.BitPack.Internal`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5dd17e950f6dca5534f235e6905f77199952c4a4",
+      "subject": "Test the ported reductions of `Clash.Class.BitPack.Internal`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "426b765b4cb6f74d15bcc79ed335a3ed6c4e7602",
+      "subject": "Port the primitives of `Clash.Sized.Internal.Index` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "4916722a7849808e2e5330cd4df9559929f9d707",
+      "subject": "Register the reductions of `Clash.Sized.Internal.Index`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "dce5d8e0bcb5f132e342886ee42e7d76abd97368",
+      "subject": "Test the ported reductions of `Clash.Sized.Internal.Index`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9bdb2bb58069e36b19e6cfb543c0b5bb2b81443b",
+      "subject": "Count identical failures as agreement in `clash-differential prims`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7f5771c96e575fab4b114fbd2c7d4673519e5f13",
+      "subject": "Add `orderingToOrderingLiteral` to the scoped primitive helpers"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "acb8dc094d62d096260ca45150667ff336fa3f7a",
+      "subject": "Add `Ordering`, `SNat`, `Double` and `T3` to the test type constructors"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "bf5b5731583b24de91c4bd75ba836c9a75c65658",
+      "subject": "Port the remaining reductions of `Clash.Sized.Internal.Unsigned` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e5c5c213dd0b257a9ef0c447174497064c139310",
+      "subject": "Port the reductions of `Clash.Sized.Internal.Signed` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "eded726e2931853c2eff4112f14f19e568834679",
+      "subject": "Port the remaining reductions of `GHC.Classes` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a23be3512624a67e32425eb1b4a26286d7c9ddef",
+      "subject": "Port the remaining reductions of `GHC.Num.Integer` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "51131a022df9b78387626b86cd12210b9e5ee38d",
+      "subject": "Port the reductions of `GHC.Num`, `GHC.Num.Natural` and `GHC.Num.BigNat` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "122395c9ef6bbb444b972b07d1df441a656cc8ab",
+      "subject": "Port the reductions of `GHC.Real`, `GHC.Internal.Real` and `Data.Singletons.TypeLits.Internal` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "943295e594689bfe85526efe55eb28451ea77099",
+      "subject": "Port the reductions of `GHC.Float` and `GHC.Internal.Float` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "36686c0f03d7ee990b8877c7ad3daf639610561c",
+      "subject": "Port the reductions of `GHC.Types`, `GHC.Int` and `GHC.Word` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5f1349e9d280d16bb27e93645c95b6bf714ca99d",
+      "subject": "Port the reductions of `GHC.Base` and `Data.Text.Show` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b58af8363a858bf084f133a98d0ea50d0d9733b8",
+      "subject": "Port the reductions of `GHC.TypeLits`, `GHC.TypeNats` and `Clash.Promoted.Nat` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "02ccf099b72cffb6e52af83a5d91c1bd71d31e28",
+      "subject": "Port the reductions of `Clash.Class.Exp` and `Clash.Annotations.BitRepresentation.Deriving` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5887279c1591aa5ffe0e44bc02eb374298c470e3",
+      "subject": "Test ported reductions that build their results from types"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "dab527a24d8ed5dd2f72a13f1156a98aac83f1a7",
+      "subject": "Register the reductions of the remaining primitive modules"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "46d3a6fd9e6ce17426ae5c889ab5f38fc443a8f0",
+      "subject": "Stop reducing primitives through the evaluator of Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "cbbf797e6a46ad335a5c984fb2d0a32fd4f712d6",
+      "subject": "Only compare primitives inside of their domain in `clash-differential prims`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "fb4688709db23e353dcef32947aaddca7b7fb848",
+      "subject": "Order scoped terms and types up to alpha-equivalence"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8aa8f0cb35b653c074445c9cc1e2cbadb5b6462d",
+      "subject": "Substitute closed terms for globals in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c10024b5b855b0110e05bcedcee93d596b72ad7d",
+      "subject": "Run the normalization strategies on scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a536204fb9b6b692d8a4990508e2e46aa9853cf5",
+      "subject": "Restore the transformations of Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "430d7fedca57fdecedb8401c63d5a9630b128bf9",
+      "subject": "Run the normalizer on scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a50eec505b224d41e6c48c607a7e3856636fe8ec",
+      "subject": "Move `viaFoil` to the tests"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "decdb39fa7c109c548b0fae3e3c1dcd759b9787d",
+      "subject": "Compare whole normalizations in `clash-differential`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "bab5661a3f4982515d620b8a58e929bbd18fc9e4",
+      "subject": "Add `NFData` instances for scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "dc089fa4f695a26944ace6b9b2ee05f901af3f42",
+      "subject": "Add a temporary `Binary` instance for closed scoped terms"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "de6fa52c68074e05923d668a0ac7eff3e93aa5d1",
+      "subject": "Build `clash-profile-netlist-run` with `-rtsopts`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8c3312209dc1c0b6f8a31941ecfbd6f209499e9d",
+      "subject": "Pass scoped Core from `generateBindings` to `genNetlist`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "81a39953549bd065d4416fd2549e1175d892a102",
+      "subject": "Add `Clash.Netlist.Scoped.Types`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "64ae85b19a0bee2f2f5626adcbf6bf6f16c82aeb",
+      "subject": "Keep the global bindings of Netlist as scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "73dda5bf2819c6c58c0dcb03f5090acfe0af3ffd",
+      "subject": "Compile blackbox functions to `SomeBlackBoxFunction`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "12d71064c84360b306b561802d0d50e0ec1a5871",
+      "subject": "Add Netlist generation on scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ed9c5cd93a7be2b5dc5a187c4aca8b3510270d2a",
+      "subject": "Generate netlists on scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "80df02d85f894dd666848592ff219e6f3b1b3687",
+      "subject": "Restore the functions of serialized primitives in `clash-profile-netlist-run`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ac28095b26e08252ce5b8b1a388a57f9409e0c27",
+      "subject": "Compare netlists in `clash-differential`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ff22e87a4a37482666fc98f2cc9754f65b4c99a0",
+      "subject": "Export `raiseWatermark` from `Clash.Core.Scoped.Syntax`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a43e2fb1c3e9fa62c3c595c49e8bc3ff0817d50f",
+      "subject": "Add a conversion of GHC Core to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d94fb510b8f8d9654b2d20b76654aed1d6c38df3",
+      "subject": "Produce scoped Core in `generateBindings` directly"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "06d722c73e4385311ad57a803097094d7b3c8c8a",
+      "subject": "Port `Clash.Core.TermLiteral` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b80007b953b105be13483c081ae9d20b8facae31",
+      "subject": "Port the `TermLiteral` tests to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "bf5c0e90deb83984c5740ca7c6fc6e6d36f04055",
+      "subject": "Check that the old and scoped `TermLiteral` decoders agree"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "af0022a716a717814bd55153add61585f17b11fd",
+      "subject": "Report the known differences that a difference needs"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "55c57f412490359aedc3738585a9098039e49785",
+      "subject": "Add the known differences of the whole normalization of `wireDemoTest`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ca5a7a95dcc076cdc1d9cbd24befb68e416bfe14",
+      "subject": "Key the top entities and component names of Netlist by `GlobalId`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9f0a898b62a4efff3d6d5ef884c3a75ede6adde8",
+      "subject": "Require `Distinct` in the signature of the scoped `mkNetDecl`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ec3704c96eeda0bcb64a4875c7fc03a396e3d766",
+      "subject": "Port `mkDcApplication` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a7716119e75327e3da6ff4ad02283ec19eb76c13",
+      "subject": "Port `mkProjection` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c154cf8752d9610c96f6573503b629c2ac71962d",
+      "subject": "Port `mkSelection` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "3133ae9a922d041edf3a225a2d6cb0f1d7743da8",
+      "subject": "Port `mkFunApp` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "faddcf79e2d24ad2aa28d032d2bee39a04759f0a",
+      "subject": "Port `mkNetDecl` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "815c8045046b24b7984949dad748f21cdeaa41df",
+      "subject": "Pretty print scoped Core in the errors of Netlist"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "4e0e736bfc91dbbfe65fd75e5fb6267e30e58732",
+      "subject": "Make `HWTypeTranslator` translate scoped types"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c46b3f621aff19fab04d3c91888db3b3efa61c1f",
+      "subject": "Don't convert types to Clash Core in `isUntranslatableType`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ef6fdc3d9026f7ab8552cc49f71104b8781046da",
+      "subject": "Give `expandTopEntity` name hints rather than `Id`s"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5f19eb4dc41f636e0e8866af0e38c87215ff325b",
+      "subject": "Translate scoped types in `Clash.Netlist.Scoped.Util` without converting them"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f307b6e66ddd5931cf2d1923ed4a8cd5bab4ef7b",
+      "subject": "Add `nfData` to the evaluator of scoped Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "092f3a8ef0c93907f319ea675bcf792c4aa214c2",
+      "subject": "Port `withTicks` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "237a0e622255c025eae614504810ca318ef03d0c",
+      "subject": "Check the ports of top entities on scoped types"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "90e9c5c9d860b796df511c4e5cc586857c94037b",
+      "subject": "Give scoped multi-result blackbox functions the types of the result variables"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "37b2b8a45b9b23ff060d69f29ee5b79dff07eb4e",
+      "subject": "Add `isLiteral` to `Clash.Core.Scoped.TermInfo`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "299ed085ec20f4880bd905c99757d382e864870e",
+      "subject": "Add a `NetlistMonad` runner to `Test.Clash.Rewrite`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "345e29ed18c457e3f843880f972f9be52cc6235d",
+      "subject": "Port the blackbox functions of `Clash.Primitives` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b3a099d37b99adb3c53507ff7dce36acba2cb0d3",
+      "subject": "Port `checkBBF` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "3997c4a9297a0e039d297fc4a0ce11069bc2a636",
+      "subject": "Add `getFunctionPlurality` on scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "74a11b587e44f72a31d90f712e56e9ad317f1158",
+      "subject": "Add an hs-boot file for `Clash.Netlist.Scoped.BlackBox`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c2dd4d65233d3eacfa79e6a19b9b39081d8f8220",
+      "subject": "Add `inverseTopSortOrderOf` for let-bindings opened into one scope"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "693ae751af358d39facb3cf1f5375fd9349e24c7",
+      "subject": "Leave out the source locations of errors in `clash-differential netlist`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c0ca86a595bacde922040061a13451fdc77de84d",
+      "subject": "Port `mkBlackBoxContext` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9048cf81617af9c2a3f6ac1395bf2f487de66dce",
+      "subject": "Port `mkPrimitive` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "0da27a782672c2177de44329700d0a15bc23d862",
+      "subject": "Port the `SimIO` primitives of `mkPrimitive` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "3518ae55fd0f921943eb51ea1c7ef873d04c30bf",
+      "subject": "Add `withCompCtxOf` to `Test.Clash.Scoped`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "1f0bae503be0241915c04ba3a0461cb36f74bc30",
+      "subject": "Test `mkFunInput` on scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a6548e53cfecf6668b949304b49e0c6967cc4842",
+      "subject": "Translate scoped types in `Clash.Netlist.Scoped` without converting them"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d847ea65b8d3eebdee8899db048200be4fb86de5",
+      "subject": "Translate scoped types in `Clash.Netlist.Scoped.BlackBox` without converting them"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "008ab78b132934fc864138fb75cb9c3479168082",
+      "subject": "Determine the plurality of blackbox function arguments on scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ab6dc015a748badd495a61cbab22fa6b268d52ae",
+      "subject": "Run the tests of `Clash.Netlist.Scoped` with `runNetlistTest`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a3ebcf58a774fdefad7020752c838c87db9d5f03",
+      "subject": "Port the testsuite's blackbox functions to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "cd4146c87551a8afb92112b5c1f39a9ead89ca17",
+      "subject": "Print scoped Core in the messages of `Clash.Netlist.Scoped`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "383ea2dcc2ff06f03b23c8605c68833261d78c52",
+      "subject": "Refer to top entities and globals by `GlobalId` in `Clash.Netlist.Scoped`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a9955ebdccf6de3153b23acf435190250dcf0b07",
+      "subject": "Remove the Netlist generation on Clash Core from the pipeline"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "930452518c55830b9d1881444fcd95ca01355545",
+      "subject": "Remove blackbox functions on Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f3e4ca2aabe934b2e6567726984cf6c6fa7e9db5",
+      "subject": "Remove the Clash Core counterparts from `CompCtx`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "34df534d5ff2f7454cc6733d0fea0dacfebae7f6",
+      "subject": "Remove the evaluator of Clash Core from the parameters of the pipeline"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "84a1364e8a0bc364abdcac99b1c5859b43d2f593",
+      "subject": "Mark the conversions of types that wait for D4 with `TODO(D4)`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a6a9fda76778d69d7fbda88b91b17588496aafe5",
+      "subject": "Describe the boundary with Clash Core as it is after Phase 5"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8218c8d8370d5092e5b41184d95d0d22e2350fbd",
+      "subject": "Move `Clash.GHC.Scoped.Builder` to `Clash.Core.Scoped.Builder`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "65e43a8c8252b5503f28133a92d20d2edfd8df32",
+      "subject": "Add native type builders to `Clash.Core.Scoped.Builder`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "df911db6f94d8ff3b8c786af25dd976a3986b742",
+      "subject": "Give `GlobalId` its name and its scoped type"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "697238842190001b5abcbc32cbdead4304152417",
+      "subject": "Give scoped Core its own `PrimInfo`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8343d7f79f0343088cec49818d66f49106457037",
+      "subject": "Move the signatures of scoped Core to `Clash.Core.Scoped.Sig`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9d6274638ca0f96e8f9c41d6793caed3721cc5b8",
+      "subject": "Store the scoped type and signature in `DataCon`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "73c1a86a76c55aa69f63d907bb5f351c99adf18b",
+      "subject": "Store the scoped kind and signatures in `TyCon`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9778fbd357f7a0c844b7a06fc4d9617485612620",
+      "subject": "Reduce `TypeEnv` to the `TyConMap`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f04fdc93bb7632e5bb188814c47893cf7b863d86",
+      "subject": "Make `bindingId` a `GlobalId`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5356d8ab2e1c59d457aa0519b5c78aa2c61a9a86",
+      "subject": "Make `topId` a `GlobalId`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "270d1d8b54dc1257a2bd4b52a169c717f0c7cafc",
+      "subject": "Add builders of signatures to `Clash.Core.Scoped.Builder`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ef23473ca2f8b4c03367ca204c4cade8cd0f24eb",
+      "subject": "Document the transition of the types that scoped Core shares"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "12205e8b609c42a79b8bdd849e3932ccd2147bae",
+      "subject": "Add `runTermIn` and `runTypeIn` to `Clash.Core.Scoped.Builder`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "1153bde28313e1eee109e1ace24b76d9030a061b",
+      "subject": "Rename the type constructor helpers of `Test.Clash.Rewrite`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "0da25c174a60709cef176ef115ca9e0af2ceb740",
+      "subject": "Add a parser of scoped Core to `Test.Clash.Rewrite`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5a97acd979157e8214458f4dad734115dd3ef6b8",
+      "subject": "Add test scopes to `Test.Clash.Scoped`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "71118a1201f831080ae34bff14a5499702dcffea",
+      "subject": "Write the `deadCode` tests in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "0ef17a402f47b28a5ba046a6830e608b70aae37f",
+      "subject": "Write the capture tests of `Clash.Tests.Core.Scoped.Subst` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "2a60b09a95d0d6b5c75950d40fc6e2e8dd3c386c",
+      "subject": "Write a test of `mkBlackBoxContext` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6fef6a630e0e6130f03d91a2e04676795e83383b",
+      "subject": "Add `funTyB` and `tyConAppB` to `Clash.Core.Scoped.Builder`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "1fc9f20aa9d4e112448f39c3e106a9bb239bfb97",
+      "subject": "Build the builtin type constructors in `Clash.Core.Scoped.TysPrim`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "13d39465948cf40801fd304086f45e3015895ed7",
+      "subject": "Add `Clash.Normalize.Scoped.Primitives`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "dd18ccbd28f7c98ff3cfb07e57c8e0079e33c066",
+      "subject": "Read the scoped types of primitives"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "94a8cb573d10e0dd5d53ef5a7c34ce8986a00b96",
+      "subject": "Build the primitives of the scoped evaluator with scoped types"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "08e40f032934f2131d3050c8352d032669ae930c",
+      "subject": "Force the scoped term in `makeUndefinedIf`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "bbd5dfcd8bd19173e8d603fcd51d9984f0af11ba",
+      "subject": "Give new global variables scoped types"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f00f995f59959a568408d193ddce53e7d2bed515",
+      "subject": "Make `curFun` a `GlobalId`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5c300303664fa1e092a856f3ebdd17cabd39b6f9",
+      "subject": "Check the scoped type of a global before normalizing it"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "46fd9761832d8e42171847ca82ed54d6a1e80157",
+      "subject": "Read the scoped types of top entities"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "064cd1ef0b164275a00379b2c7f27d3df649906a",
+      "subject": "Make the remaining primitives of normalization with scoped types"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "cb8386324718580e3682bd50778fce06ce516a46",
+      "subject": "Read the signatures and types of data constructors from their fields"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ecb7970340a1abdb40f6e2cc08492b9822223094",
+      "subject": "Number the binders of each type of a signature from its scope in `Builder`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8fec3eaad6414e0b1dd4368b03d520cc7c48aae0",
+      "subject": "Build the types of scoped Core in terms from GHC's types directly"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ed3f1e0bec68894e92a88594bb22839f0b6233e6",
+      "subject": "Build the types of globals and primitives from GHC's types directly"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "89bdda6e4ee83125da82db3316dc870e94e71deb",
+      "subject": "Build data constructors from GHC's types directly, and share them"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "696ce75883aeea379d226383e7a7dd7b21a2a93d",
+      "subject": "Build type constructors from GHC's types directly"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c71d1fd2431334445546ba798a3b35c1f9e0c319",
+      "subject": "Build class selectors in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e4cd4fe192e0d5c268bd8ef8c982cdc8ea073de1",
+      "subject": "Print scoped Core natively"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "531965724d12994ae268efc2384f09dabea4da03",
+      "subject": "Port the debug checks of scoped `applyDebug` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c6c56aafb6ea3efcc7e2cc2eece5fa41a7ea4f04",
+      "subject": "Print `TyCon`s from their scoped fields"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5504b79f20eb35193344c65c462fde86d9c1141f",
+      "subject": "Add a `pretty` mode to `clash-differential`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "0589dfcbc80c22d296d37fa87dead1ddd522f748",
+      "subject": "Store closed terms of scoped Core in `RewriteStep`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5b36806deb03e0ec67c4a410495b6fb3d24d93a9",
+      "subject": "Encode scoped Core natively in `Binary`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "694b7d29567d4a2d826755386f91497005a86c1f",
+      "subject": "Add `convert-inputs` to `clash-differential`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "870f36c60c01091de55b212eafc01ea19913e597",
+      "subject": "Start the rewrite history with the header of scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5a09a2dbdb5aba1a6764c0ceafcf96383f2d2a04",
+      "subject": "Add test helpers for the scoped-only tests to `Test.Clash.Scoped` and `Test.Clash.Rewrite`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "fa574a8f824724e18a1068e28d69b35a25d8a70b",
+      "subject": "Move the generators of Clash Core to `Test.Clash.Scoped.Gen.Clash`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "45e6977b415066dcc3b547e9859097250bcfb46c",
+      "subject": "Add generators of scoped Core to `Test.Clash.Scoped.Gen`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8605a1d9b7997be4190176861a9b6bc26e0bedb2",
+      "subject": "Write the tests of `Clash.Tests.Core.Scoped.Alpha` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "67b96086abeddbb55e079931b901243c5c574216",
+      "subject": "Write the tests of `Clash.Tests.Core.Scoped.FreeVars` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6196eaa320fd41a331ddc65b47c899a9cc05bc01",
+      "subject": "Write the tests of `Clash.Tests.Core.Scoped.Subst` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "85d0142db0f04a512fec28bfb2583f09c564f89d",
+      "subject": "Write the tests of `DataCon` and `TypeEnv` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "23ab651b43c7bc34563ceac9818999faded043da",
+      "subject": "Write the tests of `NameMap`, `TyCon` and `TysPrim` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e4be80e7da3392cbd77110bc5aa9c0a4da76a2f0",
+      "subject": "Write the tests of `Clash.Tests.Core.Scoped.Builder` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "781acd90854a4dc25d066efd782222651cf1c764",
+      "subject": "Encode the values of the `TermLiteral` tests as scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "50bee8b563c9b08dba6a99c9b054473f8c697ec9",
+      "subject": "Write the tests of `Clash.Tests.Core.Scoped.TermInfo` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e09f489b2d2c090eee59a125a0e5f8263f89af65",
+      "subject": "Write the tests of `Clash.Tests.Core.Scoped.HasType` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e45beaa3eb1eee7d22ad175835e280103c2028f8",
+      "subject": "Write the tests of `Clash.Tests.Core.Scoped.Type` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "eabb2da21a382c0677afd29b32d359b84dfabd17",
+      "subject": "Write the tests of `Clash.Tests.Core.Scoped.Term` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "880c65c79bea81eebe04dfc427c6834a3140d29e",
+      "subject": "Write the tests of `Clash.Tests.Core.Scoped.EqSolver` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "bf3fc66650fe0e555a6f03b74894c8ce6e54edb1",
+      "subject": "Write the tests of `Clash.Tests.Core.Scoped.Util` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "4699fe912ae60f6b695aa6bf2c85d126981b8e04",
+      "subject": "Write the tests of `Clash.Tests.Rewrite.Scoped.Util` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "986322bf97bf87919c12bace198050a50b625a5f",
+      "subject": "Write the tests of `Clash.Tests.Rewrite.Scoped.Whnf` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a7d910a6cbed854e61a6278981a6186d206e3572",
+      "subject": "Write the tests of `Clash.Tests.Rewrite.Scoped.WorkFree` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7609db288e9bac03d8a3aa489b9f3e74adfe3825",
+      "subject": "Write the terms of the scoped strategy tests in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b6cadc45b3de81680f3a2c02db9ba77772a3f8f0",
+      "subject": "Write the tests of `Clash.Tests.Rewrite.Scoped.Combinators` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5310fd10fbf8eeba80a7a0419d11141ad7fb655a",
+      "subject": "Write the tests of `Clash.Tests.Netlist.Scoped` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "3a7532398ec9d1753ca99746ae03275dee331091",
+      "subject": "Write the tests of `Clash.Tests.Netlist.Scoped.BlackBox` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "02c5dacce5e1f37818c60a4ffbc7780303e5bd4d",
+      "subject": "Write the tests of `Clash.Tests.Primitives` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "2e781ad09f97d2354fa0a8b12c5e2692e4e0cf42",
+      "subject": "Move the differential helpers to `Test.Clash.Scoped.Evaluator.Differential`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "03933d3e8efae4f2b2657effbe4a7b6dc20ae9f2",
+      "subject": "Write the tests of the ported reductions in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a253973651cce8fc15501d1f3ad4c3bcac6d08fa",
+      "subject": "Write the tests of the scoped evaluator in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ea0ce293d6e714074ace7b13c316eb61e4ccb743",
+      "subject": "Run the evaluator tests of the testsuite on the scoped evaluator"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "966b483c3259ad066a3cd0d5cac52d81cf6b4a94",
+      "subject": "Test helpers: extend the scoped test parser, and print scoped Core as its input"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "0b7e347c7fb44c8568d2670133130fe2675bf688",
+      "subject": "Write the tests of the case transformations in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5eadc0d792077b2fa131682f8e82e7f4134366b2",
+      "subject": "Write the tests of `makeANF` and `nonRepANF` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5fde92a200fb29e64879ac7e6462a9f4cdb5cf5a",
+      "subject": "Write the tests of DEC in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b0d562ae5a73e5b3ec449d03ed85e8f8aab37f3a",
+      "subject": "Write the tests of the let transformations in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "1930903f16d97ba926f2b4771326fc6601af63f3",
+      "subject": "Move the tests of the let-binding inliners of Clash Core to their module"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "3fb689a4a66c08fb2f899c9dc1a0aa238e2c0984",
+      "subject": "Write the tests of the inlining transformations in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "15a59260bc0ac52745f9b1d84b3138de5724d881",
+      "subject": "Write the tests of the cast transformations in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8aefa00b93150c0626b7ecfba61a417a69f4a6a9",
+      "subject": "Write the tests of eta expansion in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "017a5aca49f92b423d7218985c1f0c42ce7551de",
+      "subject": "Write the tests of `xOptimize` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "98024173aad07aacfe0a9bf811553650cbe4249b",
+      "subject": "Write the tests of the specializations in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ba808ebb57003502b87c07c5c76590a0ec5da7f7",
+      "subject": "Write the tests of the primitive reductions in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d3f540d120aa4c63656154dd2514c46fc432b853",
+      "subject": "Write the tests of `setupMultiResultPrim` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8b8bbaf0503a04e9837bb42a2590fcfb7b004da4",
+      "subject": "Write the tests of `separateArguments` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d8862a10b1da6eb83d1c7cd3517c27417ef6d90c",
+      "subject": "Write the tests of the reductions in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6cb44978e312262f77870ec37557485d6a352bf1",
+      "subject": "Write the tests of `Clash.Normalize.Scoped.Util` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "a801b2b76872113fa089c807edb6a2cd2c12ae7a",
+      "subject": "Write the tests of `whnfRW` in the context of let-bindings in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "0b34514f3df1b6b64a4304f56147bb8f15951ef4",
+      "subject": "Write the tests of `cleanupGraph` in scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "cdac850b3dd6694343e163f5d0e932b6862febe7",
+      "subject": "Move the syntax enumerations of Clash Core to `Clash.Core.Basic`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "4fc598fb3caf2a1afbf9eec56272a4fcf5104852",
+      "subject": "Reduce `clash-differential` to `normalized` and `binary`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "602ccdb915878eaf5b2710422626a6045d490e5b",
+      "subject": "Remove `Clash.Rewrite.Capture`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "47ca5d13bc85d045c09f828445bd344e68861e57",
+      "subject": "Test the printer, `Binary` and the rewrite history with the scoped generator"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "bb76b919d41423ca40fc58a1cb73858049c6ef77",
+      "subject": "Remove the tests of Clash Core and the differential test harness"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8d1c71c12dfd599d7213117e62e1edce362f0306",
+      "subject": "Remove the test helpers that only the tests of Clash Core used"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e7a72ebbc120964ff6fc29f7d93ad43595b9db20",
+      "subject": "Build the type constructors of the tests natively"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "74f0ff2281b91821a3492c10af5787d86048a175",
+      "subject": "Remove the transformations of Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "4ef92e3c65a47d380f6e21bc4d653a611d471ba4",
+      "subject": "Move the documentation of the transformations of Clash Core to their ports"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "1bcc8bda6731f37c1337e72f83be46e9d22f542d",
+      "subject": "Remove the state of the transformations of Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "dac8d38fc656c4783ffe93fba66ce67fbb408857",
+      "subject": "Remove the evaluator of Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "4364a17cb26155e3920009fa4782ff2a367dd1f5",
+      "subject": "Move the documentation of the evaluator of Clash Core to its port"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c3bb7bab077ab618b2f2603ae05dec2a0454d118",
+      "subject": "Remove Netlist generation on Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7c494c920085e694707f83ef3ab966638b764063",
+      "subject": "Remove the unused types of Clash Core from the test helpers"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "32a57727232675b17a3064269966409ea6cfa6ad",
+      "subject": "Remove `Clash.Core.TermLiteral` of Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8b3c0d1bca5aa5bb68cf1c7815bbce89376ee282",
+      "subject": "Remove the conversion of GHC Core to Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ab9df328ecc8b2fb0ba1763c9a7394448898d4f3",
+      "subject": "Stop reading the legacy fields of global variables and data constructors"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6e7f5560461318914e4ee851ca8c9c666c92ed24",
+      "subject": "Remove the parser of Clash Core from the test helpers"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "76a96efa1d970ef6ba386050666b2a710d13d147",
+      "subject": "Port `clash-lib-hedgehog` to scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "b087e002adaeb68d2cea8e7ae4d7d915dc31ab6f",
+      "subject": "Remove Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d929271abf06ae30334e9cf16976d2d9b4189730",
+      "subject": "Remove the code that only Clash Core used"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "cc9e6fee4bda9a73a3912222c09153712f467591",
+      "subject": "Update the documentation that refers to Clash Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c74782d107ce83ede153d7368be085415ba35033",
+      "subject": "Make `makeCached`, `makeCachedU` and `makeCachedO` specialisable"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "c0c214af807897278ce2c8999d50ddd59bea6261",
+      "subject": "Make the functions of `RewriteMonad` one-shot"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "93c0caf2af7f074ea1354f38f369da034cf7ade3",
+      "subject": "Share unchanged nodes in the traversals of scoped Core"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9574d80ecf0c7925d60ac64117aaa1bb705982bd",
+      "subject": "Add `rebindIds` to bind variables of a telescope again without renaming"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "5d1885808f4b3c19ea809c830d42494987c4a889",
+      "subject": "Keep the names of the kept binders in `keepBindings`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "fdfb6be7dc7c33a7b81a92e276e9ec2396b25c60",
+      "subject": "Keep binders that don't clash as they are in substitutions"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "100b200b4b9588abdb5a6cdaf7f8f033a924e15e",
+      "subject": "Keep the subterms that a substitution doesn't change"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "3365cf2979793925c575900311a02b777d4123cb",
+      "subject": "Fix `-fclash-debug-transformations-limit` with `-fclash-debug-transformations-from`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "94d0441417d3b29aa420f86143f9ed9b4555de3a",
+      "subject": "Run the unittests one at a time by default"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e03cae0c7aecbe91cf68e065aa1b304645a864b7",
+      "subject": "Drop the `scoped` prefix from the fields of `RewriteState` and `RewriteEnv`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e93f78f7e1166488146e87336a9220a0197c689c",
+      "subject": "Drop the `scoped` prefix from the fields of `NormalizeState`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7ba0f06c61e086c67397a90377d4300d48252414",
+      "subject": "Rename `ScopedTransform` and `ScopedRewrite` to `Transform` and `Rewrite`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6e45df5bff5d1d7b6d9095f2b98f79a2b624f89c",
+      "subject": "Drop the `scoped` prefix from the strategy DSL"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e7700c74818cfe286c0a64c3a346fb80b50018c3",
+      "subject": "Rename the constructor `ScopedBBF` to `SomeBlackBoxFunction`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "2e4766b945f3b3d601a044afcbd9cb858c3dcfa6",
+      "subject": "Drop the `scoped` prefix from the fields of the `GHC2Core` state"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d540dcb196216b062006b2fb125238f4fc03d6f0",
+      "subject": "Drop the `scoped` prefix from the primitive reductions and `specCacheKey`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "3880da4549fffed858d065b47acb85cbe10aecc6",
+      "subject": "Drop the `scoped` prefix from the test helpers"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e879a637e559b91591e2f0bce37ecd2586aada04",
+      "subject": "Merge `Clash.Core.Scoped.TyCon` into `Clash.Core.TyCon`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "1b0c44b528344e29a3049726ed8599cd02558b0b",
+      "subject": "Import `DataCon` into `Clash.Core.TyCon` from the boot module"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d9257d43101a5f3b61982b304b80627d3e046712",
+      "subject": "Merge `Clash.Core.Scoped.DataCon` into `Clash.Core.DataCon`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "760334c6b87fe424f95892d88590cb81f490a8ac",
+      "subject": "Merge `Clash.Core.Scoped.Pretty` into `Clash.Core.Pretty`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ae69b18bb07ec3b82303893cbfdea4d8ec191110",
+      "subject": "Merge `Clash.Primitives.Scoped.Util` into `Clash.Primitives.Util`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6d6a6bb3b340c0c9d70eb6295766100e9a623345",
+      "subject": "Merge `Clash.Netlist.Scoped.Types` into `Clash.Netlist.Types`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "9de3089fa083ef8332469c7e9099bcd000cc3430",
+      "subject": "Merge `Clash.Rewrite.Scoped.Types` into `Clash.Rewrite.Types`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e0e94bc9d15d4f76150c5bf57f933c7960c870bd",
+      "subject": "Merge `Clash.Rewrite.Scoped.Util` into `Clash.Rewrite.Util`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "7f445a98aff3448e46652ebf68e99de4476490f4",
+      "subject": "Merge `Clash.Normalize.Scoped.Util` into `Clash.Normalize.Util`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6b7f51ca525892c99d9c6f11dc0b88f57dbf6a01",
+      "subject": "Merge `Clash.Netlist.Scoped.Util` into `Clash.Netlist.Util`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "85c0c96c7a4338ab8a72fa3c50701c5845ca7e1e",
+      "subject": "Merge `Clash.GHC.Scoped.GHC2Core` into `Clash.GHC.GHC2Core`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "8909c0616107554f61d8b8c1e11721ae0ca3bdfc",
+      "subject": "Merge `Clash.Tests.Netlist.Scoped.Util` into `Clash.Tests.Netlist.Util`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "6c5f111a9c1cf2263c08c6ba12b7ebe05953abe1",
+      "subject": "Move `Clash.Core.Scoped.*` to `Clash.Core.*`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "f9c3ccb121a0865a09ffda46d03744dada5a39b4",
+      "subject": "Move `Clash.Rewrite.Scoped.*` to `Clash.Rewrite.*`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ee2d54030defca3066fd912bfee9a77884ae6fcd",
+      "subject": "Move `Clash.Normalize.Scoped.*` to `Clash.Normalize.*`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e4a169f2dce7d616eab56917567d2578cd98c1a3",
+      "subject": "Move `Clash.Netlist.Scoped.*` to `Clash.Netlist.*`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "d473de05ae2bfcd4acb6b0050482ab145c24c031",
+      "subject": "Move `Clash.Tests.*.Scoped.*` to `Clash.Tests.*`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "da4bfee65315c7b314a55478f27a81cf9fa10fe5",
+      "subject": "Rename the `Scoped` import aliases"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "ffe7a7f0f32229093a934079e98a69aecd6b4901",
+      "subject": "Rename `clash-lib/tests/scoped-negative` to `scope-negative`"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "1eafa6aa77867386a41ac35cf51f5a06695e74d1",
+      "subject": "Call scoped Core Clash Core in comments"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "e5e70832f45c7f5478d7a3332c8c05a23e9c22ed",
+      "subject": "Tell downstream users where the parts of the Core modules went"
+    },
+    {
+      "date": "2026-10-13",
+      "sha": "fed09310bd1f27a94f6ed1bef6e8444ff11b4b22",
+      "subject": "Sort the module lists of `clash-lib.cabal` that the rename touched"
+    }
+  ],
+  "pr": null,
+  "ref": "martijn/the-foil",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-10-13T16:58:56+00:00"
+}
