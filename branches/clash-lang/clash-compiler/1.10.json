@@ -485,10 +485,15 @@
       "date": "2026-10-09",
       "sha": "f6250cd06ca3f152ef677e773b65a4e9ad317747",
       "subject": "Fix accidental free variable capture in `appProp` (#3479) (#3480)"
+    },
+    {
+      "date": "2026-10-14",
+      "sha": "eb376bfde809e2f510cea21de4183ff906657514",
+      "subject": "Merge pull request #3484 from clash-lang/mergify/copy/1.10/pr-3483"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-09T21:54:46+00:00"
+  "updated": "2026-10-14T02:08:26+00:00"
 }
