@@ -1,34 +1,34 @@
 {
-  "base": "aa6cab33f1bc1da3c1fb62f3694e8ccb3d5f26de",
+  "base": "c89ec188c2b340a2d1cffb53413ce7b31b5cb26c",
   "commits": [
     {
-      "date": "2026-08-24",
-      "sha": "027da3d792cea5c67955642abe9700651c59a45f",
+      "date": "2026-10-15",
+      "sha": "9cbba92d09003dfe52352f4146e10ce90a0c3c85",
       "subject": "Add concurrent normalization"
     },
     {
-      "date": "2026-08-24",
-      "sha": "799c7cb174160f7045620a7091b514c147500647",
+      "date": "2026-10-15",
+      "sha": "c27794a53b1f39e0353c4dd7d8c1f9e78da707e2",
       "subject": "Make netlist naming concurrency proof"
     },
     {
-      "date": "2026-08-26",
-      "sha": "a6c2c77db1d45ed3b9c3b6f3f557e6f796500324",
+      "date": "2026-10-15",
+      "sha": "b59ce4f7ced671b46b900512b0542a24abe783e0",
       "subject": "Read normalization state without taking a lock"
     },
     {
-      "date": "2026-08-26",
-      "sha": "2a342baffc6e2ddffa54127dc86ca420a2d11c94",
+      "date": "2026-10-15",
+      "sha": "5ee2f90bb928b4df80c4dc0b660b5978aa5d9af8",
       "subject": "Don't normalize concurrently with only one capability"
     },
     {
-      "date": "2026-08-26",
-      "sha": "44bf0689715028d07896b758d171101c30e14891",
+      "date": "2026-10-15",
+      "sha": "e2516ee15e29fbc32d3c9aa6ede3b50b8779eda7",
       "subject": "Add `-N` to `clash`/`clashi`"
     }
   ],
   "pr": 3196,
   "ref": "martijn/concurrent-normalization",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-08-26T19:31:07+00:00"
+  "updated": "2026-10-15T14:41:56+00:00"
 }
