@@ -495,10 +495,20 @@
       "date": "2026-10-14",
       "sha": "a0f79d3fe2828d96a8b9f281962a2555070080e5",
       "subject": "Merge pull request #3475 from clash-lang/release_v1.10.3"
+    },
+    {
+      "date": "2026-10-17",
+      "sha": "64b0c42c049653e8a5b979d80aebbd06e6a7c9e1",
+      "subject": "Work around broken macOS SDK on `macos-26` runners (#3493) (#3496)"
+    },
+    {
+      "date": "2026-10-17",
+      "sha": "50bb483f7c26a6d5e8e67075f0932ec84cab5c4b",
+      "subject": "Don't produce newtype constructor in `SNat` evaluator (#3491) (#3494)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-14T22:33:28+00:00"
+  "updated": "2026-10-17T14:24:43+00:00"
 }

@@ -1,0 +1,104 @@
+{
+  "clash": {
+    "commit": "64b0c42c049653e8a5b979d80aebbd06e6a7c9e1",
+    "committer_date": "2026-10-17",
+    "parents": [
+      "a0f79d3fe2828d96a8b9f281962a2555070080e5"
+    ],
+    "ref": "1.10",
+    "repo": "clash-lang/clash-compiler",
+    "subject": "Work around broken macOS SDK on `macos-26` runners (#3493) (#3496)"
+  },
+  "machine": "oele",
+  "normalization": {
+    "benchmarks": {
+      "benchmark/tests/BundleMapRepeat.hs": {
+        "alloc_bytes": 30184722.473581214,
+        "gc_wall_s": 4.315655577299346e-07,
+        "mean_s": 0.009364151364615466,
+        "mut_wall_s": 0.00935202214677102,
+        "stddev_s": 6.876686943290834e-05
+      },
+      "benchmark/tests/PipelinesViaFolds.hs": {
+        "alloc_bytes": 449369638.6666667,
+        "gc_wall_s": 0.00017202974999999676,
+        "mean_s": 0.13603459849074992,
+        "mut_wall_s": 0.13584231094444454,
+        "stddev_s": 0.00013632637077655912
+      },
+      "examples/FIR.hs": {
+        "alloc_bytes": 24648900.99412916,
+        "gc_wall_s": 0.0,
+        "mean_s": 0.009307806074841841,
+        "mut_wall_s": 0.009284381160469668,
+        "stddev_s": 9.75101969313822e-05
+      },
+      "examples/Queens.hs": {
+        "alloc_bytes": 14491062.924062215,
+        "gc_wall_s": 0.0,
+        "mean_s": 0.004477646933214166,
+        "mut_wall_s": 0.0044658367511436455,
+        "stddev_s": 5.473567318899706e-05
+      },
+      "examples/Reducer.hs": {
+        "alloc_bytes": 1410689805.6,
+        "gc_wall_s": 0.002567135699999995,
+        "mean_s": 0.3679422752854104,
+        "mut_wall_s": 0.3649349822000003,
+        "stddev_s": 0.0034443826565610947
+      },
+      "tests/shouldwork/Basic/AES.hs": {
+        "alloc_bytes": 373914027.2,
+        "gc_wall_s": 0.00011241822222222266,
+        "mean_s": 0.1011521682194541,
+        "mut_wall_s": 0.10101536100000001,
+        "stddev_s": 0.00024966325061362286
+      },
+      "tests/shouldwork/Basic/T1354B.hs": {
+        "alloc_bytes": 78065368.46666667,
+        "gc_wall_s": 4.031591666667223e-06,
+        "mean_s": 0.03840000898974189,
+        "mut_wall_s": 0.03828363398333335,
+        "stddev_s": 0.0002964883844542823
+      }
+    },
+    "skip_reason": null,
+    "status": "ok"
+  },
+  "run": {
+    "date": "2026-10-17T14:24:42+00:00",
+    "quick": false,
+    "trigger": "schedule",
+    "workflow_run_url": "https://github.com/clash-lang/clash-benchmarks/actions/runs/39040076777"
+  },
+  "schema_version": 4,
+  "toolchain": {
+    "container": "ghcr.io/clash-lang/nixos-bittide-hardware:2026-05-11",
+    "ghc_version": "9.10.3"
+  },
+  "wire_demo": {
+    "bittide_rev": "bea4b627b2daaba2009d52e73b7c709d859094e8",
+    "overlays": [
+      "0001-quickcheck-bound",
+      "0002-termtodata-hash",
+      "0003-rom-unsigned-address"
+    ],
+    "runs": [
+      {
+        "alloc_bytes": 106709398216,
+        "gc_cpu_s": 8.047,
+        "gc_wall_s": 5.399,
+        "max_live_bytes": 591995864,
+        "mut_cpu_s": 44.535,
+        "mut_wall_s": 43.263,
+        "netlist_s": 1.748,
+        "normalization_s": 35.792,
+        "num_gcs": 2196,
+        "peak_mb": 1617,
+        "total_s": 42.973
+      }
+    ],
+    "skip_reason": null,
+    "status": "ok"
+  }
+}
