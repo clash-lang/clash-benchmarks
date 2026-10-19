@@ -505,10 +505,15 @@
       "date": "2026-10-17",
       "sha": "50bb483f7c26a6d5e8e67075f0932ec84cab5c4b",
       "subject": "Don't produce newtype constructor in `SNat` evaluator (#3491) (#3494)"
+    },
+    {
+      "date": "2026-10-19",
+      "sha": "b12a92c0e0e72660fee6bc1ef4b96ec9707a523e",
+      "subject": "Revamp GitHub CI (#3489) (#3501)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-17T14:27:53+00:00"
+  "updated": "2026-10-19T17:42:40+00:00"
 }
