@@ -510,10 +510,15 @@
       "date": "2026-10-19",
       "sha": "b12a92c0e0e72660fee6bc1ef4b96ec9707a523e",
       "subject": "Revamp GitHub CI (#3489) (#3501)"
+    },
+    {
+      "date": "2026-10-21",
+      "sha": "842ec9da6464a5564f79dc651aca4521f728a41c",
+      "subject": "GitHub CI: Release flow (#3504) (#3505)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-19T17:42:40+00:00"
+  "updated": "2026-10-21T14:12:00+00:00"
 }
