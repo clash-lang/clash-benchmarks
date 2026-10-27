@@ -520,10 +520,20 @@
       "date": "2026-10-27",
       "sha": "c7d15e0c36425ca1797bc7f6e9cc5160e76e6b95",
       "subject": "Generate valid VHDL for entities without ports (#3500) (#3509)"
+    },
+    {
+      "date": "2026-10-27",
+      "sha": "201e2405a9f080f979cf8dac48cda4ac4c03ff94",
+      "subject": "Merge pull request #3508 from clash-lang/mergify/copy/1.10/pr-3503"
+    },
+    {
+      "date": "2026-10-27",
+      "sha": "b00410360de491a741f391438e03142ddd6add6f",
+      "subject": "Merge pull request #3510 from clash-lang/mergify/copy/1.10/pr-3490"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-27T13:41:52+00:00"
+  "updated": "2026-10-27T19:08:41+00:00"
 }
