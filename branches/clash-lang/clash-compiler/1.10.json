@@ -515,10 +515,15 @@
       "date": "2026-10-21",
       "sha": "842ec9da6464a5564f79dc651aca4521f728a41c",
       "subject": "GitHub CI: Release flow (#3504) (#3505)"
+    },
+    {
+      "date": "2026-10-27",
+      "sha": "c7d15e0c36425ca1797bc7f6e9cc5160e76e6b95",
+      "subject": "Generate valid VHDL for entities without ports (#3500) (#3509)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-10-21T14:12:00+00:00"
+  "updated": "2026-10-27T13:41:52+00:00"
 }
