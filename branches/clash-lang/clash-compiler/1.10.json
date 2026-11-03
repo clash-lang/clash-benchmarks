@@ -545,10 +545,30 @@
       "date": "2026-11-02",
       "sha": "9bc39574ec4e39dfc8e8f7a4970b912b8f063d58",
       "subject": "Account for multi-usage in `inlineCleanup`'s single-alternative branch (#3519) (#3523)"
+    },
+    {
+      "date": "2026-11-02",
+      "sha": "e0a65c796963b6b6bf88c4c4c1f7eda9004484c6",
+      "subject": "Account for `WorkInfo` in `isConstant` (#3518) (#3524)"
+    },
+    {
+      "date": "2026-11-02",
+      "sha": "fe67a4f607274907e6c0f20d3ed9a74ad4f1c466",
+      "subject": "Add `indexBitVectorCV` to `knownBlackBoxFunctions` (#3522) (#3525)"
+    },
+    {
+      "date": "2026-11-02",
+      "sha": "1fc1be17b0c31f3ae47bf388d041ed064ec088f4",
+      "subject": "Don't instantiate a global for a local function argument in `mkFunInput` (#3499) (#3527)"
+    },
+    {
+      "date": "2026-11-02",
+      "sha": "8eef51383bb933ffa81cb2175b1ff4bacab3c032",
+      "subject": "Fix type given to the function argument of `iterateI` (#3497) (#3528)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-11-02T17:42:11+00:00"
+  "updated": "2026-11-03T00:17:30+00:00"
 }
