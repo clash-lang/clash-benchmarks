@@ -565,10 +565,15 @@
       "date": "2026-11-02",
       "sha": "8eef51383bb933ffa81cb2175b1ff4bacab3c032",
       "subject": "Fix type given to the function argument of `iterateI` (#3497) (#3528)"
+    },
+    {
+      "date": "2026-11-05",
+      "sha": "a052910ddf475293ae2f3b777641ca78a12862b9",
+      "subject": "CI: Fix hostname (#3532) (#3533)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-11-03T00:29:37+00:00"
+  "updated": "2026-11-05T15:50:30+00:00"
 }
