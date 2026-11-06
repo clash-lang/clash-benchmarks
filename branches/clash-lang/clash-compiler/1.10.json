@@ -570,10 +570,15 @@
       "date": "2026-11-05",
       "sha": "a052910ddf475293ae2f3b777641ca78a12862b9",
       "subject": "CI: Fix hostname (#3532) (#3533)"
+    },
+    {
+      "date": "2026-11-06",
+      "sha": "b248c5eb06275067f3cc6931d750d8185366700c",
+      "subject": "Constant fold `logBase#` for all relevant inputs (#3492) (#3531)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-11-05T15:50:30+00:00"
+  "updated": "2026-11-06T11:16:57+00:00"
 }
