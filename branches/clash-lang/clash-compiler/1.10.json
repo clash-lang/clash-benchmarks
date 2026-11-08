@@ -575,10 +575,15 @@
       "date": "2026-11-06",
       "sha": "b248c5eb06275067f3cc6931d750d8185366700c",
       "subject": "Constant fold `logBase#` for all relevant inputs (#3492) (#3531)"
+    },
+    {
+      "date": "2026-11-08",
+      "sha": "2211a20ac4a8a4d2229337f6b8ec6b1ddaae7015",
+      "subject": "Merge pull request #3535 from clash-lang/mergify/copy/1.10/pr-3534"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-11-06T11:16:57+00:00"
+  "updated": "2026-11-08T21:04:34+00:00"
 }
