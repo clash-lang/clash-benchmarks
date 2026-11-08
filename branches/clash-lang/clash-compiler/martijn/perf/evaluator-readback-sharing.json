@@ -3,12 +3,12 @@
   "commits": [
     {
       "date": "2026-11-08",
-      "sha": "55f63ce7dfe8c2e2ab6564a64af57037651eb594",
+      "sha": "5e28267ecee49710544549f8dcbc42b86d648a71",
       "subject": "Share constructor fields in evaluator's case-of-known-constructor"
     }
   ],
-  "pr": null,
+  "pr": 3539,
   "ref": "martijn/perf/evaluator-readback-sharing",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-11-08T20:15:27+00:00"
+  "updated": "2026-11-08T20:31:17+00:00"
 }
