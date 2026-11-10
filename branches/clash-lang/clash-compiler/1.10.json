@@ -585,10 +585,35 @@
       "date": "2026-11-08",
       "sha": "f098c365392595707ba019c1cdd549f04a6ed92f",
       "subject": "Update documentation link in README (#3530) (#3538)"
+    },
+    {
+      "date": "2026-11-10",
+      "sha": "b39d6f31c8417786366e0d3c2bdb346e2bd3037e",
+      "subject": "Fix `isFunction` check in `normalize'` (#3540) (#3541)"
+    },
+    {
+      "date": "2026-11-10",
+      "sha": "a5b413f99d0b123173ac73e02795dfe141f406f8",
+      "subject": "Share constructor fields in evaluator's case-of-known-constructor (#3539) (#3542)"
+    },
+    {
+      "date": "2026-11-10",
+      "sha": "70b2e9d6e717a14e51151fd61f6b9850653b0553",
+      "subject": "Merge pull request #3546 from clash-lang/rowan/qlog-update-1.10"
+    },
+    {
+      "date": "2026-11-10",
+      "sha": "96b86609c2d7637ed0bf8fec432a6a64886cfa36",
+      "subject": "Improve number conversion documentation (#3537) (#3543)"
+    },
+    {
+      "date": "2026-11-10",
+      "sha": "f9c8654a5fcb3432894c66be53f150bc878ea787",
+      "subject": "Merge pull request #3545 from clash-lang/mergify/copy/1.10/pr-3536"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-11-09T01:06:40+00:00"
+  "updated": "2026-11-10T18:23:34+00:00"
 }
