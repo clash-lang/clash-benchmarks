@@ -1,14 +1,14 @@
 {
-  "base": "da8b9c223658f3f2a13d90a2790e68d4f5c74f5c",
+  "base": "a1721b1f94d7a7342b512bf2281f9fe3289aba94",
   "commits": [
     {
-      "date": "2026-11-08",
-      "sha": "5e28267ecee49710544549f8dcbc42b86d648a71",
+      "date": "2026-11-10",
+      "sha": "ad0d9e8f66c610527af77fc0ec2d2077e0adae0b",
       "subject": "Share constructor fields in evaluator's case-of-known-constructor"
     }
   ],
   "pr": 3539,
   "ref": "martijn/perf/evaluator-readback-sharing",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-11-08T20:35:44+00:00"
+  "updated": "2026-11-10T11:22:45+00:00"
 }
