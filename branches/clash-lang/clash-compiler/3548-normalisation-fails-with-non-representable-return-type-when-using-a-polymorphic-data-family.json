@@ -10,5 +10,5 @@
   "pr": 3549,
   "ref": "3548-normalisation-fails-with-non-representable-return-type-when-using-a-polymorphic-data-family",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-11-15T05:16:25+00:00"
+  "updated": "2026-11-15T05:24:24+00:00"
 }
