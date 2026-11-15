@@ -1,0 +1,14 @@
+{
+  "base": "920973dbb208b14f875eff730dbcf739fad22870",
+  "commits": [
+    {
+      "date": "2026-11-12",
+      "sha": "4ad9a9b10bef83aea1c71f23aa7687fb2110f268",
+      "subject": "Fix type-family reduction over data-family representations"
+    }
+  ],
+  "pr": 3549,
+  "ref": "3548-normalisation-fails-with-non-representable-return-type-when-using-a-polymorphic-data-family",
+  "repo": "clash-lang/clash-compiler",
+  "updated": "2026-11-15T05:16:25+00:00"
+}
