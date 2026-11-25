@@ -620,10 +620,15 @@
       "date": "2026-11-17",
       "sha": "8c8e26addda4db68b6e04358ea7897644f38fecd",
       "subject": "Merge pull request #3551 from clash-lang/release_v1.10.4"
+    },
+    {
+      "date": "2026-11-25",
+      "sha": "ce3da26447a29a0538a9170fa2110407c7a75d2e",
+      "subject": "Keep argument names after a let when Clash specializes a function (#3552) (#3554)"
     }
   ],
   "pr": null,
   "ref": "1.10",
   "repo": "clash-lang/clash-compiler",
-  "updated": "2026-11-17T14:51:04+00:00"
+  "updated": "2026-11-25T17:44:18+00:00"
 }
